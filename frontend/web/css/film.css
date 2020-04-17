@@ -1,0 +1,371 @@
+.main-film {
+    margin-top: 55px;
+    display: flex;
+    width: 1320px;
+}
+.film__poster {
+    margin-right: 55px;
+    display: flex;
+    min-width: 300px;
+    min-height: 406px;
+    border-radius: 8px;
+    background: top left no-repeat;
+}
+.film__trailer-preview {
+    padding-bottom: 53.58%;
+    position: relative;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 8px;
+    background: no-repeat;
+    background-size: 100%;
+}
+.film__play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border: 2px solid white;
+    border-radius: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+.film__play-svg {
+    margin-left: 9px;
+    width: 60px;
+}
+.max-height-on {
+    max-height: 568px;
+}
+.film {
+    position: relative;
+    overflow: hidden;
+}
+.film__top-left-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.film__left-content {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+}
+.film__label {
+    margin-bottom: .3rem;
+    display: inline-flex;
+}
+.film__title {
+    margin-top: 6px;
+    min-height: 4rem;
+    font-size: 2rem;
+}
+.film__trailer {
+    margin-right: 20px;
+    padding: 0 1.5rem 0 1.5rem;
+    height: 3rem;
+    line-height: 3rem;
+    border-radius: 50px;
+    background: #30a6f1;
+}
+.film__age-rating {
+    width: 46px;
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+    border: 2px solid rgba(225, 225, 225, .7);
+    border-radius: 100%;
+}
+.film__genre, .film__country, .film__duration {
+    margin-right: 25px;
+    font-family: "Roboto Light", sans-serif;
+    font-size: .9rem;
+}
+.film__left-content > .film__title {
+    font-weight: 600;
+    min-height: 0;
+}
+.film__trailer {
+    padding: 0 1.5rem 0 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    line-height: 3rem;
+    font-family: "Proxima Nova Light", sans-serif;
+    font-size: 13px;
+    border-radius: 50px;
+    background: #30a6f1;
+    color: white;
+}
+.film__trailer-title {
+    font-family: "Proxima Nova", sans-serif;
+    font-size: 1rem;
+}
+.film__trailer-svg {
+    margin-left: 15px;
+    width: 10px;
+    height: 10px;
+}
+.film__trailer:hover, .film__trailer-svg:hover {
+    cursor: pointer;
+}
+.film__description {
+    margin-bottom: 55px;
+    font-size: 1rem;
+    font-family: "Roboto Light", sans-serif;
+    font-weight: 300;
+    line-height: 1.5;
+}
+.film__day-name {
+    margin-bottom: 1rem;
+    display: inline-block;
+    font-weight: 300;
+    color: rgba(255,255,255,.5);
+}
+.film > .flex-wrapper, .partially-hidden-content > .flex-wrapper {
+    margin-bottom: 1.5rem;
+}
+.film__sessions-info {
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 55px;
+    border-radius: 8px;
+    background: #e41a69;
+}
+.film__session-time {
+    margin-bottom: 2px;
+    font-size: 1rem;
+    font-weight: 100;
+}
+.film__session-price {
+    font-size: .75rem;
+    font-weight: 100;
+    opacity: .7;
+}
+.film__upcoming-sessions {
+    margin-bottom: 18px;
+    font-size: 1.5rem;
+    font-weight: 100;
+}
+.film__show-all-sessions-btn {
+    position: absolute;
+    bottom: 0;
+    background: #fff;
+    color: #30a6f1;
+    font-family: "Proxima Nova Light", sans-serif;
+    font-size: .95rem;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    border-radius: 50px;
+}
+.film__show-all-sessions-btn:hover {
+    cursor: pointer;
+}
+.partially-hidden-content {
+    opacity: .6;
+}
+.additionally-film {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background: white;
+    overflow: hidden;
+}
+.additionally-film > .container {
+    padding: 55px 0 55px;
+    display: flex;
+    width: 1320px;
+}
+.film-about {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 25%;
+    z-index: 2;
+}
+.film-description-mobile {
+    display: none;
+}
+.film-about > h3 {
+    margin-bottom: 1rem;
+    color: black;
+    font-weight: 600;
+    font-size: 18px;
+}
+.film-about > p {
+    margin-bottom: 2.5rem;
+    font-family: "Roboto Light", sans-serif;
+    color: rgb(35, 41, 52);
+}
+.film-about__description {display: none;}
+.film-gallery {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 75%;
+}
+.film-gallery:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    right: 100%;
+    width: calc(100vw + 100%);
+    background: #fff;
+    z-index: 1;
+}
+.film-gallery__top-content {
+    margin-bottom: 55px;
+    display: flex;
+    justify-content: space-between;
+}
+.film-gallery__film-frames {
+    font-size: 2rem;
+    color: black;
+}
+.film-gallery__btn {
+    margin: 0 2px 0 2px;
+    height: 23px;
+    width: 20px;
+}
+.film-gallery__btn:hover {
+    cursor: pointer;
+}
+.film-gallery__btn.--next { transform: rotate(180deg); }
+.btn-disabled {
+    pointer-events: none;
+    opacity: .1;
+}
+.film-gallery__bottom-content {
+    margin-bottom: 55px;
+    display: flex;
+}
+.film-gallery__big-image {
+    min-width: 66%;
+    height: 300px;
+    border-radius: 8px;
+    background: center center no-repeat;
+    background-size: cover;
+}
+.film-gallery__bottom-content > .wrap {
+    margin: 0 10px 0 5px;
+    display: flex;
+    min-width: 33%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.wrap > .film-gallery__middle-image {
+    width: 100%;
+}
+.film-gallery__middle-image {
+    margin: 0 5px 0 5px;
+    min-width: 33%;
+    height: 145px;
+    border-radius: 8px;
+    background: center center no-repeat;
+    background-size: cover;
+}
+.film-gallery__middle-image:hover, .film-gallery__big-image:hover {
+    cursor: pointer;
+}
+.footer {
+    box-shadow: none;
+}
+
+@media (max-width: 1320px) {
+    .max-height-on {
+        max-height: none;
+    }
+    .main-film {
+        flex-direction: column;
+    }
+    .main-film, .additionally-film > .container {
+        width: 96%;
+    }
+    .film__poster {
+        display: none;
+    }
+    .film__trailer-preview {
+        margin-bottom: 2rem;
+        display: block;
+    }
+    .film__top-left-content {
+        margin-bottom: 2rem;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .film__genre, .film__country, .film__duration {
+        margin-right: 25px;
+        font-family: "Roboto Light", sans-serif;
+        font-size: 2rem;
+    }
+    .film__title {
+        font-size: 5rem;
+    }
+    .film__trailer {
+        display: none;
+    }
+    .film__description {
+        display: none;
+    }
+    .film__day-name {
+        font-size: 2.5rem;
+    }
+    .film__sessions-info {
+        height: auto;
+        width: auto;
+        padding: 1.75rem 2.5rem 1.75rem 2.5rem;
+        margin-bottom: 2rem;
+        border-radius: 25px;
+    }
+    .film__session-time, .film__session-price {
+        margin: .25rem 0 .25rem 0;
+        font-size: 2rem;
+    }
+    .partially-hidden-content {
+        opacity: 1;
+    }
+    .film__show-all-sessions-btn {
+        display: none;
+    }
+    .additionally-film > .container {
+        flex-direction: column;
+    }
+    .film-about {
+        width: auto;
+    }
+    .film-about > h3 {
+        font-size: 1.4rem;
+    }
+    .film-about > p {
+        font-weight: 300;
+        font-size: 1rem;
+        line-height: 1.43;
+        letter-spacing: 0;
+    }
+    .film-about__description, .film-description-mobile {
+        display: inline-block;
+    }
+    .film-gallery__buttons {
+        display: none;
+    }
+    .film-gallery {
+        width: 100%;
+        overflow-x: auto;
+    }
+    .film-gallery__film-frames {
+        font-size: 4rem;
+    }
+}

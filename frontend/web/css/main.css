@@ -1,0 +1,250 @@
+@font-face {
+	font-family: 'Proxima Nova';
+	src: url("fonts/ProximaNova/ProximaNova-Regular.ttf") format("opentype");
+}
+@font-face {
+    font-family: 'Proxima Nova Light';
+    src: url("fonts/ProximaNova/ProximaNova-Light.ttf") format("opentype");
+}
+@font-face {
+    font-family: 'Roboto Light';
+    src: url("fonts/Roboto/Roboto-Light.ttf") format("opentype");
+}
+
+html {
+	font-family: "Proxima Nova", sans-serif;
+	color: white;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.page-background:before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: RGBA(0,28,45,.9);
+}
+.page-background {
+	position: fixed;
+	width: 100%;
+    min-height: 100vh;
+	background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+    will-change: transform;
+	z-index: -1;
+}
+.header, .news-owl, .session-schedule, .session-schedule__films, .footer {
+	display: flex;
+	position: relative;
+	z-index: 1;
+}
+.header {
+	margin: 25px 0 50px 0;
+	width: 1320px;
+	justify-content: space-between;
+	align-items: center;
+}
+.header__logo {
+	max-width: 160px;
+	height: 82px;
+}
+.header__town-toggler {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.footer{
+    display: block;
+    padding: 50px 0 0;
+    width: 100%;    
+    color: #fff;
+    flex: 0 0 auto;
+    background: #1d0133;
+    background: linear-gradient(10deg,#1d0133 0,#013e64 100%) center center no-repeat; 
+    background-size: 100% 200%;
+    box-shadow: 0px 0px 20px 10px rgba(35,41,52,.4);
+}
+.footer > .container{
+    max-width: 1315px;
+    padding: 0px 15px;
+    margin: 0 auto;
+}
+.footer__title {
+    margin: 0 0 40px;
+    line-height: 1.34;
+    font-size: 2rem;
+    color: rgba(255,255,255,.5);
+    font-weight: 600;
+}
+.footer__contacts {
+    margin-bottom: 60px;
+}
+.footer__contacts > .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.footer__map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 155px;
+    width: 50%;
+    border-radius: 8px;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+}
+.footer__map-wrap {
+    display: block;
+    padding: 1px 0 0 50px;
+    background: url(https://otrada.comfortkino.ru/local/templates/comfortkino/static/img/icons/i-place.svg) 10px top no-repeat;
+    background-size: 30px auto;
+}
+.footer__map p {
+    display: block;
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1.125;
+    color: #232934;
+}
+.footer__address {
+    display: block;
+    margin-top: 1rem;
+    color: rgba(255,255,255,.5);
+    font-weight: 600;
+}
+.footer__info {
+    margin-left: 55px;
+}
+.footer__tel {
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    text-align: left;
+}
+.footer__tel a{
+    color: #fff;
+}
+.footer__socials {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 18px 0 0;
+}
+.footer__socials a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 0 15px 0 0;
+    border-radius: 100%;
+    border: 2px solid rgba(255,255,255,.5);
+    transition: .2s ease;
+    transition-property: border,box-shadow;
+}
+.footer__socials a span {
+    display: block;
+    fill: #fff;
+    transition: .2s ease;
+    transition-property: fill,filter;
+}
+.footer__socials a svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+}
+.footer__socials a:hover.sm--facebook span {
+    fill: #4d59ff;
+    -webkit-filter: drop-shadow(0 0 5px #4d59ff);
+    filter: drop-shadow(0 0 5px #4d59ff);
+}
+.footer__socials a:hover.sm--facebook {
+    border-color: #4d59ff;
+    -webkit-box-shadow: 0 0 5px #4d59ff, inset 0 0 5px #4d59ff;
+    box-shadow: 0 0 5px #4d59ff, inset 0 0 5px #4d59ff;
+}
+.footer__socials a:hover.sm--insta span {
+    fill: #dd3188;
+    -webkit-filter: drop-shadow(0 0 5px #dd3188);
+    filter: drop-shadow(0 0 5px #dd3188);
+}
+.footer__socials a:hover.sm--insta {
+    border-color: #dd3188;
+    -webkit-box-shadow: 0 0 5px #dd3188, inset 0 0 2px #dd3188;
+    box-shadow: 0 0 5px #dd3188, inset 0 0 2px #dd3188;
+}
+.footer__socials a:hover.sm--vk span {
+    fill: #617bff;
+    -webkit-filter: drop-shadow(0 0 5px #617bff);
+    filter: drop-shadow(0 0 5px #617bff);
+}
+.footer__socials a:hover.sm--vk {
+    border-color: #617bff;
+    -webkit-box-shadow: 0 0 5px #617bff, inset 0 0 2px #617bff;
+    box-shadow: 0 0 5px #617bff, inset 0 0 2px #617bff;
+}
+
+@media (min-height: 1050px) {
+    .footer {
+        min-height: 50vh;
+    }
+}
+
+@media (max-width: 1320px) {
+    body {background-size: cover;}
+    .header {
+        margin: 1rem 0 0 0;
+        width: 95%;
+    }
+    .header__town {
+        display: none;
+    }
+    .footer__contacts {
+        display: flex;
+        flex-direction: column;
+    }
+    .footer__contacts > .row {
+        order: 2;
+    }
+    .footer__address {
+        margin-bottom: 1rem;
+        font-size: 1.75rem;
+        order: 1;
+    }
+    .footer__map {
+        height: 310px;
+        width: 100%;
+    }
+    .footer__info {
+        margin: 1rem 0 1rem 0;
+        width: 100%;
+    }
+    .footer__tel {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 2.4rem;
+    }
+    .footer__socials a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height: 120px;
+        border: 6px solid rgba(255,255,255,.5);
+    }
+    .footer__socials a svg {
+        width: 60px;
+        height: 60px;
+    }
+}

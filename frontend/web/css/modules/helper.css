@@ -1,0 +1,32 @@
+.pos-relative {
+    position: relative;
+}
+
+.flex-wrapper {
+    display: flex;
+}
+
+.disabled {
+    display: none;
+}
+
+.blue {
+    background: #30a6f1 !important;
+}
+
+.no-transition { transition: none !important; }
+
+.svg__left-arrow, .svg__right-arrow {
+    width: 10px;
+    height: 10px;
+    fill: RGB(46, 166, 241);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+.svg__right-arrow {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+.rub:after{ content:' ₽'; }
