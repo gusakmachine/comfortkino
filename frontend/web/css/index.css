@@ -27,7 +27,7 @@
     left: 50%;
     z-index: 1;
 }
-.info-carousel .owl-prev, .info-carousel .owl-next {
+.info-carousel > .owl-nav > .owl-prev, .info-carousel > .owl-nav > .owl-next {
     position: absolute;
     left: -437.5px;
     top: -25px;
@@ -35,14 +35,21 @@
     height: 50px;
     border-radius: 100%;
     transform: rotate(90deg);
-    background: #fff url("../img/icons/down-arrow.svg") center center no-repeat !important;
+    background: #fff !important;
     background-size: 8px auto !important;
     -webkit-box-shadow: 0 0 15px rgba(0,28,45,.25);
     box-shadow: 0 0 15px rgba(0,28,45,.25);
 }
-.info-carousel .owl-next {
+.info-carousel > .owl-nav > .owl-next {
     left: 387px;
     transform: rotate(-90deg);
+}
+.info-carousel > .owl-nav > .owl-next > svg, .info-carousel > .owl-nav > .owl-prev > svg {
+    position: relative;
+    top: -2px;
+    width: 8px;
+    height: 5px;
+    fill: #30A6F1;
 }
 .info-carousel .owl__progress-bar {
     position: absolute;
@@ -146,17 +153,6 @@
 	font-weight: 100;
 	margin-bottom: 18px;
 }
-.owl__progress-bar {
-    position: absolute;
-    left: 42px;
-    bottom: 2%;
-    width: 742px;
-    height: 4px;
-    background: white;
-    border-radius: 5px;
-    opacity: .5;
-    z-index: 1;
-}
 
 
 .session-schedule {
@@ -176,12 +172,10 @@
 }
 .day-list__btn {
     position: absolute;
-    top: 20px;
+    top: calc(50% - 17px);
     left: -70px;
     height: 34px;
     width: 30px;
-    background: url("../img/icons/triangle.svg") center center no-repeat;
-    background-size: 60%;
 }
 .day-list__btn.--next {
     left: 1280px;
@@ -190,9 +184,14 @@
 .day-list__btn:hover {
     cursor: pointer;
 }
+.day-list__svg--left, .day-list__svg--right {
+    fill: #30a6f1;
+    width: 100%;
+    height: 100%;
+}
 .day-list-wrapper {
-    width: 1250px;
-    /* overflow: hidden; */
+    width: 1210px;
+    overflow: hidden;
 }
 .day-list {
     padding-bottom: 10px;
@@ -210,7 +209,7 @@
     flex-direction: column;
     align-items: flex-start;
     border-radius: 8px;
-    text-align: center;
+    text-align: left;
     white-space: nowrap;
     cursor: pointer;
 }
@@ -226,7 +225,7 @@
 }
 .day__week {
     position: relative;
-    display: block;
+    display: inline-block;
     padding: 0 0 2px;
     border-bottom: 1px dashed #30a6f1;
     font-weight: 700;
@@ -310,6 +309,12 @@
     transform: translate(-50%, -50%);
     z-index: 1;
 }
+.film__play-svg {
+    margin-left: 3px;
+    width: 25%;
+    height: 25%;
+    fill: white;
+}
 .film__play:after {
     content: 'Смотреть трейлер';
     position: absolute;
@@ -341,10 +346,6 @@
 }
 .film__play:hover ~ .film__poster:after {
     opacity: .6;
-}
-.film__play-svg {
-    margin-left: 3px;
-    width: 20px;
 }
 .film__play-svg:hover {
     cursor: pointer;

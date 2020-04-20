@@ -13,10 +13,6 @@
 	overflow: auto;
 	z-index: 100;
 }
-#popup.show {
-    display: flex;
-    
-}
 .popup-content {
     height: 100%;
     flex: 0 1 100%;

@@ -14,12 +14,16 @@ class MainAsset extends AssetBundle
         'css/popup.css',
     ];
     public $js = [
-        'js/owl.carousel.min.js',
-        'js/pages/main.js',
+        'js/drag-scroll.js',
+        'js/show-hide.js',
+        'js/popup-tickets.js',
     ];
     public $depends = [
         'yii\web\JqueryAsset',
     ];
 }
+
+
+
 
 

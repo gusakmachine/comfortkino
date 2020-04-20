@@ -15,7 +15,8 @@ class AppAsset extends AssetBundle
         'css/main.css',
     ];
     public $js = [
-        'js/pages/main.js',
+        'js/owl.carousel.min.js',
+        'js/pages/index.js',
     ];
     public $depends =[
         'yii\web\JqueryAsset',

@@ -52,6 +52,8 @@ button {
     outline: none;
     background: none;
     border: none;
+    color: inherit;
+    font: inherit;
 }
 ul {
     list-style: none;
