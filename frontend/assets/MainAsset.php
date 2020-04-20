@@ -10,8 +10,8 @@ class MainAsset extends AssetBundle
     public $css = [
         'css/modules/owl.theme.default.min.css',
         'css/modules/owl.carousel.min.css',
+        'css/modules/popup.css',
         'css/index.css',
-        'css/popup.css',
     ];
     public $js = [
         'js/drag-scroll.js',

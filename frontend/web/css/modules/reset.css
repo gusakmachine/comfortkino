@@ -55,6 +55,9 @@ button {
     color: inherit;
     font: inherit;
 }
+button:hover {
+    cursor: pointer;
+}
 ul {
     list-style: none;
 }

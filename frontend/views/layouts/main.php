@@ -31,7 +31,7 @@ AppAsset::register($this);
     <a href="<?= Url::home()?>"><img src="<?= Yii::getAlias('@logo-image'); ?>" alt="Кинотеатр Русь, логотип" class="header__logo"></a>
     <a class="header__town-link">
         <span class="header__town">Москва</span>
-        <svg class="header__arrow-without-bottom"><use href="/img/static/icons/icons.svg#arrow-without-bottom"></use></svg>
+        <svg class="header__arrow-without-bottom"><use href="<?= Yii::getAlias('@svg:#arrow-without-bottom'); ?>"></use></svg>
     </a>
 </header>
 
