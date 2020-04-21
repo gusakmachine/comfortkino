@@ -12,11 +12,13 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/modules/reset.css',
         'css/modules/helper.css',
+        'css/modules/popup.css',
         'css/main.css',
     ];
     public $js = [
-        'js/owl.carousel.min.js',
-        'js/pages/index.js',
+        'js/drag-scroll.js',
+        'js/show-hide.js',
+        'js/popup-tickets.js',
     ];
     public $depends =[
         'yii\web\JqueryAsset',

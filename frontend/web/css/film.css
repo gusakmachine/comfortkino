@@ -130,7 +130,7 @@
     font-weight: 300;
     color: rgba(255,255,255,.5);
 }
-.film > .flex-wrapper, .partially-hidden-content > .flex-wrapper {
+.film .flex-wrapper, .partially-hidden-content .flex-wrapper {
     margin-bottom: 1.5rem;
 }
 .film__sessions-info {
@@ -251,6 +251,9 @@
 .film-gallery__bottom-content {
     margin-bottom: 55px;
     display: flex;
+    width: 100%;
+    overflow: hidden;
+    padding-right: 100px;
 }
 .film-gallery__big-image {
     min-width: 66%;
@@ -280,8 +283,86 @@
 .film-gallery__middle-image:hover, .film-gallery__big-image:hover {
     cursor: pointer;
 }
+button.film-gallery__arrow {
+    cursor: pointer;
+    display: block;
+    width: 95px;
+    height: 95px;
+    opacity: .5;
+    filter: drop-shadow(0 0 5px #30a6f1);
+    transition: opacity .2s ease-out 0s;
+    will-change: opacity;
+}
+button.film-gallery__arrow--right{
+    right: -130px;
+}
+button.film-gallery__arrow--left{
+    left: -130px;
+}
+button.film-gallery__arrow:hover:before {
+    opacity: 1;
+}
+button.film-gallery__arrow:before {
+    display: block;
+    width: 55px;
+    height: 55px;
+    border: 2px solid #fff ;
+    border-radius: 100px;
+    opacity: 0.5;
+    box-sizing: border-box;
+    filter: drop-shadow(0 0 5px #30a6f1);
+    transform: none;
+    background: url('/img/static/icons/i-play-right--white.svg') 20px center no-repeat;
+    background-size: 14px auto;
+    margin: 20px;
+}
+button.film-gallery__arrow:after{
+    border: none;
+    margin: 0;
+}
+button.film-gallery__arrow--left:before{
+    transform: rotate(180deg);
+}
+
 .footer {
     box-shadow: none;
+}
+
+
+.sl-overlay {
+    background: rgb(0,28,45);
+    opacity: .99;
+}
+.baguetteBox-button#next-button, .baguetteBox-button#previous-button {
+    display: block;
+    width: 55px;
+    height: 55px;
+    margin: 19px 9px;
+    padding: 0;
+    border: 2px solid #fff;
+    border-radius: 100px;
+    opacity: 0.5;
+    box-sizing: border-box;
+    filter: drop-shadow(0 0 5px #30a6f1);
+    background: rgba(0,28,45,.99);
+    transition: 0.3s ease opacity;
+    transform: none;
+}
+.baguetteBox-button#next-button:hover, .baguetteBox-button#previous-button:hover {
+    opacity: 1;
+}
+.baguetteBox-button#next-button svg, .baguetteBox-button#previous-button svg{
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 5px #30a6f1);
+    fill: #fff;
+}
+.baguetteBox-button#next-button svg{
+    transform: rotate(180deg);
+}
+.baguetteBox-button#close-button{
+    display: none;
 }
 
 @media (max-width: 1320px) {

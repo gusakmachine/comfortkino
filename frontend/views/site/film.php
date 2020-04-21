@@ -7,6 +7,19 @@ use frontend\assets\FilmAsset;
 $this->title = 'My Yii Application';
 
 FilmAsset::register($this);
+
+$days = [];
+
+for ($i = 0; $i < 15; $i++) {
+    $day = mktime(0, 0, 0, 0, date('d') + $i, 0);
+    $day_of_week = Yii::$app->formatter->asDate($day, 'eeee');
+    $days[$i] = [
+        'day-of-week' => mb_strtoupper(mb_substr($day_of_week, 0, 1, 'utf-8'), 'utf-8') . mb_substr($day_of_week, 1, strlen($day_of_week), 'utf-8'),
+        'month' => Yii::$app->formatter->asDate(date('F'), 'MM'),
+        'day' => Yii::$app->formatter->asDate($day, 'd'),
+    ];
+}
+
 ?>
 <section class="main-film">
     <a href="#" class="film__poster" style="background-image: url(img/posters/1d5491e6b2e4107880accec6815b4f29.jpg)"></a>
@@ -27,7 +40,7 @@ FilmAsset::register($this);
                 </p>
                 <a href="#" class="film__title">Название фильма</a>
             </div>
-            <a class="film__trailer">
+            <a class="film__trailer" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
                 <span class="film__trailer-title">Обоссаный трейлер</span>
                 <svg class="film__trailer-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="white">
                     <path d="M9.4 6l-7.7 3.9c-.4.2-.8.2-1.2 0-.3-.3-.5-.6-.5-1v-7.8c0-.4.2-.8.6-1 .4-.2.8-.2 1.2 0l7.6 3.9c.6.3.8.9.5 1.5-.1.2-.3.4-.5.5z"></path>
@@ -37,7 +50,7 @@ FilmAsset::register($this);
         <p class="film__description">Талантливый выпускник Оксфорда, применив свой уникальный ум и невиданную дерзость, придумал нелегальную схему обогащения, используя поместья обедневшей английской аристократии.
             Однако когда он решает продать свой бизнес влиятельному клану миллиардеров из США, на его пути встают не менее обаятельные, но жёсткие джентльмены.
             Намечается обмен любезностями, который точно не обойдётся без перестрелок и парочки несчастных случаев.</p>
-        <span class="film__day-name">Сегодня 16.03</span>
+        <span class="film__day-name">Сегодня <?= $days[0]['day'], '.', $days[0]['month']; ?></span>
         <div class="flex-wrapper">
             <a href="#" class="film__sessions-info">
                 <span class="film__session-time">17:00</span>
@@ -51,12 +64,8 @@ FilmAsset::register($this);
                 <span class="film__session-time">21:40</span>
                 <span class="film__session-price">от 380 ₽</span>
             </a>
-            <a href="#" class="film__sessions-info">
-                <span class="film__session-time">23:55</span>
-                <span class="film__session-price">от 380 ₽</span>
-            </a>
         </div>
-        <span class="film__day-name">Завтра 16.03</span>
+        <span class="film__day-name">Завтра <?= $days[1]['day'], '.', $days[1]['month']; ?></span>
         <div class="flex-wrapper">
             <a href="#" class="film__sessions-info">
                 <span class="film__session-time">17:00</span>
@@ -64,27 +73,31 @@ FilmAsset::register($this);
             </a>
         </div>
         <div class="partially-hidden-content">
-            <span class="film__day-name">Завтра 16.03</span>
-            <div class="flex-wrapper">
-                <a href="#" class="film__sessions-info">
-                    <span class="film__session-time">17:00</span>
-                    <span class="film__session-price">от 380 ₽</span>
-                </a>
-            </div>
-            <span class="film__day-name">Завтра 16.03</span>
-            <div class="flex-wrapper">
-                <a href="#" class="film__sessions-info">
-                    <span class="film__session-time">17:00</span>
-                    <span class="film__session-price">от 380 ₽</span>
-                </a>
-            </div>
-            <span class="film__day-name">Завтра 16.03</span>
-            <div class="flex-wrapper">
-                <a href="#" class="film__sessions-info">
-                    <span class="film__session-time">17:00</span>
-                    <span class="film__session-price">от 380 ₽</span>
-                </a>
-            </div>
+           <?php for ($i = 2; $i < 5; $i++): ?>
+               <span class="film__day-name"><?= $days[$i]['day-of-week'], ' ', $days[$i]['day'], '.', $days[$i]['month']; ?></span>
+               <div class="flex-wrapper">
+                   <a href="#" class="film__sessions-info">
+                       <span class="film__session-time">17:00</span>
+                       <span class="film__session-price">от 380 ₽</span>
+                   </a>
+               </div>
+           <?php endfor; ?>
+<!--            <span class="film__day-name">Завтра 16.03</span>-->
+<!---->
+<!--            <span class="film__day-name">Завтра 16.03</span>-->
+<!--            <div class="flex-wrapper">-->
+<!--                <a href="#" class="film__sessions-info">-->
+<!--                    <span class="film__session-time">17:00</span>-->
+<!--                    <span class="film__session-price">от 380 ₽</span>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <span class="film__day-name">Завтра 16.03</span>-->
+<!--            <div class="flex-wrapper">-->
+<!--                <a href="#" class="film__sessions-info">-->
+<!--                    <span class="film__session-time">17:00</span>-->
+<!--                    <span class="film__session-price">от 380 ₽</span>-->
+<!--                </a>-->
+<!--            </div>-->
         </div>
         <button class="film__show-all-sessions-btn">Еще сеансы</button>
     </div>
@@ -119,15 +132,15 @@ FilmAsset::register($this);
                     </button>
                 </div>
             </div>
-            <div class="film-gallery__bottom-content">
-                <div class="film-gallery__big-image" style="background-image: url('img/background/50ee4a7ce72c7426ffe2eff30267411e.jpg')"></div>
+            <div class="film-gallery__bottom-content dragscroll">
+                <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__big-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
                 <div class="wrap">
-                    <div class="film-gallery__middle-image" style="background-image: url('img/background/50ee4a7ce72c7426ffe2eff30267411e.jpg')"></div>
-                    <div class="film-gallery__middle-image" style="background-image: url('img/background/50ee4a7ce72c7426ffe2eff30267411e.jpg')"></div>
+                    <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__middle-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
+                    <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__middle-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
                 </div>
-                <div class="film-gallery__middle-image" style="background-image: url('img/background/50ee4a7ce72c7426ffe2eff30267411e.jpg')"></div>
-                <div class="film-gallery__middle-image" style="background-image: url('img/background/50ee4a7ce72c7426ffe2eff30267411e.jpg')"></div>
-                <div class="film-gallery__middle-image" style="background-image: url('img/background/50ee4a7ce72c7426ffe2eff30267411e.jpg')"></div>
+                <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__middle-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
+                <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__middle-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
+                <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__middle-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
             </div>
         </div>
     </div>
