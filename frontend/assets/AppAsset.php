@@ -19,6 +19,7 @@ class AppAsset extends AssetBundle
         'js/drag-scroll.js',
         'js/show-hide.js',
         'js/popup-tickets.js',
+        'js/popup-cities.js',
     ];
     public $depends =[
         'yii\web\JqueryAsset',

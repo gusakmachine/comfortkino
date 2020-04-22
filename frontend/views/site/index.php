@@ -116,7 +116,7 @@ for ($i = 0; $i < 15; $i++) {
                         <span class="day__date"><?= $days[1]['day'], ' ', $days[1]['month']; ?></span>
                     </button>
                     <?php for ($i = 2; $i < count($days); $i++):?>
-                        <button class="day <?= ($i == 0)? 'day--active' : '' ?> tabs__link" type="button" data-idx="0">
+                        <button class="day tabs__link" type="button" data-idx="0">
                             <span class="day__week"><?= $days[$i]['day-of-week']?></span>
                             <span class="day__date"><?= $days[$i]['day'], ' ', $days[$i]['month']; ?></span>
                         </button>
