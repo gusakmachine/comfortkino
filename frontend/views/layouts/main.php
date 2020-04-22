@@ -29,10 +29,10 @@ AppAsset::register($this);
 <div class="page-background" style="background-image: url(img/background/50ee4a7ce72c7426ffe2eff30267411e.jpg)"></div>
 <header class="header">
     <a href="<?= Url::home()?>"><img src="<?= Yii::getAlias('@logo-image'); ?>" alt="Кинотеатр Русь, логотип" class="header__logo"></a>
-    <a class="header__town-link">
+    <button class="header__town-link" data-sh="#popup-cities">
         <span class="header__town">Москва</span>
         <svg class="header__arrow-without-bottom"><use href="<?= Yii::getAlias('@svg:#arrow-without-bottom'); ?>"></use></svg>
-    </a>
+    </button>
 </header>
 
 <?= $content ?>

@@ -1,5 +1,8 @@
-<div id="popup-cities" class="popup-cities">
-    <div class="popup-cities__wrapper">
+<div id="popup-cities" class="popup-cities" style="display: none;">
+    <div class="popup-cities__top-content">
+        <button class="popup-cities__close-btn" data-sh="#popup-cities"><svg class="popup-cities__close-svg"><use href="<?= Yii::getAlias('@svg:#cross'); ?>"></use></svg></button>
+    </div>
+    <div class="popup-cities__bottom-content">
         <div class="popup-cities__cities">
             <button class="popup-cities__city">Самара</button>
             <button class="popup-cities__city">Челябинск</button>

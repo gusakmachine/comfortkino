@@ -8,5 +8,6 @@ Yii::setAlias('@svg:#arrow-empty', '/img/static/icons/icons.svg#arrow-empty');
 Yii::setAlias('@svg:#facebook', '/img/static/icons/icons.svg#facebook');
 Yii::setAlias('@svg:#inst', '/img/static/icons/icons.svg#inst');
 Yii::setAlias('@svg:#vk', '/img/static/icons/icons.svg#vk');
+Yii::setAlias('@svg:#cross', '/img/static/icons/icons.svg#cross');
 
 Yii::setAlias('@svg:place-logos', '/img/static/logos/svg/place-logos.svg#otrada');
