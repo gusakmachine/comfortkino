@@ -5,9 +5,6 @@ use Yii;
 use yii\web\Controller;
 use frontend\models\MovieTheater;
 
-/**
- * Site controller
- */
 class SiteController extends Controller
 {
 

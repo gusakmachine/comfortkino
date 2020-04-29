@@ -159,6 +159,6 @@ $(document).ready(function(){
             $('#posters__toggler span').toggleClass('posters__toggler--hide');
         });
     }
-    
+
     getMoviesForThisDay(`${new Date().getFullYear()}.${new Date().getMonth()+1}.${new Date().getDay()}`);
 });

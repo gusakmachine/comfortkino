@@ -10,6 +10,7 @@ MainAsset::register($this);
 $this->title = $title;
 
 $days = GetMoviesDates::getAllDates(15);
+
 ?>
 <div class="info-carousel owl-carousel">
     <div>

@@ -2,7 +2,7 @@
 
 use frontend\models\MovieTheater;
 
-$sessions = MovieTheater::getSessions('otrada', $date);
+$sessions = MovieTheater::getSessions(Yii::$app->session->get('subdomain'), $date);
 $sessions_time = MovieTheater::getSessionTime($sessions);
 $movies = MovieTheater::getMoviesForThisSession($sessions);
 
@@ -25,10 +25,10 @@ $sessions_timeIDX = 0;
             <div class="left-content">
                 <p class="film__label">
                     <span class="film__country">
-                        <?php for($j = 0; $j < count($movies[$i]['countries']); $j++) echo $movies[$i]['countries'][$j] . ', '; ?>
+                        <?php for($j = 0; $j < count($movies[$i]['countries']); $j++) echo $movies[$i]['countries'][$j] . ($j + 1 < count($movies[$i]['countries'])? ', ' : ' '); ?>
                     </span>
                     <span class="film__genre">
-                        <?php for($j = 0; $j < count($movies[$i]['genres']); $j++) echo $movies[$i]['genres'][$j] . ', '; ?>
+                        <?php for($j = 0; $j < count($movies[$i]['genres']); $j++) echo $movies[$i]['genres'][$j] . ($j + 1 < count($movies[$i]['genres'])? ', ' : ' '); ?>
                     </span>
                     <span class="film__duration"><?= $movies[$i]['duration'] ?></span>
                 </p>

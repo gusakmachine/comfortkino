@@ -388,10 +388,10 @@
 }
 .popup-cities__addresses {
     display: flex;
-    justify-content: space-between;
     width: 100%;
 }
 .popup-cities__address {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -401,6 +401,7 @@
     border: 2px solid #fff;
     border-radius: 8px;
     transition: .3s ease-out;
+    margin-left: 30px;
 }
 .popup-cities__address:hover {
     border-color: #30a6f1;
@@ -408,9 +409,16 @@
     color: #fff;
 }
 .popup-cities__address > svg {
+    margin-bottom: 50px;
     width: 180px;
     height: 50px;
 }
-.popup-cities__address > span {
-    margin-top: 50px;
+.popup-cities .tabs__body{
+    width: 100%;
+}
+.popup-cities .tabs__content{
+    display: none;
+}
+.popup-cities .tabs__content--active{
+    display: flex;
 }

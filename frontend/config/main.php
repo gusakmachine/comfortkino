@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'cityComponent'],
     'controllerNamespace' => 'frontend\controllers',
     'language' => 'ru-RU',
     'components' => [
@@ -45,6 +45,9 @@ return [
                 '/film/<filmID:\d+>' => 'site/film',
                 '/movies' => 'site/movies',
             ],
+        ],
+        'cityComponent' => [
+            'class' => 'frontend\components\CityComponent',
         ],
     ],
     'params' => $params,
