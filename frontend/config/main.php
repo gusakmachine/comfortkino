@@ -9,12 +9,13 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'cityComponent'],
     'controllerNamespace' => 'frontend\controllers',
     'language' => 'ru-RU',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'enableCsrfValidation' => false,
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -41,9 +42,12 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'index' => 'site/index',
-                'film' => 'site/film',
+                '/' => 'site/index',
+                '/film/<filmID:\d+>' => 'site/film',
             ],
+        ],
+        'cityComponent' => [
+            'class' => 'frontend\components\CityComponent',
         ],
     ],
     'params' => $params,

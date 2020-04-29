@@ -15,7 +15,7 @@ class FilmAsset extends AssetBundle
 		'js/jquery.magnific-popup.min.js',
         'js/pages/film.js',
     ];
-    public $depends = [
+    public $depends =[
         'yii\web\JqueryAsset',
     ];
 }

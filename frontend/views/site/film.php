@@ -8,17 +8,6 @@ $this->title = 'My Yii Application';
 
 FilmAsset::register($this);
 
-$days = [];
-
-for ($i = 0; $i < 15; $i++) {
-    $day = mktime(0, 0, 0, 0, date('d') + $i, 0);
-    $day_of_week = Yii::$app->formatter->asDate($day, 'eeee');
-    $days[$i] = [
-        'day-of-week' => mb_strtoupper(mb_substr($day_of_week, 0, 1, 'utf-8'), 'utf-8') . mb_substr($day_of_week, 1, strlen($day_of_week), 'utf-8'),
-        'month' => Yii::$app->formatter->asDate(date('F'), 'MM'),
-        'day' => Yii::$app->formatter->asDate($day, 'd'),
-    ];
-}
 
 ?>
 <section class="main-film">
