@@ -1,7 +1,6 @@
 <?php
 $cities = Yii::$app->cityComponent->getCities();
 ?>
-
 <div id="popup-cities" class="popup-cities" style="display: none;">
     <div class="popup-cities__top-content">
         <button class="popup-cities__close-btn" data-sh="#popup-cities"><svg class="popup-cities__close-svg"><use href="<?= Yii::getAlias('@svg:#cross'); ?>"></use></svg></button>

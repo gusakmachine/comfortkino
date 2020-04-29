@@ -362,6 +362,7 @@
     display: flex;
 }
 .popup-cities__cities {
+    margin-right: 30px;
     display: flex;
     flex-direction: column;
     width: 165px;
