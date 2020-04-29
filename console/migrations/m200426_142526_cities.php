@@ -3,27 +3,27 @@
 use yii\db\Migration;
 
 /**
- * Class m200416_125714_genres
+ * Class m200426_142526_cities
  */
-class m200416_125714_genres extends Migration
+class m200426_142526_cities extends Migration
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function safeUp()
     {
-        $this->createTable('{{%genres}}', [
+        $this->createTable('cities', [
             'id' => $this->primaryKey(),
             'name' => $this->string(255),
         ]);
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function safeDown()
     {
-        $this->dropTable('{{%genres}}');
+        $this->dropTable('cities');
     }
 
     /*
@@ -35,7 +35,7 @@ class m200416_125714_genres extends Migration
 
     public function down()
     {
-        echo "m200416_125714_genres cannot be reverted.\n";
+        echo "m200426_142526_cities cannot be reverted.\n";
 
         return false;
     }

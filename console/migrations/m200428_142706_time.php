@@ -3,19 +3,18 @@
 use yii\db\Migration;
 
 /**
- * Class m200416_125738_film_to_city
+ * Class m200428_144542_time
  */
-class m200416_125738_film_to_city extends Migration
+class m200428_142706_time extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%film_to_city}}', [
+        $this->createTable('time', [
             'id' => $this->primaryKey(),
-            'film_id' => $this->integer(11),
-            'city_id' => $this->integer(11),
+            'time' => $this->time(255),
         ]);
     }
 
@@ -24,7 +23,7 @@ class m200416_125738_film_to_city extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%film_to_city}}');
+        $this->dropTable('time');
     }
 
     /*
@@ -36,7 +35,7 @@ class m200416_125738_film_to_city extends Migration
 
     public function down()
     {
-        echo "m200416_125738_film_to_city cannot be reverted.\n";
+        echo "m200428_144542_time cannot be reverted.\n";
 
         return false;
     }

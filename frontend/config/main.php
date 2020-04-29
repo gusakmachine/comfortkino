@@ -15,6 +15,7 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'enableCsrfValidation' => false,
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -41,8 +42,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'index' => 'site/index',
-                'film' => 'site/film',
+                '/film/<filmID:\d+>' => 'site/film',
+                '/movies' => 'site/movies',
             ],
         ],
     ],

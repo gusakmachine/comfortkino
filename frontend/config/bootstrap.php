@@ -1,4 +1,6 @@
 <?php
+
+
 //Installing aliases for static images
 Yii::setAlias('@logo-image', '/img/static/logos/logo.png');
 
@@ -11,3 +13,5 @@ Yii::setAlias('@svg:#vk', '/img/static/icons/icons.svg#vk');
 Yii::setAlias('@svg:#cross', '/img/static/icons/icons.svg#cross');
 
 Yii::setAlias('@svg:place-logos', '/img/static/logos/svg/place-logos.svg#otrada');
+
+

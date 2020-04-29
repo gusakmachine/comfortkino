@@ -3,19 +3,18 @@
 use yii\db\Migration;
 
 /**
- * Class m200416_125901_film_to_prices
+ * Class m200426_142705_countries
  */
-class m200416_125901_film_to_prices extends Migration
+class m200426_142705_countries extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%film_to_prices}}', [
+        $this->createTable('countries', [
             'id' => $this->primaryKey(),
-            'film_id' => $this->integer(11),
-            'price_id' => $this->integer(11),
+            'name' => $this->string(255),
         ]);
     }
 
@@ -24,7 +23,7 @@ class m200416_125901_film_to_prices extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%film_to_prices}}');
+        $this->dropTable('countries');
     }
 
     /*
@@ -36,7 +35,7 @@ class m200416_125901_film_to_prices extends Migration
 
     public function down()
     {
-        echo "m200416_125901_film_to_prices cannot be reverted.\n";
+        echo "m200426_142705_countries cannot be reverted.\n";
 
         return false;
     }

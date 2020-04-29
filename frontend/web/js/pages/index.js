@@ -81,14 +81,23 @@ $(document).ready(function(){
     var mousemove = false;
 
     // show-hide day-list-btns
+    function changeDisplayDayListBTN() {
+        if (dayListWrapper.offset().left == dayList.offset().left) {
+            dayListBtn[0].classList.add('disabled');
+            dayListBtn[1].classList.remove('disabled');
+        } else if (dayList[0].scrollWidth - dayListWrapper.outerWidth() == dayListWrapper.scrollLeft()) {
+            dayListBtn[0].classList.remove('disabled');
+            dayListBtn[1].classList.add('disabled');
+        } else {
+            dayListBtn[0].classList.remove('disabled');
+            dayListBtn[1].classList.remove('disabled');
+        }
+    }
+
     dayListWrapper[0].addEventListener('scroll', changeDisplayDayListBTN);
-    dayListWrapper[0].addEventListener('mousedown', function (e) {
-        mousedown = true;
-    });
-    dayListWrapper[0].addEventListener('mouseup', function () {
-        mousedown = false;
-    });
-    dayListWrapper[0].addEventListener('mousemove', function (e) {
+    dayListWrapper[0].addEventListener('mousedown', function () { mousedown = true; });
+    dayListWrapper[0].addEventListener('mouseup', function () { mousedown = false; });
+    dayListWrapper[0].addEventListener('mousemove', function () {
         if (mousedown)
             mousemove = true;
         else mousemove = false;
@@ -110,26 +119,32 @@ $(document).ready(function(){
         });
     });
 
-    function changeDisplayDayListBTN() {
-        if (dayListWrapper.offset().left == dayList.offset().left) {
-            dayListBtn[0].classList.add('disabled');
-            dayListBtn[1].classList.remove('disabled');
-        } else if (dayList[0].scrollWidth - dayListWrapper.outerWidth() == dayListWrapper.scrollLeft()) {
-            dayListBtn[0].classList.remove('disabled');
-            dayListBtn[1].classList.add('disabled');
-        } else {
-            dayListBtn[0].classList.remove('disabled');
-            dayListBtn[1].classList.remove('disabled');
-        }
+    // Session schedule
+    //Ajax-request and add/remove highlight
+    function getMoviesForThisDay(postData) {
+        $.ajax({
+            type: 'post',
+            url: getMoviesURL,
+            data: postData
+        }).done(function (data) {
+            if (data.error == null) {
+                $('.films').empty();
+                $('.films').append(data);
+            } else $('.films').append('<h1>Ковальски, у нас проблемы.</h1>');
+        });
     }
 
-    // Session schedule
     $('.day-list').on('click', '.day', function () {
         // if the user does not scroll, show movies for this day
         if (mousemove) {
             mousemove = false;
             return false;
         }
+
+        var postData = {
+            date: $(this).attr('data-date')
+        }
+        getMoviesForThisDay(postData);
 
         $('.day').removeClass('day--active');
         $(this).addClass('day--active');
@@ -144,4 +159,6 @@ $(document).ready(function(){
             $('#posters__toggler span').toggleClass('posters__toggler--hide');
         });
     }
+    
+    getMoviesForThisDay(`${new Date().getFullYear()}.${new Date().getMonth()+1}.${new Date().getDay()}`);
 });

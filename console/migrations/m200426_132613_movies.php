@@ -3,22 +3,21 @@
 use yii\db\Migration;
 
 /**
- * Class m200416_125556_film
+ * Class m200426_142613_movies
  */
-class m200416_125556_film extends Migration
+class m200426_132613_movies extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%film}}', [
+        $this->createTable('movies', [
             'id' => $this->primaryKey(),
             'title' => $this->string(255),
             'description' => $this->text(),
             'duration' => $this->time(),
             'age' => $this->tinyInteger(2)->unsigned(),
-            'director' => $this->string(255),
             'poster' => $this->string(255),
             'mob_poster' => $this->string(255),
             'gallery' => $this->string(255),
@@ -33,7 +32,7 @@ class m200416_125556_film extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('film');
+        $this->dropTable('movies');
     }
 
     /*
@@ -45,7 +44,7 @@ class m200416_125556_film extends Migration
 
     public function down()
     {
-        echo "m200416_125556_film cannot be reverted.\n";
+        echo "m200426_142613_movies cannot be reverted.\n";
 
         return false;
     }
