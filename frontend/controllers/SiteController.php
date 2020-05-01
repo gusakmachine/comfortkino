@@ -3,6 +3,9 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\web\Controller;
+
+use frontend\components\CacheDuration;
+
 use frontend\models\MovieTheater;
 
 class SiteController extends Controller
@@ -10,8 +13,27 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        $length = false;//Yii::$app->cache->get('day_list_length');
+        $dayList = false;//Yii::$app->cache->get('day_list');
+        $endDayListIDX = 9; //week + this day + 1 because for ($i < 9) so max $i == 8
+
+        if ($length < $endDayListIDX)
+            $endDayListIDX -= $length;
+
+        if (!$length) {
+            $length = MovieTheater::getNumberOfDaysWithSessions(date('Y-m-d'));
+            Yii::$app->cache->set('day_list_length', $length, CacheDuration::getSecondsToMidnight(date('Y-m-d', strtotime(('+' . $length+$endDayListIDX . ' day')))));
+        }
+
+        if (!$dayList) {
+            $dayList = MovieTheater::generateDayList($length + $endDayListIDX, date('Y-m-d'));
+            Yii::$app->cache->set('day_list', $dayList, CacheDuration::getSecondsToMidnight(date('Y-m-d', strtotime(('+' . $length+$endDayListIDX . ' day')))));
+        }
+
         return $this->render('index', [
-            'title' => 'Otrada',
+            'dayList' => $dayList,
+            'endDayListIDX' => $endDayListIDX,
+            'length' => $length
         ]);
     }
 
@@ -23,20 +45,30 @@ class SiteController extends Controller
     public function actionMovies()
     {
         $this->layout = false;
+        $post = Yii::$app->request->post();
 
-        if (Yii::$app->request->isAjax) {
-            $post = Yii::$app->request->post();
+        /*$sessions = Yii::$app->cache->get('sessions_' . $post['date']);
+        $movies = Yii::$app->cache->get('movies_' . $post['date']);*/
 
-            if (!isset($post['date']))
-                $post['date'] = date('Y.m.d');
+        $sessions = false;
+        $movies = false;
 
-            return $this->render('movies', [
-                'date' => $post['date'],
-            ]);
+        if (!isset($post['date']))
+            return null;
+
+        if (!$sessions) {
+            $sessions = MovieTheater::getSessions(Yii::$app->session->get('subdomain'), $post['date']);
+            Yii::$app->cache->set('sessions_' . $post['date'], $sessions, CacheDuration::getSecondsToMidnight($post['date']));
+        }
+
+        if (!$movies) {
+            $movies = MovieTheater::getMoviesForThisSession($sessions, $post['date']);
+            Yii::$app->cache->set('movies_' . $post['date'], $movies, CacheDuration::getSecondsToMidnight($post['date']));
         }
 
         return $this->render('movies', [
-            'date' => date('Y.m.d'),
+            'sessions' => $sessions,
+            'movies' => $movies
         ]);
     }
 }

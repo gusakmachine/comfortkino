@@ -6,16 +6,18 @@ use Yii;
 use yii\base\Model;
 use yii\db\Query;
 
+use frontend\components\CacheDuration;
+
 class MovieTheater extends Model
 {
-    public static function getSessions($movieTheaterName = NULL, $date = NULL)
+    public static function getSessions($movieTheaterName, $date)
     {
-        $sql = 'select * from sessions 
-                where `date` = :date
-                and
-                hall_id in (
-                    select id from halls where movie_theaters_id = (
-                        select id from movie_theaters where subdomain_name = :movieTheaterName
+        $sql = 'SELECT * FROM sessions 
+                WHERE `date` = :date
+                AND
+                hall_id IN (
+                    SELECT id FROM halls WHERE movie_theaters_id = (
+                        SELECT id FROM movie_theaters WHERE subdomain_name = :movieTheaterName
                     )
                 )';
 
@@ -25,8 +27,32 @@ class MovieTheater extends Model
         ];
 
         $command = Yii::$app->db->createCommand($sql);
+        $sessions = $command->bindValues($params)->queryAll();
 
-        return $command->bindValues($params)->queryAll();;
+        $sessionsIDXs = [];
+
+        for ($i = 0; $i < count($sessions); $i++)
+            $sessionsIDXs[$i] = $sessions[$i]['id'];
+
+        $sessions_time = (new Query())
+            ->select('sessions.id, time')
+            ->from('sessions_time')
+            ->join('INNER JOIN', 'sessions', 'sessions.id = sessions_time.sessions_id')
+            ->join('INNER JOIN', 'time', 'time.id = sessions_time.time_id')
+            ->where(['sessions.id' => $sessionsIDXs])
+            ->orderBy('sessions.id')
+            ->all();
+
+
+        for ($i = 0, $j = 0; $i < count($sessions); $i++) {
+            $sessions[$i]['time'] = [];
+            for (; $j < count($sessions_time); $j++) {
+                if ($sessions_time[$j]['id'] != $sessions[$i]['id']) break;
+                array_push($sessions[$i]['time'], $sessions_time[$j]['time']);
+            }
+        }
+
+        return $sessions;
     }
 
     public static function getMoviesForThisSession($sessions)
@@ -78,19 +104,40 @@ class MovieTheater extends Model
         return $movies;
     }
 
-    public static function getSessionTime($sessions)
+    public static function getNumberOfDaysWithSessions($date)
     {
-        $sessionsIDXs = [];
+        return intval((new Query())
+            ->select('COUNT(date) AS length')
+            ->from('sessions')
+            ->where('date > :date', [':date' => $date])
+            ->one()['length']);
+    }
+    public static function generateDayList($length, $date)
+    {
+        $dayList = [];
 
-        for ($i = 0; $i < count($sessions); $i++)
-            $sessionsIDXs[$i] = $sessions[$i]['id'];
+        $date = date_parse($date);
 
-        return (new Query())
-            ->select('sessions.id, time')
-            ->from('sessions_time')
-            ->join('INNER JOIN', 'sessions', 'sessions.id = sessions_time.sessions_id')
-            ->join('INNER JOIN', 'time', 'time.id = sessions_time.time_id')
-            ->where(['sessions.id' => $sessionsIDXs])
-            ->all();
+        for ($i = 0; $i < $length; $i++) {
+            switch ($i) {
+                case 0:
+                    $day_of_week = 'Сегодня';
+                    break;
+                case 1:
+                    $day_of_week = 'Завтра';
+                    break;
+                default:
+                    $day_of_week = Yii::$app->formatter->asDate(mktime(0, 0, 0, $date['month'], $date['day'] + $i, $date['year']), 'eeee');
+
+            }
+
+            $dayList[$i] = [
+                'day-of-week' => mb_strtoupper(mb_substr($day_of_week, 0, 1, 'utf-8'), 'utf-8') . mb_substr($day_of_week, 1, strlen($day_of_week), 'utf-8'),
+                'month' => Yii::$app->formatter->asDate($date['month'] + strtotime("+" . $i . " day"), 'MMMM'),
+                'day' => Yii::$app->formatter->asDate($date['day'] + strtotime("+" . $i . " day"), 'dd'),
+            ];
+        }
+
+        return $dayList;
     }
 }

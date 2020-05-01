@@ -1,16 +1,7 @@
 <?php
-
-use yii\helpers\Url;
-
 use frontend\assets\MainAsset;
-use frontend\components\GetMoviesDates;
 
 MainAsset::register($this);
-
-$this->title = $title;
-
-$days = GetMoviesDates::getAllDates(15);
-
 ?>
 <div class="info-carousel owl-carousel">
     <div>
@@ -98,10 +89,10 @@ $days = GetMoviesDates::getAllDates(15);
         <button class="day-list__btn --prev disabled"><svg class="day-list__svg--left"><use href="/img/static/icons/icons.svg#arrow-empty" /></use></svg></button>
         <div class="day-list-wrapper dragscroll">
             <nav class="day-list tabs__header">
-                <?php for ($i = 0; $i < count($days); $i++):?>
-                    <button class="day tabs__link <?= $i == 0 ? 'day--active' : '' ?>" type="button" data-date="<?= date("y.m.d", strtotime("+" . $i . " day")) ?>">
-                        <span class="day__week"><?= $days[$i]['day-of-week']?></span>
-                        <span class="day__date"><?= $days[$i]['day'], ' ', $days[$i]['month']; ?></span>
+                <?php for ($i = 0; $i < $length + $endDayListIDX; $i++):?>
+                    <button class="day <?= $i == 0 ? 'day--active' : '' ?>" type="button" data-date="<?= date("Y-m-d", strtotime("+" . $i . " day")) ?>">
+                        <span class="day__week <?= $i > $length ? 'day--disabled' : '' ?>"><?= $dayList[$i]['day-of-week']?></span>
+                        <span class="day__date <?= $i > $length ? 'day--disabled' : '' ?>"><?= $dayList[$i]['day'], ' ', $dayList[$i]['month']; ?></span>
                     </button>
                     <?php if(date('w', strtotime('+' . $i . 'day')) == 4):?>
                         <div class="days__etc">

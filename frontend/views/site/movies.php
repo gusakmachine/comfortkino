@@ -1,14 +1,3 @@
-<?php
-
-use frontend\models\MovieTheater;
-
-$sessions = MovieTheater::getSessions(Yii::$app->session->get('subdomain'), $date);
-$sessions_time = MovieTheater::getSessionTime($sessions);
-$movies = MovieTheater::getMoviesForThisSession($sessions);
-
-$sessions_timeIDX = 0;
-
-?>
 <?php for ($i = 0; $i < count($sessions); $i++): ?>
 <div class="films-item">
     <div class="wrapper">
@@ -37,14 +26,13 @@ $sessions_timeIDX = 0;
             <span class="film__age-rating"><?= $movies[$i]['age'] ?>+</span>
         </div>
         <div class="flex-wrapper">
-            <?php for ( ; $sessions_timeIDX < count($sessions_time); $sessions_timeIDX++): ?>
-                <?php if ($sessions_time[$sessions_timeIDX]['id'] != $sessions[$i]['id']) break; ?>
+            <?php for ($sessions_timeIDX = 0 ; $sessions_timeIDX < count($sessions[$i]['time']); $sessions_timeIDX++): ?>
                 <button class="film__sessions-info" data-SH="#popup">
-                    <span class="film__session-time"><?= date('H:i', strtotime($sessions_time[$sessions_timeIDX]['time'])); ?></span>
+                    <span class="film__session-time"><?= date('H:i', strtotime($sessions[$i]['time'][$sessions_timeIDX])); ?></span>
                     <span class="film__session-price">от <?= $sessions[$i]['base_price'] ?> ₽</span>
                 </button>
             <?php endfor; ?>
         </div>
     </div>
 </div>
-<?php endfor; ?>
+<?php endfor;?>

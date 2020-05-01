@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('Europe/Moscow');
 
 //Installing aliases for static images
 Yii::setAlias('@logo-image', '/img/static/logos/logo.png');

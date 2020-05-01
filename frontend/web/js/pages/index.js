@@ -103,6 +103,8 @@ $(document).ready(function(){
         else mousemove = false;
     });
 
+    dayListWrapper[0].addEventListener('scroll', changeDisplayDayListBTN);
+
     // scroll with buttons
     dayListBtn[0].addEventListener('click', function () {
         dayListWrapper[0].scrollBy({
@@ -120,17 +122,35 @@ $(document).ready(function(){
     });
 
     // Session schedule
+    var sessions = [];
+    var date = $('.day--active').attr('data-date');
+
+    function addMoviesForThisDay(data = null) {
+        if (data)
+            sessions[date] = data;
+
+        $('.films').empty();
+        $('.films').append(sessions[date]);
+    }
+
     //Ajax-request and add/remove highlight
-    function getMoviesForThisDay(postData) {
-        $.ajax({
+    function getMoviesForThisDay() {
+        var request = $.ajax({
             type: 'post',
             url: getMoviesURL,
-            data: postData
-        }).done(function (data) {
-            if (data.error == null) {
-                $('.films').empty();
-                $('.films').append(data);
-            } else $('.films').append('<h1>Ковальски, у нас проблемы.</h1>');
+            data: {
+                date: date
+            }
+        });
+
+        request.done(function (data) {
+            if (data)
+                addMoviesForThisDay(data);
+            else addMoviesForThisDay('<span class="day-list-error">Нет сеансов</span>');
+        });
+
+        request.fail(function () {
+            addMoviesForThisDay('<span class="day-list-error">Тех. неполадка</span>');
         });
     }
 
@@ -141,13 +161,15 @@ $(document).ready(function(){
             return false;
         }
 
-        var postData = {
-            date: $(this).attr('data-date')
-        }
-        getMoviesForThisDay(postData);
-
         $('.day').removeClass('day--active');
         $(this).addClass('day--active');
+
+        date = $(this).attr('data-date');
+
+        console.log(!sessions[date])
+        if (!sessions[date])
+            getMoviesForThisDay(date);
+        else addMoviesForThisDay();
     });
 
     // Section soon: hide-show posters
@@ -160,5 +182,5 @@ $(document).ready(function(){
         });
     }
 
-    getMoviesForThisDay(`${new Date().getFullYear()}.${new Date().getMonth()+1}.${new Date().getDay()}`);
+    getMoviesForThisDay();
 });
