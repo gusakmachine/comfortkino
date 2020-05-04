@@ -20,7 +20,7 @@ class m200426_132613_movies extends Migration
             'age' => $this->tinyInteger(2)->unsigned(),
             'poster' => $this->string(255),
             'mob_poster' => $this->string(255),
-            'gallery' => $this->string(255),
+            'trailer' => $this->string(255),
             'release_date' => $this->date(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),

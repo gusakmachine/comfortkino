@@ -11,12 +11,17 @@ class AppAsset extends AssetBundle
 {
     public $css = [
         'css/modules/reset.css',
+        'css/modules/magnific-popup.css',
+        'css/modules/owl.theme.default.min.css',
+        'css/modules/owl.carousel.min.css',
         'css/modules/helper.css',
         'css/modules/popup.css',
         'css/main.css',
     ];
     public $js = [
         'js/drag-scroll.js',
+        'js/jquery.magnific-popup.min.js',
+        'js/owl.carousel.min.js',
         'js/show-hide.js',
         'js/popup-tickets.js',
         'js/popup-cities.js',

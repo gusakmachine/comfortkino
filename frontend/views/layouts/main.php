@@ -55,17 +55,17 @@ AppAsset::register($this);
                     <div class="footer__socials">
                         <a class="sm--facebook" href="#" target="_blank" rel="nofollow noopener">
                             <span>
-                                <svg><use href="/img/static/icons/icons.svg#facebook" /></svg>
+                                <svg><use href="/img/static/icons/icons.svg#facebook"></use></svg>
                             </span>
                         </a>
                         <a class="sm--insta" href="#" target="_blank" rel="nofollow noopener">
                             <span>
-                                <svg><use href="/img/static/icons/icons.svg#inst" /></svg>
+                                <svg><use href="/img/static/icons/icons.svg#inst"></use></svg>
                             </span>
                         </a>
                         <a class="sm--vk" href="#" target="_blank" rel="nofollow noopener">
                             <span>
-                                <svg><use href="/img/static/icons/icons.svg#vk" /></svg>
+                                <svg><use href="/img/static/icons/icons.svg#vk"></use></svg>
                             </span>
                         </a>
                     </div>

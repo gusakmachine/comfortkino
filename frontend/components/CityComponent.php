@@ -11,21 +11,23 @@ class CityComponent extends Component
 {
     public function init() {
         $subdomain = preg_replace("/\.\w+\.\w+$/",'', Yii::$app->request->getHostName());
-        $city = $this->getCityNameBySubdomain($subdomain)['name'];
-
-        if ($this->checkSubdomain($subdomain)) {
-            Yii::$app->session->set('city', $city);
-            Yii::$app->session->set('subdomain', $subdomain);
-            Yii::$app->params['HostName'] = substr(Yii::$app->request->getHostName(), strpos( Yii::$app->request->getHostName(), "." ) + 1 );
-        } else {
-            Yii::$app->response->redirect('//' . $this->getMovieTheaters()[0]['subdomain_name'] . '.' . Yii::$app->request->getHostName());
-            Yii::$app->params['HostName'] = Yii::$app->request->getHostName();
+        if($subdomain != Yii::$app->session->get('subdomain')){
+            $city = $this->getCityNameBySubdomain($subdomain)['name'];
+            $theater = $this->getMovieTheaterBySubdomain($subdomain);
+            if ($subdomain == $theater['subdomain_name']) {
+                Yii::$app->session->set('city', $city);
+                Yii::$app->session->set('subdomain', $subdomain);
+                Yii::$app->session->set('theaterName', $theater['name']);
+            } else {
+                Yii::$app->response->redirect('//' . $this->getMovieTheaters()[0]['subdomain_name'] . '.' . Yii::$app->request->getHostName());
+            }
         }
+        Yii::$app->params['HostName'] = substr(Yii::$app->request->getHostName(), strpos( Yii::$app->request->getHostName(), "." ) + 1 );
     }
 
-    public static function checkSubdomain($subdomain) {
-        $sql = 'SELECT subdomain_name FROM movie_theaters WHERE subdomain_name = :subdomen';
-        return Yii::$app->db->createCommand($sql)->bindParam(':subdomen', $subdomain)->queryScalar();
+    public static function getMovieTheaterBySubdomain($subdomain) {
+        $sql = 'SELECT name, subdomain_name FROM movie_theaters WHERE subdomain_name = :subdomen';
+        return Yii::$app->db->createCommand($sql)->bindParam(':subdomen', $subdomain)->queryOne();
     }
 
     public static function getCityNameBySubdomain($subdomain) {
@@ -33,7 +35,7 @@ class CityComponent extends Component
         return Yii::$app->db->createCommand($sql)->bindParam(':subdomen', $subdomain)->queryOne();
     }
 
-    public static function getMovieTheaterByCityId($id) {
+    public static function getMovieTheatersByCityId($id) {
         $sql = 'SELECT * FROM movie_theaters WHERE city_id = :id';
         return Yii::$app->db->createCommand($sql)->bindParam(':id', $id)->queryAll();
     }

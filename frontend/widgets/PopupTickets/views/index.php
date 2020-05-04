@@ -71,7 +71,7 @@
                                     <span>1 ряд, 1 место</span>
                                 </div>
                             </button>
-                            <button class="place scheme-menu__place" data-price="1"style="left: 115px; top: 0px;">
+                            <button class="place scheme-menu__place" data-price="1" style="left: 115px; top: 0px;">
                                 <span class="place__number">14</span>
                                 <div class="popover">
                                     <span class="big">200 ₽</span>

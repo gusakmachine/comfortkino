@@ -4,31 +4,30 @@ namespace frontend\controllers;
 use Yii;
 use yii\web\Controller;
 
-use frontend\components\CacheDuration;
+use app\models\MovieTheaters;
+use app\models\Halls;
+use app\models\Sessions;
+use app\models\Movies;
 
-use frontend\models\MovieTheater;
+
+use frontend\components\CacheDuration;
+use frontend\components\MovieTheater;
+
+use yii\helpers\ArrayHelper;
 
 class SiteController extends Controller
 {
 
     public function actionIndex()
     {
-        $length = false;//Yii::$app->cache->get('day_list_length');
-        $dayList = false;//Yii::$app->cache->get('day_list');
+        $length = Sessions::find()->where('date > :date', [':date' => date('Y-m-d', strtotime('- 1 day'))])->count();
+
         $endDayListIDX = 9; //week + this day + 1 because for ($i < 9) so max $i == 8
 
         if ($length < $endDayListIDX)
             $endDayListIDX -= $length;
 
-        if (!$length) {
-            $length = MovieTheater::getNumberOfDaysWithSessions(date('Y-m-d'));
-            Yii::$app->cache->set('day_list_length', $length, CacheDuration::getSecondsToMidnight(date('Y-m-d', strtotime(('+' . $length+$endDayListIDX . ' day')))));
-        }
-
-        if (!$dayList) {
-            $dayList = MovieTheater::generateDayList($length + $endDayListIDX, date('Y-m-d'));
-            Yii::$app->cache->set('day_list', $dayList, CacheDuration::getSecondsToMidnight(date('Y-m-d', strtotime(('+' . $length+$endDayListIDX . ' day')))));
-        }
+        $dayList = MovieTheater::generateDayList($length + $endDayListIDX, date('Y-m-d'));
 
         return $this->render('index', [
             'dayList' => $dayList,
@@ -37,9 +36,23 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionFilm($filmID = '')
+    public function actionFilm($id)
     {
-        return $this->render('film');
+        $movie = Movies::find()->where('id = :id', [':id' => $id])->with('galleries', 'countries', 'genres', 'actors', 'directors')->asArray()->one();
+        $sessions = Sessions::find()
+            ->with('time')
+            ->where(['>', 'date', '2020-04-30'])
+            ->andWhere(['movie_id' => $movie['id']])
+            ->asArray()
+            ->all();
+
+        $dayList = $sessions ? MovieTheater::generateDayList(count($sessions), $sessions[0]['date']) : '';
+
+        return $this->render('film', [
+            'sessions' => $sessions,
+            'movie' => $movie,
+            'dayList' => $dayList,
+        ]);
     }
 
     public function actionMovies()
@@ -47,24 +60,35 @@ class SiteController extends Controller
         $this->layout = false;
         $post = Yii::$app->request->post();
 
-        /*$sessions = Yii::$app->cache->get('sessions_' . $post['date']);
-        $movies = Yii::$app->cache->get('movies_' . $post['date']);*/
-
-        $sessions = false;
-        $movies = false;
-
         if (!isset($post['date']))
             return null;
 
-        if (!$sessions) {
-            $sessions = MovieTheater::getSessions(Yii::$app->session->get('subdomain'), $post['date']);
-            Yii::$app->cache->set('sessions_' . $post['date'], $sessions, CacheDuration::getSecondsToMidnight($post['date']));
-        }
+        //$sessions = Yii::$app->cache->get('sessions' . $post['date']);
+        //$movies = Yii::$app->cache->get('movies' . $post['date']);
 
-        if (!$movies) {
-            $movies = MovieTheater::getMoviesForThisSession($sessions, $post['date']);
-            Yii::$app->cache->set('movies_' . $post['date'], $movies, CacheDuration::getSecondsToMidnight($post['date']));
-        }
+        $sessions = Sessions::find()
+            ->with('time')
+            ->where(['>', 'date', $post['date']])
+            ->andWhere(['hall_id' => array_map(
+                'intval', ArrayHelper::getColumn(
+                Halls::find()
+                    ->select('id')
+                    ->where(['movie_theaters_id' => MovieTheaters::find()
+                            ->select(['id'])
+                            ->where(['subdomain_name' => Yii::$app->session->get('subdomain')])
+                            ->one()]
+                    )->asArray()
+                    ->all(), 'id'
+            )
+            )
+            ])->asArray()
+            ->all();
+
+        $movies = Movies::find()
+            ->with('genres', 'countries')
+            ->where(['id' => array_map('intval', ArrayHelper::getColumn($sessions, 'movie_id'))]
+            )->asArray()->all();
+
 
         return $this->render('movies', [
             'sessions' => $sessions,

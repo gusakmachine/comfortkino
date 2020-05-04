@@ -42,7 +42,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '/film/<filmID:\d+>' => 'site/film',
+                '/film/<id:\d+>' => 'site/film',
                 '/movies' => 'site/movies',
             ],
         ],

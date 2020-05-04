@@ -1,93 +1,57 @@
 <?php
 
 /* @var $this yii\web\View */
+
+use frontend\components\MovieTheater;
 use \yii\helpers\Url;
 use frontend\assets\FilmAsset;
 
-$this->title = 'My Yii Application';
+$this->title = 'Фильм «' . $movie['title'] . '» — Мягкий кинотеатр ' . Yii::$app->session->get('theaterName');
 
 FilmAsset::register($this);
-
-
 ?>
 <section class="main-film">
-    <a href="#" class="film__poster" style="background-image: url(img/posters/1d5491e6b2e4107880accec6815b4f29.jpg)"></a>
-    <a href="#" class="film__trailer-preview" style="background-image: url(img/youtube-preview/maxresdefault.jpg)">
+    <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__poster" style="background-image: url(<?= Yii::getAlias('@posters') . $movie['poster'] ?>)"></a>
+    <a href="<?= Yii::getAlias('@mob_posters') . $movie['mob_poster'] ?>" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') . $movie['mob_poster'] ?>)">
         <div class="film__play">
             <svg class="film__play-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="white">
                 <path d="M9.4 6l-7.7 3.9c-.4.2-.8.2-1.2 0-.3-.3-.5-.6-.5-1v-7.8c0-.4.2-.8.6-1 .4-.2.8-.2 1.2 0l7.6 3.9c.6.3.8.9.5 1.5-.1.2-.3.4-.5.5z"></path>
             </svg>
         </div>
     </a>
-    <div class="film max-height-on">
+    <div class="film partially-hidden-content max-height-on">
         <div class="film__top-left-content">
             <div class="film__left-content">
                 <p class="film__label">
-                    <span class="film__country">Страна 1, Страна 2</span>
-                    <span class="film__genre">жанр</span>
-                    <span class="film__duration">0 часов 0 минут</span>
+                    <span class="film__country">
+                        <?php for($j = 0; $j < count($movie['countries']); $j++) echo $movie['countries'][$j]['name'] . ($j + 1 < count($movie['countries'])? ', ' : ' '); ?>
+                    </span>
+                    <span class="film__genre">
+                        <?php for($j = 0; $j < count($movie['genres']); $j++) echo $movie['genres'][$j]['name'] . ($j + 1 < count($movie['genres'])? ', ' : ' '); ?>
+                    </span>
+                    <span class="film__duration"><?= $movie['duration'] ?></span>
                 </p>
-                <a href="#" class="film__title">Название фильма</a>
+                <h1 class="film__title"><?= $movie['title'] ?></h1>
             </div>
-            <a class="film__trailer" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                <span class="film__trailer-title">Обоссаный трейлер</span>
+            <a class="film__trailer" href="<?= $movie['trailer'] ?>">
+                <span class="film__trailer-title">Трейлер</span>
                 <svg class="film__trailer-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="white">
                     <path d="M9.4 6l-7.7 3.9c-.4.2-.8.2-1.2 0-.3-.3-.5-.6-.5-1v-7.8c0-.4.2-.8.6-1 .4-.2.8-.2 1.2 0l7.6 3.9c.6.3.8.9.5 1.5-.1.2-.3.4-.5.5z"></path>
                 </svg>
             </a>
         </div>
-        <p class="film__description">Талантливый выпускник Оксфорда, применив свой уникальный ум и невиданную дерзость, придумал нелегальную схему обогащения, используя поместья обедневшей английской аристократии.
-            Однако когда он решает продать свой бизнес влиятельному клану миллиардеров из США, на его пути встают не менее обаятельные, но жёсткие джентльмены.
-            Намечается обмен любезностями, который точно не обойдётся без перестрелок и парочки несчастных случаев.</p>
-        <span class="film__day-name">Сегодня <?= $days[0]['day'], '.', $days[0]['month']; ?></span>
-        <div class="flex-wrapper">
-            <a href="#" class="film__sessions-info">
-                <span class="film__session-time">17:00</span>
-                <span class="film__session-price">от 380 ₽</span>
-            </a>
-            <a href="#" class="film__sessions-info">
-                <span class="film__session-time">19:20</span>
-                <span class="film__session-price">от 380 ₽</span>
-            </a>
-            <a href="#" class="film__sessions-info">
-                <span class="film__session-time">21:40</span>
-                <span class="film__session-price">от 380 ₽</span>
-            </a>
-        </div>
-        <span class="film__day-name">Завтра <?= $days[1]['day'], '.', $days[1]['month']; ?></span>
-        <div class="flex-wrapper">
-            <a href="#" class="film__sessions-info">
-                <span class="film__session-time">17:00</span>
-                <span class="film__session-price">от 380 ₽</span>
-            </a>
-        </div>
-        <div class="partially-hidden-content">
-           <?php for ($i = 2; $i < 5; $i++): ?>
-               <span class="film__day-name"><?= $days[$i]['day-of-week'], ' ', $days[$i]['day'], '.', $days[$i]['month']; ?></span>
-               <div class="flex-wrapper">
-                   <a href="#" class="film__sessions-info">
-                       <span class="film__session-time">17:00</span>
-                       <span class="film__session-price">от 380 ₽</span>
-                   </a>
-               </div>
-           <?php endfor; ?>
-<!--            <span class="film__day-name">Завтра 16.03</span>-->
-<!---->
-<!--            <span class="film__day-name">Завтра 16.03</span>-->
-<!--            <div class="flex-wrapper">-->
-<!--                <a href="#" class="film__sessions-info">-->
-<!--                    <span class="film__session-time">17:00</span>-->
-<!--                    <span class="film__session-price">от 380 ₽</span>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--            <span class="film__day-name">Завтра 16.03</span>-->
-<!--            <div class="flex-wrapper">-->
-<!--                <a href="#" class="film__sessions-info">-->
-<!--                    <span class="film__session-time">17:00</span>-->
-<!--                    <span class="film__session-price">от 380 ₽</span>-->
-<!--                </a>-->
-<!--            </div>-->
-        </div>
+        <p class="film__description"><?= $movie['description'] ?></p>
+            <?php foreach ($sessions as $key => $session): ?>
+                <span class="film__day-name"><?= $dayList[$key]['day-of-week'] ?></span>
+                <div class="flex-wrapper">
+                    <?php for ($i = 0 ; $i < count($session['time']); $i++): ?>
+                        <button class="film__sessions-info" data-SH="#popup">
+                            <span class="film__session-time"><?= date('H:i', strtotime($session['time'][$i]['time'])); ?></span>
+                            <span class="film__session-price">от <?= $session['base_price'] ?> ₽</span>
+                        </button>
+                    <?php endfor; ?>
+                </div>
+            <?php endforeach; ?>
         <button class="film__show-all-sessions-btn">Еще сеансы</button>
     </div>
 </section>
@@ -95,15 +59,19 @@ FilmAsset::register($this);
     <div class="container">
         <div class="film-about">
             <h3 class="film-about__director">Режиссёр</h3>
-            <p class="film-about__directors-names">Имя режиссёра</p>
+            <p class="film-about__directors-names">
+                <?php for($j = 0; $j < count($movie['directors']); $j++) echo $movie['directors'][$j]['name'] . ($j + 1 < count($movie['directors'])? ', ' : ' '); ?>
+            </p>
             <h3 class="film-about__genre">Жанр</h3>
-            <p class="film-about__genre-names">Название жанра</p>
+            <p class="film-about__genre-names">
+                <?php for($j = 0; $j < count($movie['genres']); $j++) echo $movie['genres'][$j]['name'] . ($j + 1 < count($movie['genres'])? ', ' : ' '); ?>
+            </p>
             <h3 class="film-about__actors">Актёры</h3>
-            <p class="film-about__actors-names">Имена актёров</p>
+            <p class="film-about__actors-names">
+                <?php for($j = 0; $j < count($movie['actors']); $j++) echo $movie['actors'][$j]['name'] . ($j + 1 < count($movie['actors'])? ', ' : ' '); ?>
+            </p>
             <h3 class="film-about__description">Описание</h3>
-            <p class="film-description-mobile">Талантливый выпускник Оксфорда, применив свой уникальный ум и невиданную дерзость, придумал нелегальную схему обогащения, используя поместья обедневшей английской аристократии.
-                Однако когда он решает продать свой бизнес влиятельному клану миллиардеров из США, на его пути встают не менее обаятельные, но жёсткие джентльмены.
-                Намечается обмен любезностями, который точно не обойдётся без перестрелок и парочки несчастных случаев.</p>
+            <p class="film-description-mobile"><?= $movie['description'] ?></p>
         </div>
         <div class="film-gallery">
             <div class="film-gallery__top-content">
@@ -122,14 +90,23 @@ FilmAsset::register($this);
                 </div>
             </div>
             <div class="film-gallery__bottom-content dragscroll">
-                <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__big-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
-                <div class="wrap">
-                    <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__middle-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
-                    <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__middle-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
-                </div>
-                <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__middle-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
-                <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__middle-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
-                <a href="img/posters/1d5491e6b2e4107880accec6815b4f29.jpg" class="film-gallery__middle-image" style="background-image: url('img/posters/1d5491e6b2e4107880accec6815b4f29.jpg')"></a>
+                <?php for ($i = 0; $i < count($movie['galleries']); $i++): ?>
+                    <?php switch ($i):
+                        case 0: ?>
+                            <a href="<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>" class="film-gallery__big-image" style="background-image: url('<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>')"></a>
+                            <?php break; ?>
+                        <?php case 1: ?>
+                            <div class="wrap">
+                                <?php for($j = $i; $j < (count($movie['galleries']) > 3 ? 3 : count($movie['galleries'])); $j++): ?>
+                                    <a href="<?= Yii::getAlias('@gallery') . $movie['galleries'][$j]['path'] ?>" class="film-gallery__middle-image" style="background-image: url('<?= Yii::getAlias('@gallery') .  $movie['galleries'][$j]['path'] ?>')"></a>
+                                <?php endfor; ?>
+                            </div>
+                            <?php break; ?>
+                        <?php case 2: break;?>
+                        <?php default: ?>
+                            <a href="<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>" class="film-gallery__middle-image" style="background-image: url('<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>')"></a>
+                    <?php endswitch; ?>
+                <?php endfor; ?>
             </div>
         </div>
     </div>

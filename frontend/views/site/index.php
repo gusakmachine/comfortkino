@@ -86,7 +86,7 @@ MainAsset::register($this);
 <section class="session-schedule">
     <h1 class="session-schedule__title">Расписание сеансов</h1>
     <div class="pos-relative wrapper">
-        <button class="day-list__btn --prev disabled"><svg class="day-list__svg--left"><use href="/img/static/icons/icons.svg#arrow-empty" /></use></svg></button>
+        <button class="day-list__btn --prev disabled"><svg class="day-list__svg--left"><use href="/img/static/icons/icons.svg#arrow-empty"></use></svg></button>
         <div class="day-list-wrapper dragscroll">
             <nav class="day-list tabs__header">
                 <?php for ($i = 0; $i < $length + $endDayListIDX; $i++):?>
@@ -102,7 +102,7 @@ MainAsset::register($this);
                 <?php endfor; ?>
             </nav>
         </div>
-        <button class="day-list__btn --next"><svg class="day-list__svg--right"><use href="/img/static/icons/icons.svg#arrow-empty" /></use></svg></button>
+        <button class="day-list__btn --next"><svg class="day-list__svg--right"><use href="/img/static/icons/icons.svg#arrow-empty"></use></svg></button>
     </div>
     <div class="films"></div>
 </section>

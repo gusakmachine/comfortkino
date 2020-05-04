@@ -1,6 +1,6 @@
 @font-face {
-	font-family: 'Proxima Nova';
-	src: url("fonts/ProximaNova/ProximaNova-Regular.ttf") format("opentype");
+    font-family: 'Proxima Nova';
+    src: url("fonts/ProximaNova/ProximaNova-Regular.ttf") format("opentype");
 }
 @font-face {
     font-family: 'Proxima Nova Light';
@@ -12,12 +12,19 @@
 }
 
 html {
-	font-family: "Proxima Nova", sans-serif;
-	color: white;
+    font-family: "Proxima Nova", sans-serif;
+    color: white;
 }
 body {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     position: relative;
     width: 100%;
@@ -25,36 +32,42 @@ body {
 }
 
 .page-background:before {
-	content: "";
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: RGBA(0,28,45,.9);
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: RGBA(0,28,45,.9);
 }
 .page-background {
-	position: fixed;
-	width: 100%;
+    position: fixed;
+    width: 100%;
     min-height: 100vh;
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-position: top center;
     background-size: cover;
     will-change: transform;
-	z-index: -1;
+    z-index: -1;
 }
 .header, .news-owl, .session-schedule, .session-schedule__films, .footer {
-	display: flex;
-	position: relative;
-	z-index: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    z-index: 1;
 }
 .header {
-	margin: 25px 0 50px 0;
-	width: 1320px;
-	justify-content: space-between;
-	align-items: center;
+    margin: 25px 0 50px 0;
+    width: 1320px;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
 }
 .header__logo {
-	max-width: 160px;
-	height: 82px;
+    max-width: 160px;
+    height: 82px;
 }
 .header__town-link:hover {
     cursor: pointer;
@@ -71,12 +84,16 @@ body {
 .footer{
     display: block;
     padding: 50px 0 0;
-    width: 100%;    
+    width: 100%;
     color: #fff;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     background: #1d0133;
-    background: linear-gradient(10deg,#1d0133 0,#013e64 100%) center center no-repeat; 
+    background: -o-linear-gradient(80deg,#1d0133 0,#013e64 100%) center center no-repeat;
+    background: linear-gradient(10deg,#1d0133 0,#013e64 100%) center center no-repeat;
     background-size: 100% 200%;
+    -webkit-box-shadow: 0px 0px 20px 10px rgba(35,41,52,.4);
     box-shadow: 0px 0px 20px 10px rgba(35,41,52,.4);
 }
 .footer > .container{
@@ -95,12 +112,21 @@ body {
     margin-bottom: 60px;
 }
 .footer__contacts > .row {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 .footer__map {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     height: 155px;
     width: 50%;
@@ -135,7 +161,11 @@ body {
     color: #fff;
 }
 .footer__socials {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
     width: 100%;
     margin: 18px 0 0;
@@ -147,18 +177,36 @@ body {
     margin: 0 15px 0 0;
     border-radius: 100%;
     border: 2px solid rgba(255,255,255,.5);
+    -webkit-transition: .2s ease;
+    -o-transition: .2s ease;
     transition: .2s ease;
+    -webkit-transition-property: border,-webkit-box-shadow;
+    transition-property: border,-webkit-box-shadow;
+    -o-transition-property: border,box-shadow;
     transition-property: border,box-shadow;
+    transition-property: border,box-shadow,-webkit-box-shadow;
 }
 .footer__socials a span {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     width: 40px;
     height: 40px;
     fill: #fff;
+    -webkit-transition: .2s ease;
+    -o-transition: .2s ease;
     transition: .2s ease;
+    -webkit-transition-property: fill, -webkit-filter;
+    transition-property: fill, -webkit-filter;
+    -o-transition-property: fill, filter;
     transition-property: fill, filter;
+    transition-property: fill, filter, -webkit-filter;
 }
 .footer__socials > a > span > svg {
     display: block;
@@ -212,15 +260,24 @@ body {
         display: none;
     }
     .footer__contacts {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
         flex-direction: column;
     }
     .footer__contacts > .row {
+        -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
         order: 2;
     }
     .footer__address {
         margin-bottom: 1rem;
         font-size: 1.75rem;
+        -webkit-box-ordinal-group: 2;
+        -ms-flex-order: 1;
         order: 1;
     }
     .footer__map {
@@ -232,14 +289,24 @@ body {
         width: 100%;
     }
     .footer__tel {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
         justify-content: space-between;
         width: 100%;
         font-size: 2.4rem;
     }
     .footer__socials a {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
         justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
         align-items: center;
         width: 120px;
         height: 120px;
