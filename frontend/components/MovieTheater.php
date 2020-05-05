@@ -27,6 +27,7 @@ class MovieTheater extends Model
             }
 
             $dayList[$i] = [
+                'Y-m-d' => date('Y-m-d', strtotime('+ '. $i .' day')),
                 'day-of-week' => mb_strtoupper(mb_substr($day_of_week, 0, 1, 'utf-8'), 'utf-8') . mb_substr($day_of_week, 1, strlen($day_of_week), 'utf-8'),
                 'month' => Yii::$app->formatter->asDate($date['month'] + strtotime("+" . $i . " day"), 'MMMM'),
                 'day' => Yii::$app->formatter->asDate($date['day'] + strtotime("+" . $i . " day"), 'dd'),

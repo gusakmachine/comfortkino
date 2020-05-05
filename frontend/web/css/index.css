@@ -112,6 +112,7 @@
 .film {
     margin: 0 0 1rem 5%;
     max-width: 500px;
+    min-width: 500px;
 }
 .info-carousel .owl-item > .film, .owl-item--duplicate > .film {
     z-index: -1;

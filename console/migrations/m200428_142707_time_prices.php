@@ -3,19 +3,18 @@
 use yii\db\Migration;
 
 /**
- * Class m200503_084734_ads_types
+ * Class m200504_134930_time_prices
  */
-class m200503_084730_ads_types extends Migration
+class m200428_142707_time_prices extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('ads_types', [
+        $this->createTable('time_prices', [
             'id' => $this->primaryKey(),
-            'name' => $this->string(255),
-            'pos_index' => $this->integer(),
+            'price' => $this->integer(),
         ]);
     }
 
@@ -24,7 +23,7 @@ class m200503_084730_ads_types extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('ads_types');
+        $this->dropTable('time_prices');
     }
 
     /*
@@ -36,7 +35,7 @@ class m200503_084730_ads_types extends Migration
 
     public function down()
     {
-        echo "m200503_084734_ads_types cannot be reverted.\n";
+        echo "m200504_134930_time_prices cannot be reverted.\n";
 
         return false;
     }

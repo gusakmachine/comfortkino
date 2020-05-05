@@ -17,6 +17,8 @@ use Yii;
  * @property Movies $movie
  * @property SessionsTime[] $sessionsTimes
  * @property Time[] $times
+ * @property SessionsTimePrices[] $sessionsTimePrices
+ * @property TimePrices[] $timePrices
  * @property Tickets[] $tickets
  */
 class Sessions extends \yii\db\ActiveRecord
@@ -81,7 +83,7 @@ class Sessions extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getSessionsTimes()
+    public function getSessionsTime()
     {
         return $this->hasMany(SessionsTime::className(), ['sessions_id' => 'id']);
     }
@@ -94,6 +96,26 @@ class Sessions extends \yii\db\ActiveRecord
     public function getTime()
     {
         return $this->hasMany(Time::className(), ['id' => 'time_id'])->viaTable('sessions_time', ['sessions_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[SessionsTimePrices]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSessionsTimePrices()
+    {
+        return $this->hasMany(SessionsTimePrices::className(), ['sessions_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[TimePrices]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTimePrices()
+    {
+        return $this->hasMany(TimePrices::className(), ['id' => 'time_prices_id'])->viaTable('sessions_time_prices', ['sessions_id' => 'id']);
     }
 
     /**

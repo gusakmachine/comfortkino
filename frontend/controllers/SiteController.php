@@ -8,8 +8,6 @@ use app\models\MovieTheaters;
 use app\models\Halls;
 use app\models\Sessions;
 use app\models\Movies;
-
-
 use frontend\components\CacheDuration;
 use frontend\components\MovieTheater;
 
@@ -20,21 +18,39 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $length = Sessions::find()->where('date > :date', [':date' => date('Y-m-d', strtotime('- 1 day'))])->count();
+        $sessions = Sessions::find()
+            ->select('date')
+            ->where('date > :date', [':date' => date('Y-m-d', strtotime('- 1 day'))])
+            ->groupBy('date')
+            ->asArray()
+            ->all();
 
-        $endDayListIDX = 9; //week + this day + 1 because for ($i < 9) so max $i == 8
+        $dayList = [];
 
-        if ($length < $endDayListIDX)
-            $endDayListIDX -= $length;
+        if ($sessions) {
+            $length = (
+                    strtotime($sessions[count($sessions) - 1]['date']) //get last session date
+                    - strtotime(date('Y-m-d', strtotime('- 1 day'))) //get yesterday day ('- 1 day' - count today)
+                ) / (60 * 60 * 24); //get difference in days
+        } else $length = 0;
+        $minLengthDayList = 9; //week + this day + 1 because for ($i < 9) so max $i == 8
 
-        $dayList = MovieTheater::generateDayList($length + $endDayListIDX, date('Y-m-d'));
+        if ($length < $minLengthDayList)
+            $length = $minLengthDayList;
+
+        $dayList['date'] = MovieTheater::generateDayList($length, date('Y-m-d'));
+
+        for ($i = 0, $j = 0; $i < $length; $i++)
+            if (isset($sessions[$j]) && $dayList['date'][$i]['Y-m-d'] == $sessions[$j]['date']) {
+                $dayList['empty_day'][$i] = true;
+                $j++;
+            } else $dayList['empty_day'][$i] = false;
+
         $lastSession = Sessions::find()->select('date')->orderBy('date DESC')->limit(1)->asArray()->one();
         $futureMovies = Movies::find()->where('release_date > :date', [':date' => $lastSession['date']])->with('genres')->asArray()->all();
 
         return $this->render('index', [
             'dayList' => $dayList,
-            'endDayListIDX' => $endDayListIDX,
-            'length' => $length,
             'futureMovies' => $futureMovies,
         ]);
     }
@@ -53,7 +69,6 @@ class SiteController extends Controller
             ->all();
 
         $dayList = $sessions ? MovieTheater::generateDayList(count($sessions), $sessions[0]['date']) : '';
-
         return $this->render('film', [
             'sessions' => $sessions,
             'movie' => $movie,
@@ -63,18 +78,14 @@ class SiteController extends Controller
 
     public function actionMovies()
     {
-        $this->layout = false;
         $post = Yii::$app->request->post();
 
         if (!isset($post['date']))
             return null;
 
-        //$sessions = Yii::$app->cache->get('sessions' . $post['date']);
-        //$movies = Yii::$app->cache->get('movies' . $post['date']);
-
         $sessions = Sessions::find()
-            ->with('time')
-            ->where(['>', 'date', $post['date']])
+            ->with('time', 'timePrices')
+            ->where(['date' => $post['date']])
             ->andWhere(['hall_id' => array_map(
                 'intval', ArrayHelper::getColumn(
                 Halls::find()
@@ -95,8 +106,7 @@ class SiteController extends Controller
             ->where(['id' => array_map('intval', ArrayHelper::getColumn($sessions, 'movie_id'))]
             )->asArray()->all();
 
-
-        return $this->render('movies', [
+        return $this->renderPartial('movies', [
             'sessions' => $sessions,
             'movies' => $movies
         ]);

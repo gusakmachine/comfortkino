@@ -15,7 +15,10 @@ class m200503_084731_ads extends Migration
         $this->createTable('ads', [
             'id' => $this->primaryKey(),
             'type_id' => $this->integer(),
-            'text' => $this->text(),
+            'visibility' => $this->boolean(),
+            'movie_theater_id' => $this->integer(),
+            'movie_id' => $this->integer(),
+            'content' => $this->text(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
@@ -27,10 +30,39 @@ class m200503_084731_ads extends Migration
         );
 
         $this->addForeignKey(
-            '{{%fk-ads}}',
+            '{{%fk-ads-ads-types}}',
             '{{%ads}}',
             'type_id',
             '{{%ads_types}}',
+            'id',
+            'CASCADE'
+        );
+        $this->createIndex(
+            '{{%idx-ads-movie_id}}',
+            '{{%ads}}',
+            'movie_id'
+        );
+
+        $this->addForeignKey(
+            '{{%fk-ads-movies}}',
+            '{{%ads}}',
+            'movie_id',
+            '{{%movies}}',
+            'id',
+            'CASCADE'
+        );
+
+        $this->createIndex(
+            '{{%idx-ads-movie_theater}}',
+            '{{%ads}}',
+            'movie_theater_id'
+        );
+
+        $this->addForeignKey(
+            '{{%fk-ads-movie_theater}}',
+            '{{%ads}}',
+            'movie_theater_id',
+            '{{%movie_theaters}}',
             'id',
             'CASCADE'
         );
@@ -42,12 +74,32 @@ class m200503_084731_ads extends Migration
     public function safeDown()
     {
         $this->dropForeignKey(
-            '{{%fk-ads}}',
+            '{{%fk-ads-ads-types}}',
             '{{%ads}}'
         );
 
         $this->dropIndex(
             '{{%idx-ads-types_id}}',
+            '{{%ads}}'
+        );
+
+        $this->dropForeignKey(
+            '{{%fk-ads-movie}}',
+            '{{%ads}}'
+        );
+
+        $this->dropIndex(
+            '{{%idx-ads-movie_id}}',
+            '{{%ads}}'
+        );
+
+        $this->dropForeignKey(
+            '{{%fk-ads-movie_theater}}',
+            '{{%ads}}'
+        );
+
+        $this->dropIndex(
+            '{{%idx-ads-movie_theater}}',
             '{{%ads}}'
         );
 
