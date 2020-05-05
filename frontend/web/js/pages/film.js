@@ -1,5 +1,13 @@
 $(document).ready(function() {
 
+	var owl = $('.film-gallery__bottom-content').owlCarousel({
+		margin:15,
+		nav: true,
+		navClass: ['film-gallery__btn --prev','film-gallery__btn --next'],
+		navText: ["<svg><use href=\"/img/static/icons/icons.svg#arrow-empty\"></use></svg>","<svg><use href=\"/img/static/icons/icons.svg#arrow-empty\"></use></svg>"],
+		items:1,
+	});
+
 	$('.film-gallery__bottom-content').magnificPopup({
 		delegate: 'a',
 		type: 'image',

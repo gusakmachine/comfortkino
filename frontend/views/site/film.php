@@ -2,8 +2,6 @@
 
 /* @var $this yii\web\View */
 
-use frontend\components\MovieTheater;
-use \yii\helpers\Url;
 use frontend\assets\FilmAsset;
 
 $this->title = 'Фильм «' . $movie['title'] . '» — Мягкий кинотеатр ' . Yii::$app->session->get('theaterName');
@@ -76,36 +74,29 @@ FilmAsset::register($this);
         <div class="film-gallery">
             <div class="film-gallery__top-content">
                 <h1 class="film-gallery__film-frames">Кадры из фильма</h1>
-                <div class="film-gallery__buttons">
-                    <button class="film-gallery__btn --prev">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 23" fill="#30a6f1">
-                            <path d="M16.5 23c-.6 0-1.2-.2-1.7-.5l-13-7.7c-.9-.6-1.5-1.5-1.7-2.6-.2-1 0-2.1.6-3 .3-.3.8-.8 1.1-1l13-7.7c1.1-.7 2.5-.6 3.6.1 1 .8 1.6 1.9 1.6 3.2v15.4c0 1.2-.6 2.4-1.6 3.2-.6.4-1.2.6-1.9.6zm-13.1-12.2l-.2.2c-.2.2-.2.5-.2.7s.2.5.4.6l12.9 7.7c.1.1.2.1.3 0 .2-.2.3-.4.3-.7v-15.5c0-.3-.1-.6-.4-.7.1-.1-.1-.1-.2-.1l-12.9 7.8z"></path>
-                        </svg>
-                    </button>
-                    <button class="film-gallery__btn --next">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 23" fill="#30a6f1">
-                            <path d="M16.5 23c-.6 0-1.2-.2-1.7-.5l-13-7.7c-.9-.6-1.5-1.5-1.7-2.6-.2-1 0-2.1.6-3 .3-.3.8-.8 1.1-1l13-7.7c1.1-.7 2.5-.6 3.6.1 1 .8 1.6 1.9 1.6 3.2v15.4c0 1.2-.6 2.4-1.6 3.2-.6.4-1.2.6-1.9.6zm-13.1-12.2l-.2.2c-.2.2-.2.5-.2.7s.2.5.4.6l12.9 7.7c.1.1.2.1.3 0 .2-.2.3-.4.3-.7v-15.5c0-.3-.1-.6-.4-.7.1-.1-.1-.1-.2-.1l-12.9 7.8z"></path>
-                        </svg>
-                    </button>
-                </div>
             </div>
-            <div class="film-gallery__bottom-content dragscroll">
+            <div class="film-gallery__bottom-content owl-carousel">
                 <?php for ($i = 0; $i < count($movie['galleries']); $i++): ?>
                     <?php switch ($i):
                         case 0: ?>
-                            <a href="<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>" class="film-gallery__big-image" style="background-image: url('<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>')"></a>
-                            <?php break; ?>
-                        <?php case 1: ?>
-                            <div class="wrap">
-                                <?php for($j = $i; $j < (count($movie['galleries']) > 3 ? 3 : count($movie['galleries'])); $j++): ?>
-                                    <a href="<?= Yii::getAlias('@gallery') . $movie['galleries'][$j]['path'] ?>" class="film-gallery__middle-image" style="background-image: url('<?= Yii::getAlias('@gallery') .  $movie['galleries'][$j]['path'] ?>')"></a>
-                                <?php endfor; ?>
+                            <div class="film-gallery__item">
+                                <a href="<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>" class="film-gallery__big-image" style="background-image: url('<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>')"></a>
+                                <div class="wrap">
+                                    <?php for($i = 1; $i < count($movie['galleries']); $i++): ?>
+                                        <a href="<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>" class="film-gallery__middle-image" style="background-image: url('<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>')"></a>
+                                        <?php if ($i == 2) break; ?>
+                                    <?php endfor; ?>
+                                </div>
                             </div>
                             <?php break; ?>
-                        <?php case 2: break;?>
                         <?php default: ?>
-                            <a href="<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>" class="film-gallery__middle-image" style="background-image: url('<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>')"></a>
-                    <?php endswitch; ?>
+                            <div class="film-gallery__item">
+                                <?php for ($k = 1; $i < (count($movie['galleries'])); $i++, $k++): ?>
+                                    <a href="<?= Yii::getAlias('@gallery') . $movie['galleries'][$i]['path'] ?>" class="film-gallery__middle-image" style="background-image: url('<?= Yii::getAlias('@gallery') .  $movie['galleries'][$i]['path'] ?>')"></a>
+                                    <?php if ($k == 3) break; ?>
+                                <?php endfor; ?>
+                            </div>
+                        <?php endswitch; ?>
                 <?php endfor; ?>
             </div>
         </div>

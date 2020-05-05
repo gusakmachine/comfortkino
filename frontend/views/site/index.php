@@ -106,86 +106,27 @@ MainAsset::register($this);
     </div>
     <div class="films"></div>
 </section>
+<?php if ($futureMovies): ?>
 <section class="session-soon">
     <div class="container">
         <h2 class="session-soon__title">Скоро</h2>
         <div id="posters" class="posters posters--collapse session-soon__posters">
             <div class="posters__list">
-                <div class="poster posters__item"
-                     style="background-image: url(img/posters/1d5491e6b2e4107880accec6815b4f29.jpg)">
-                    <a href="#" class="poster__link">
-                        <span class="poster__age">18+</span>
-                        <div class="poster__content">
-                            <div>
-                                <h5 class="poster__heading">Чёрная Вдова</h5>
-                                <p class="poster__text">боевик, приключения</p>
+                <?php foreach ($futureMovies as $movie): ?>
+                    <div class="poster posters__item"
+                         style="background-image: url(<?= Yii::getAlias('@posters') . $movie['poster']?>)">
+                        <a href="<?= \yii\helpers\Url::to(['site/film', 'id' => $movie['id']]) ?>" class="poster__link">
+                            <span class="poster__age"><?= $movie['age'] ?>+</span>
+                            <div class="poster__content">
+                                <div>
+                                    <h5 class="poster__heading"><?= $movie['title'] ?></h5>
+                                    <p class="poster__text"><?php for($j = 0; $j < count($movie['genres']); $j++) echo $movie['genres'][$j]['name'] . ($j + 1 < count($movie['genres'])? ', ' : ' '); ?></p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="poster__date">
-                            30.04
-                        </div>
-                    </a>
-                </div>
-                <div class="poster posters__item"
-                     style="background-image: url(img/posters/1d5491e6b2e4107880accec6815b4f29.jpg)">
-                    <a href="#" class="poster__link">
-                        <span class="poster__age">18+</span>
-                        <div class="poster__content">
-                            <div>
-                                <h5 class="poster__heading">Чёрная Вдова</h5>
-                                <p class="poster__text">боевик, приключения</p>
-                            </div>
-                        </div>
-                        <div class="poster__date">
-                            30.04
-                        </div>
-                    </a>
-                </div>
-                <div class="poster posters__item"
-                     style="background-image: url(img/posters/1d5491e6b2e4107880accec6815b4f29.jpg)">
-                    <a href="#" class="poster__link">
-                        <span class="poster__age">18+</span>
-                        <div class="poster__content">
-                            <div>
-                                <h5 class="poster__heading">Чёрная Вдова</h5>
-                                <p class="poster__text">боевик, приключения</p>
-                            </div>
-                        </div>
-                        <div class="poster__date">
-                            30.04
-                        </div>
-                    </a>
-                </div>
-                <div class="poster posters__item"
-                     style="background-image: url(img/posters/1d5491e6b2e4107880accec6815b4f29.jpg)">
-                    <a href="#" class="poster__link">
-                        <span class="poster__age">18+</span>
-                        <div class="poster__content">
-                            <div>
-                                <h5 class="poster__heading">Чёрная Вдова</h5>
-                                <p class="poster__text">боевик, приключения</p>
-                            </div>
-                        </div>
-                        <div class="poster__date">
-                            30.04
-                        </div>
-                    </a>
-                </div>
-                <div class="poster posters__item"
-                     style="background-image: url(img/posters/1d5491e6b2e4107880accec6815b4f29.jpg)">
-                    <a href="#" class="poster__link">
-                        <span class="poster__age">18+</span>
-                        <div class="poster__content">
-                            <div>
-                                <h5 class="poster__heading">Чёрная Вдова</h5>
-                                <p class="poster__text">боевик, приключения</p>
-                            </div>
-                        </div>
-                        <div class="poster__date">
-                            30.04
-                        </div>
-                    </a>
-                </div>
+                            <div class="poster__date"><?= date('d.m', strtotime($movie['release_date'])) ?></div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
                 <div class="posters__btn">
                     <a id="posters__toggler" class="posters__toggler">
                         <span>Показать все</span>
@@ -196,3 +137,5 @@ MainAsset::register($this);
         </div>
     </div>
 </section>
+
+<?php endif; ?>

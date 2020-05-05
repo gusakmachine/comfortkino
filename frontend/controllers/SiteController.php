@@ -28,17 +28,23 @@ class SiteController extends Controller
             $endDayListIDX -= $length;
 
         $dayList = MovieTheater::generateDayList($length + $endDayListIDX, date('Y-m-d'));
+        $lastSession = Sessions::find()->select('date')->orderBy('date DESC')->limit(1)->asArray()->one();
+        $futureMovies = Movies::find()->where('release_date > :date', [':date' => $lastSession['date']])->with('genres')->asArray()->all();
 
         return $this->render('index', [
             'dayList' => $dayList,
             'endDayListIDX' => $endDayListIDX,
-            'length' => $length
+            'length' => $length,
+            'futureMovies' => $futureMovies,
         ]);
     }
 
     public function actionFilm($id)
     {
         $movie = Movies::find()->where('id = :id', [':id' => $id])->with('galleries', 'countries', 'genres', 'actors', 'directors')->asArray()->one();
+
+        if(!$movie) return $this->goHome();
+
         $sessions = Sessions::find()
             ->with('time')
             ->where(['>', 'date', '2020-04-30'])
