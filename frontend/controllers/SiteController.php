@@ -47,6 +47,7 @@ class SiteController extends Controller
                 $j++;
             } else $dayList['empty_day'][$i] = false;
 
+
         return $this->render('index', [
             'dayList' => $dayList,
         ]);

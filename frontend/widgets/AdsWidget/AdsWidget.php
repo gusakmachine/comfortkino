@@ -42,11 +42,11 @@ class AdsWidget extends Widget
 
         $renderedAds = [];
 
-        for ($i = 0, $startIDX = 0; ; $i++) {
+        /*for ($i = 0, $startIDX = 0; ; $i++) {
             while ($i < count($ads) && $ads[$i]['type']['name'] == $ads[$startIDX]['type']['name'])
                 $i++;
 
-            $renderedAds[] = $this->render($ads[$startIDX]['type']['name'], [
+            $renderedAds[$ads[$startIDX]['type']['name']] = $this->render($ads[$startIDX]['type']['name'], [
                 'ads' => $ads,
                 'sessions' => $sessions,
                 'movies' => $movies,
@@ -58,8 +58,8 @@ class AdsWidget extends Widget
                 break;
 
             $startIDX = $i;
-        }
+        }*/
 
-        
+        //print_r($renderedAds);
     }
 }
