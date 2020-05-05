@@ -182,5 +182,11 @@ $(document).ready(function(){
         });
     }
 
+    $('.film__trailer').magnificPopup({
+        type:'iframe',
+        mainClass: 'mfp-fade',
+        showCloseBtn:false,
+    });
+
     getMoviesForThisDay();
 });

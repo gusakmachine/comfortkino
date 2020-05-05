@@ -14,6 +14,8 @@ class MainAsset extends AssetBundle
     ];
     public $js = [
         'js/owl.carousel.min.js',
+        'js/jquery.magnific-popup.min.js',
+        'css/modules/magnific-popup.css',
         'js/pages/index.js',
     ];
     public $depends =[

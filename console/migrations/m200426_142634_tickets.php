@@ -21,6 +21,8 @@ class m200426_142634_tickets extends Migration
             'hall_id' => $this->integer(),
             'movie_theaters_id' => $this->integer(),
             'city_id' => $this->integer(),
+            'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
+            'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
 
         $this->createIndex(

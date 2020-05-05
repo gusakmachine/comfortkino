@@ -16,6 +16,8 @@ class m200426_142633_places_sets extends Migration
             'id' => $this->primaryKey(),
             'place' => $this->integer(),
             'row' => $this->integer(),
+            'graphic_place' => $this->integer(),
+            'graphic_row' => $this->integer(),
             'price' => $this->integer(),
             'set_id' => $this->integer(),
         ]);

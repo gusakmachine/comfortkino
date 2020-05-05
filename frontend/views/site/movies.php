@@ -14,10 +14,10 @@
             <div class="left-content">
                 <p class="film__label">
                     <span class="film__country">
-                        <?php for($j = 0; $j < count($movies[$i]['countries']); $j++) echo $movies[$i]['countries'][$j] . ($j + 1 < count($movies[$i]['countries'])? ', ' : ' '); ?>
+                        <?php for($j = 0; $j < count($movies[$i]['countries']); $j++) echo $movies[$i]['countries'][$j]['name'] . ($j + 1 < count($movies[$i]['countries'])? ', ' : ' '); ?>
                     </span>
                     <span class="film__genre">
-                        <?php for($j = 0; $j < count($movies[$i]['genres']); $j++) echo $movies[$i]['genres'][$j] . ($j + 1 < count($movies[$i]['genres'])? ', ' : ' '); ?>
+                        <?php for($j = 0; $j < count($movies[$i]['genres']); $j++) echo $movies[$i]['genres'][$j]['name'] . ($j + 1 < count($movies[$i]['genres'])? ', ' : ' '); ?>
                     </span>
                     <span class="film__duration"><?= $movies[$i]['duration'] ?></span>
                 </p>
@@ -28,8 +28,8 @@
         <div class="flex-wrapper">
             <?php for ($sessions_timeIDX = 0 ; $sessions_timeIDX < count($sessions[$i]['time']); $sessions_timeIDX++): ?>
                 <button class="film__sessions-info" data-SH="#popup">
-                    <span class="film__session-time"><?= date('H:i', strtotime($sessions[$i]['time'][$sessions_timeIDX])); ?></span>
-                    <span class="film__session-price">от <?= $sessions[$i]['base_price'] ?> ₽</span>
+                    <span class="film__session-time"><?= date('H:i', strtotime($sessions[$i]['time'][$sessions_timeIDX]['time'])); ?></span>
+                    <span class="film__session-price">от <?= $sessions[$i]['timePrices'][$sessions_timeIDX]['price'] ?> ₽</span>
                 </button>
             <?php endfor; ?>
         </div>
