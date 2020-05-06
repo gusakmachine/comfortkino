@@ -14,14 +14,18 @@ use Yii;
  * @property int|null $age
  * @property string|null $poster
  * @property string|null $mob_poster
+ * @property string|null $trailer
  * @property string|null $gallery
  * @property string|null $release_date
  * @property string $created_at
  * @property string $updated_at
- *
  * @property Gallery[] $galleries
+ * @property MoviesActors[] $moviesActors
+ * @property Actors[] $actors
  * @property MoviesCountries[] $moviesCountries
  * @property Countries[] $countries
+ * @property MoviesDirectors[] $moviesDirectors
+ * @property Directors[] $directors
  * @property MoviesGenres[] $moviesGenres
  * @property Genres[] $genres
  * @property Sessions[] $sessions
@@ -46,10 +50,9 @@ class Movies extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['duration', 'release_date', 'created_at', 'updated_at'], 'safe'],
             [['age'], 'integer'],
-            [['title', 'poster', 'mob_poster', 'gallery'], 'string', 'max' => 255],
+            [['title', 'poster', 'mob_poster', 'trailer', 'gallery'], 'string', 'max' => 255],
         ];
     }
-
 
     /**
      * {@inheritdoc}
@@ -64,6 +67,7 @@ class Movies extends \yii\db\ActiveRecord
             'age' => 'Age',
             'poster' => 'Poster',
             'mob_poster' => 'Mob Poster',
+            'trailer' => 'Trailer',
             'gallery' => 'Gallery',
             'release_date' => 'Release Date',
             'created_at' => 'Created At',
@@ -79,6 +83,26 @@ class Movies extends \yii\db\ActiveRecord
     public function getGalleries()
     {
         return $this->hasMany(Gallery::className(), ['movies_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[MoviesActors]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMoviesActors()
+    {
+        return $this->hasMany(MoviesActors::className(), ['movies_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Actors]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getActors()
+    {
+        return $this->hasMany(Actors::className(), ['id' => 'actors_id'])->viaTable('movies_actors', ['movies_id' => 'id']);
     }
 
     /**
@@ -102,6 +126,29 @@ class Movies extends \yii\db\ActiveRecord
     }
 
     /**
+<<<<<<< HEAD
+     * Gets query for [[MoviesDirectors]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMoviesDirectors()
+    {
+        return $this->hasMany(MoviesDirectors::className(), ['movies_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Directors]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDirectors()
+    {
+        return $this->hasMany(Directors::className(), ['id' => 'directors_id'])->viaTable('movies_directors', ['movies_id' => 'id']);
+    }
+
+    /**
+=======
+>>>>>>> c0b945ca8421d635002c60a643b9cf82c47245a8
      * Gets query for [[MoviesGenres]].
      *
      * @return \yii\db\ActiveQuery

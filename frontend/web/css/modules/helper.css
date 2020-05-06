@@ -3,6 +3,8 @@
 }
 
 .flex-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 }
 
@@ -14,7 +16,7 @@
     background: #30a6f1 !important;
 }
 
-.no-transition { transition: none !important; }
+.no-transition { -webkit-transition: none !important; -o-transition: none !important; transition: none !important; }
 
 .svg__left-arrow, .svg__right-arrow {
     width: 10px;
@@ -29,4 +31,24 @@
     -ms-transform: rotate(-90deg);
     transform: rotate(-90deg);
 }
+
+.btn {
+    padding: 0 1.5rem 0 1.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 3rem;
+    line-height: 3rem;
+    font-family: "Proxima Nova Light", sans-serif;
+    border-radius: 50px;
+    background: #30a6f1;
+    color: white;
+}
+
 .rub:after{ content:' ₽'; }

@@ -125,12 +125,17 @@ $(document).ready(function(){
     var sessions = [];
     var date = $('.day--active').attr('data-date');
 
-    function addMoviesForThisDay(data = null) {
-        if (data)
-            sessions[date] = data;
+    function addMoviesForThisDay(data) {
+        if (data) sessions[date] = data;
 
         $('.films').empty();
         $('.films').append(sessions[date]);
+
+        $('.film__poster, .film__trailer-preview').magnificPopup({
+            type:'iframe',
+            mainClass: 'mfp-fade',
+            showCloseBtn:false,
+        });
     }
 
     //Ajax-request and add/remove highlight

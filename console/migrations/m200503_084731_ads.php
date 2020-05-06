@@ -37,7 +37,6 @@ class m200503_084731_ads extends Migration
             'id',
             'CASCADE'
         );
-
         $this->createIndex(
             '{{%idx-ads-movie_id}}',
             '{{%ads}}',

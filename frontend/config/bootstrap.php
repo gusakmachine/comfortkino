@@ -14,4 +14,8 @@ Yii::setAlias('@svg:#cross', '/img/static/icons/icons.svg#cross');
 
 Yii::setAlias('@svg:place-logos', '/img/static/logos/svg/place-logos.svg#otrada');
 
+Yii::setAlias('@gallery', '/img/gallery/');
+Yii::setAlias('@posters', '/img/posters/');
+Yii::setAlias('@mob_posters', '/img/mob_poster/');
+
 

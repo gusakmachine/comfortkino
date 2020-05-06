@@ -14,7 +14,7 @@ $cities = Yii::$app->cityComponent->getCities();
         <div class="tabs__body">
             <?php foreach ($cities as $city): ?>
                 <div class="popup-cities__addresses tabs__content ">
-                    <?php foreach (Yii::$app->cityComponent->getMovieTheaterByCityId($city['id']) as $theater): ?>
+                    <?php foreach (Yii::$app->cityComponent->getMovieTheatersByCityId($city['id']) as $theater): ?>
                         <a href="<?= '//' . $theater['subdomain_name'] . '.' . Yii::$app->params['HostName']; ?>" class="popup-cities__address">
                             <svg><use href="<?= Yii::getAlias('@svg:place-logos'); ?>"></use></svg>
                             <span><?= $theater['address'] ?></span>

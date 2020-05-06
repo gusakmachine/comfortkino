@@ -8,7 +8,6 @@ use app\models\MovieTheaters;
 use app\models\Halls;
 use app\models\Sessions;
 use app\models\Movies;
-
 use frontend\components\CacheDuration;
 use frontend\components\MovieTheater;
 
@@ -47,34 +46,38 @@ class SiteController extends Controller
                 $j++;
             } else $dayList['empty_day'][$i] = false;
 
+        $futureMovies = Movies::find()->where('release_date > :date', [':date' => $sessions? $sessions[count($sessions) - 1]['date'] : date('Y-m-d')])->with('genres')->asArray()->all();
 
         return $this->render('index', [
             'dayList' => $dayList,
+            'futureMovies' => $futureMovies,
         ]);
     }
 
     public function actionFilm($id)
     {
-        $sessions = MovieTheater::getSessionById($id);
-        $movie = MovieTheater::getMoviesForThisSession($sessions);
+        $movie = Movies::find()->where('id = :id', [':id' => $id])->with('galleries', 'countries', 'genres', 'actors', 'directors')->asArray()->one();
 
-        if (!$movie){
-            return $this->goHome();
-        }
+        if(!$movie) return $this->goHome();
 
-        $imagesPath = MovieTheater::getImagesPathFromGalleryByMovieId($movie[0]['id']);
+        $sessions = Sessions::find()
+            ->with('time')
+            ->where(['>', 'date', '2020-04-30'])
+            ->andWhere(['movie_id' => $movie['id']])
+            ->asArray()
+            ->all();
 
+        $dayList = $sessions ? MovieTheater::generateDayList(count($sessions), $sessions[0]['date']) : '';
         return $this->render('film', [
             'sessions' => $sessions,
-            'movie' => $movie[0],
-            'imagesPath' => $imagesPath,
+            'movie' => $movie,
+            'dayList' => $dayList,
         ]);
     }
 
     public function actionMovies()
     {
         $post = Yii::$app->request->post();
-
         $post['date'] = '2020-05-04';
 
         if (!isset($post['date']))
@@ -84,18 +87,18 @@ class SiteController extends Controller
             ->with('time', 'timePrices')
             ->where(['date' => $post['date']])
             ->andWhere(['hall_id' => array_map(
-            'intval', ArrayHelper::getColumn(
-                        Halls::find()
-                            ->select('id')
-                            ->where(['movie_theaters_id' => MovieTheaters::find()
-                                    ->select(['id'])
-                                    ->where(['subdomain_name' => Yii::$app->session->get('subdomain')])
-                                    ->one()]
-                            )->asArray()
-                            ->all(), 'id'
-                        )
-                    )
-                ])->asArray()
+                'intval', ArrayHelper::getColumn(
+                Halls::find()
+                    ->select('id')
+                    ->where(['movie_theaters_id' => MovieTheaters::find()
+                            ->select(['id'])
+                            ->where(['subdomain_name' => Yii::$app->session->get('subdomain')])
+                            ->one()]
+                    )->asArray()
+                    ->all(), 'id'
+            )
+            )
+            ])->asArray()
             ->all();
 
         $movies = Movies::find()

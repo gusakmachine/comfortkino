@@ -19,7 +19,7 @@ class AdsWidget extends Widget
             ->with('type')
             ->where(['visibility' => 1])
             ->asArray()
-            ->orderBy('type_id')
+            ->orderBy('movie_id')
             ->all();
 
         usort($ads, function($a, $b) {
@@ -40,26 +40,26 @@ class AdsWidget extends Widget
             ->asArray()
             ->all();
 
-        $renderedAds = [];
+        for ($i = 0, $j = 0, $k = 0; $i < count($ads); $i++) {
+            $ads[$i]['counter_time'] = 0;
+            if ($ads[$i]['movie_id'] == $movies[$j]['id']) {
+                $ads[$i]['movie'] = $movies[$j];
 
-        /*for ($i = 0, $startIDX = 0; ; $i++) {
-            while ($i < count($ads) && $ads[$i]['type']['name'] == $ads[$startIDX]['type']['name'])
-                $i++;
+                for ( ; $k < count($sessions); $k++) {
+                    if ($movies[$j]['id'] != $sessions[$k]['movie_id'])
+                        break;
 
-            $renderedAds[$ads[$startIDX]['type']['name']] = $this->render($ads[$startIDX]['type']['name'], [
-                'ads' => $ads,
-                'sessions' => $sessions,
-                'movies' => $movies,
-                'startIDX' => $startIDX,
-                'endIDX' => $i,
-            ]);
+                    $ads[$i]['sessions'][] = $sessions[$k];
+                    $ads[$i]['counter_time'] += count($sessions[$k]['time']);
+                }
 
-            if ($i == count($ads))
-                break;
+                if ($j < count($movies) - 1)
+                    $j++;
+            }
+        }
 
-            $startIDX = $i;
-        }*/
-
-        //print_r($renderedAds);
+        return $this->render('index', [
+            'ads' => $ads,
+        ]);
     }
 }
