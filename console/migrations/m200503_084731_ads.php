@@ -19,7 +19,7 @@ class m200503_084731_ads extends Migration
             'movie_theater_id' => $this->integer(),
             'movie_id' => $this->integer(),
             'visibility' => $this->boolean(),
-            'content' => $this->text(),
+            'json_content' => $this->json(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
