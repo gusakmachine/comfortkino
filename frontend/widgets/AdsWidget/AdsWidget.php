@@ -9,21 +9,19 @@ use yii\helpers\ArrayHelper;
 use app\models\Ads;
 use app\models\Movies;
 use app\models\Sessions;
-use function foo\func;
 
 class AdsWidget extends Widget
 {
     public function run()
     {
         $ads = Ads::find()
-            ->with('type')
             ->where(['visibility' => 1])
             ->asArray()
             ->orderBy('movie_id')
             ->all();
 
         usort($ads, function($a, $b) {
-           return ($a['type']['pos_index'] > $b['type']['pos_index'])? 1 : 0;
+           return ($a['page_pos'] > $b['page_pos'])? 1 : 0;
         });
 
         $movies = Movies::find()

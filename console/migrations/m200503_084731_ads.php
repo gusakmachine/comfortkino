@@ -14,29 +14,16 @@ class m200503_084731_ads extends Migration
     {
         $this->createTable('ads', [
             'id' => $this->primaryKey(),
-            'type_id' => $this->integer(),
-            'visibility' => $this->boolean(),
+            'render_file_name' => $this->string(255),
+            'page_pos' => $this->integer(),
             'movie_theater_id' => $this->integer(),
             'movie_id' => $this->integer(),
+            'visibility' => $this->boolean(),
             'content' => $this->text(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
 
-        $this->createIndex(
-            '{{%idx-ads-types_id}}',
-            '{{%ads}}',
-            'type_id'
-        );
-
-        $this->addForeignKey(
-            '{{%fk-ads-ads-types}}',
-            '{{%ads}}',
-            'type_id',
-            '{{%ads_types}}',
-            'id',
-            'CASCADE'
-        );
         $this->createIndex(
             '{{%idx-ads-movie_id}}',
             '{{%ads}}',
@@ -73,15 +60,6 @@ class m200503_084731_ads extends Migration
      */
     public function safeDown()
     {
-        $this->dropForeignKey(
-            '{{%fk-ads-ads-types}}',
-            '{{%ads}}'
-        );
-
-        $this->dropIndex(
-            '{{%idx-ads-types_id}}',
-            '{{%ads}}'
-        );
 
         $this->dropForeignKey(
             '{{%fk-ads-movie}}',

@@ -37,8 +37,14 @@
                 </div>
             </div>
         <?php else: ?>
+            <?php $ads[$startIDX]['json_content'] = json_decode($ads[$startIDX]['json_content'], true); ?>
             <div>
-                <?= $ads[$startIDX]['content'] ?>
+                <div class="owl__ad-background" style="background-image: url('/img/ads/<?= $ads[$startIDX]['json_content']['owl__ad-background']; ?>')"></div>
+                <a href="#" class="owl__ad-link">
+                    <p class="owl__ad-subtitle"><?= $ads[$startIDX]['json_content']['owl__ad-subtitle']; ?></p>
+                    <h3 class="owl__ad-title"><?= $ads[$startIDX]['json_content']['owl__ad-title']; ?></h3>
+                    <span class="owl__ad-btn btn">Подробнее</span>
+                </a>
                 <div class="owl__progress-bar">
                     <div class="owl__progress-indicator"></div>
                 </div>

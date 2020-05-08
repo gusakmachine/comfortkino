@@ -11,11 +11,12 @@ class CityComponent extends Component
 {
     public function init() {
         $subdomain = preg_replace("/\.\w+\.\w+$/",'', Yii::$app->request->getHostName());
+
         if($subdomain != Yii::$app->session->get('subdomain')){
-            $city = $this->getCityNameBySubdomain($subdomain)['name'];
-            $theater = $this->getMovieTheaterBySubdomain($subdomain);
-            if ($subdomain == $theater['subdomain_name']) {
-                Yii::$app->session->set('city', $city);
+            $city = $this->getCityNameBySubdomain($subdomain);
+            if ($city) {
+                $theater = $this->getMovieTheaterBySubdomain($subdomain);
+                Yii::$app->session->set('city', $city['name']);
                 Yii::$app->session->set('subdomain', $subdomain);
                 Yii::$app->session->set('theaterName', $theater['name']);
             } else {
