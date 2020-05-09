@@ -17,16 +17,19 @@ class AdsWidget extends Widget
         $ads = Ads::find()
             ->where(['visibility' => 1])
             ->asArray()
-            ->orderBy('movie_id')
             ->all();
 
         usort($ads, function($a, $b) {
            return ($a['page_pos'] > $b['page_pos'])? 1 : 0;
         });
 
+        for ($i = 0; $i < count($ads); $i++)
+            $ads[$i]['json_content'] = json_decode($ads[$i]['json_content'], true);
+
+
         $movies = Movies::find()
             ->with('genres')
-            ->where(['id' => array_map('intval', ArrayHelper::getColumn($ads, 'movie_id'))])
+            ->where(['id' => array_map('intval', array_column(array_column($ads, 'json_content'), 'movie_id'))]) //not sure in code
             ->asArray()
             ->all();
 
@@ -40,7 +43,7 @@ class AdsWidget extends Widget
 
         for ($i = 0, $j = 0, $k = 0; $i < count($ads); $i++) {
             $ads[$i]['counter_time'] = 0;
-            if ($ads[$i]['movie_id'] == $movies[$j]['id']) {
+            if (isset($ads[$i]['json_content']['movie_id']) && $ads[$i]['json_content']['movie_id'] == $movies[$j]['id']) {
                 $ads[$i]['movie'] = $movies[$j];
 
                 for ( ; $k < count($sessions); $k++) {

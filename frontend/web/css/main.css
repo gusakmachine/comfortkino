@@ -1,5 +1,5 @@
 html {
-    font-family: Proxima Nova, sans-serif;
+    font-family: "Raleway", sans-serif;
     color: white;
 }
 body {
@@ -58,6 +58,10 @@ body {
 }
 .header__town-link:hover {
     cursor: pointer;
+}
+.header__town {
+    font-family: Roboto;
+    font-size: .95rem;
 }
 .header__arrow-without-bottom {
     margin-left: 5px;
@@ -139,6 +143,7 @@ body {
     margin-left: 55px;
 }
 .footer__tel {
+    font-family: Roboto, sans-serif;
     font-weight: 500;
     font-size: 1.2rem;
     line-height: 1.5;

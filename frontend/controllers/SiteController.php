@@ -8,6 +8,8 @@ use app\models\MovieTheaters;
 use app\models\Halls;
 use app\models\Sessions;
 use app\models\Movies;
+use app\models\PlacesSets;
+
 use frontend\components\CacheDuration;
 use frontend\components\MovieTheater;
 
@@ -47,10 +49,12 @@ class SiteController extends Controller
             } else $dayList['empty_day'][$i] = false;
 
         $futureMovies = Movies::find()->where('release_date > :date', [':date' => $sessions? $sessions[count($sessions) - 1]['date'] : date('Y-m-d')])->with('genres')->asArray()->all();
+        $halls = Halls::find()->with('placesSets')->where(['id' => Yii::$app->cityComponent->getMovieTheaterBySubdomain(Yii::$app->session->get('subdomain'))['id']])->asArray()->all();
 
         return $this->render('index', [
             'dayList' => $dayList,
             'futureMovies' => $futureMovies,
+            'halls' => $halls,
         ]);
     }
 
@@ -78,7 +82,7 @@ class SiteController extends Controller
     public function actionMovies()
     {
         $post = Yii::$app->request->post();
-        $post['date'] = '2020-05-04';
+        //$post['date'] = '2020-05-04';
 
         if (!isset($post['date']))
             return null;

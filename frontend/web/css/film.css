@@ -137,14 +137,14 @@
     align-items: center;
     height: 3rem;
     line-height: 3rem;
-    font-family: "Proxima Nova Light", sans-serif;
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
     font-size: 13px;
     border-radius: 50px;
     background: #30a6f1;
     color: white;
 }
 .film__trailer-title {
-    font-family: "Proxima Nova", sans-serif;
     font-size: 1rem;
 }
 .film__trailer-svg {
@@ -200,13 +200,6 @@
 }
 .film__session-time {
     margin-bottom: 2px;
-    font-size: 1rem;
-    font-weight: 100;
-}
-.film__session-price {
-    font-size: .75rem;
-    font-weight: 100;
-    opacity: .7;
 }
 .film__upcoming-sessions {
     margin-bottom: 18px;
@@ -218,7 +211,8 @@
     bottom: 0;
     background: #fff;
     color: #30a6f1;
-    font-family: "Proxima Nova Light", sans-serif;
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
     font-size: .95rem;
     padding: 1rem 1.5rem 1rem 1.5rem;
     border-radius: 50px;

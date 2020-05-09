@@ -27,7 +27,7 @@ class CityComponent extends Component
     }
 
     public static function getMovieTheaterBySubdomain($subdomain) {
-        $sql = 'SELECT name, subdomain_name FROM movie_theaters WHERE subdomain_name = :subdomen';
+        $sql = 'SELECT * FROM movie_theaters WHERE subdomain_name = :subdomen';
         return Yii::$app->db->createCommand($sql)->bindParam(':subdomen', $subdomain)->queryOne();
     }
 

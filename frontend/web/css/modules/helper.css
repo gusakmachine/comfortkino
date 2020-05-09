@@ -45,10 +45,21 @@
     align-items: center;
     height: 3rem;
     line-height: 3rem;
-    font-family: "Proxima Nova Light", sans-serif;
     border-radius: 50px;
     background: #30a6f1;
     color: white;
+}
+
+.session-time {
+    font-size: 0.95rem;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+}
+.session-price {
+    font-size: .75rem;
+    font-weight: 100;
+    font-family: Roboto, sans-serif;
+    opacity: .7;
 }
 
 .rub:after{ content:' ₽'; }

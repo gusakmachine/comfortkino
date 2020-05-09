@@ -170,11 +170,10 @@ $(document).ready(function(){
         $(this).addClass('day--active');
 
         date = $(this).attr('data-date');
-
-        console.log(!sessions[date])
-        if (!sessions[date])
+        
+        if (!sessions[date]) {
             getMoviesForThisDay(date);
-        else addMoviesForThisDay();
+        } else addMoviesForThisDay();
     });
 
     // Section soon: hide-show posters
@@ -194,5 +193,4 @@ $(document).ready(function(){
     });
 
     getMoviesForThisDay();
-
 });

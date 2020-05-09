@@ -1,6 +1,6 @@
 <div class="info-carousel owl-carousel">
     <?php for ( ; $startIDX < $endIDX; $startIDX++): ?>
-        <?php if ($ads[$startIDX]['movie_id']): ?>
+        <?php if (isset($ads[$startIDX]['json_content']['movie_id'])): ?>
             <div>
                 <div class="owl-item__blurred-img" style="background-image: url(img/mob_poster/<?= $ads[$startIDX]['movie']['mob_poster'] ?>)"></div>
                 <a href="#" class="owl-item__film-poster" style="background-image: url(img/posters/<?= $ads[$startIDX]['movie']['poster'] ?>)"></a>
@@ -10,7 +10,7 @@
                         <h1 class="film__title"><?= $ads[$startIDX]['movie']['title'] ?></h1>
                     </a>
                     <div class="film__short-info">
-                        <a href="<?= $ads[$startIDX]['movie']['trailer'] ?>" class="film__trailer">Смотреть трейлер</a>
+                        <a href="<?= $ads[$startIDX]['movie']['trailer'] ?>" class="film__trailer btn">Смотреть трейлер</a>
                         <span class="film__age-rating"><?= $ads[$startIDX]['movie']['age'] ?>+</span>
                     </div>
                     <?php if(isset($ads[$startIDX]['sessions'][0])): ?>
@@ -18,13 +18,13 @@
                         <div class="flex-wrapper">
                             <?php for ($k = 0; $k < count($ads[$startIDX]['sessions'][0]['time']); $k++): ?>
                                 <button class="film__sessions-info" data-SH="#popup">
-                                    <span class="film__session-time"><?= date('H:i', strtotime($ads[$startIDX]['sessions'][0]['time'][$k]['time'])); ?></span>
-                                    <span class="film__session-price">от <?= $ads[$startIDX]['sessions'][0]['timePrices'][$k]['price'] ?> ₽</span>
+                                    <span class="film__session-time session-time"><?= date('H:i', strtotime($ads[$startIDX]['sessions'][0]['time'][$k]['time'])); ?></span>
+                                    <span class="film__session-price session-price">от <?= $ads[$startIDX]['sessions'][0]['timePrices'][$k]['price'] ?> ₽</span>
                                 </button>
                             <?php endfor; ?>
                             <?php if ($ads[$startIDX]['counter_time'] > 0): ?>
                                 <a href="#" class="film__sessions-info blue">
-                                    <span class="film__session-time__more">Ещё <?= $ads[$startIDX]['counter_time'] ?></span>
+                                    <span class="film__session-time session-time__more">Ещё <?= $ads[$startIDX]['counter_time'] ?></span>
                                 </a>
                             <?php endif; ?>
                         </div>
@@ -37,7 +37,6 @@
                 </div>
             </div>
         <?php else: ?>
-            <?php $ads[$startIDX]['json_content'] = json_decode($ads[$startIDX]['json_content'], true); ?>
             <div>
                 <div class="owl__ad-background" style="background-image: url('/img/ads/<?= $ads[$startIDX]['json_content']['owl__ad-background']; ?>')"></div>
                 <a href="#" class="owl__ad-link">

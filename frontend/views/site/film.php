@@ -31,7 +31,7 @@ FilmAsset::register($this);
                 </p>
                 <h1 class="film__title"><?= $movie['title'] ?></h1>
             </div>
-            <a class="film__trailer" href="<?= $movie['trailer'] ?>">
+            <a class="film__trailer btn" href="<?= $movie['trailer'] ?>">
                 <span class="film__trailer-title">Трейлер</span>
                 <svg class="film__trailer-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="white">
                     <path d="M9.4 6l-7.7 3.9c-.4.2-.8.2-1.2 0-.3-.3-.5-.6-.5-1v-7.8c0-.4.2-.8.6-1 .4-.2.8-.2 1.2 0l7.6 3.9c.6.3.8.9.5 1.5-.1.2-.3.4-.5.5z"></path>
@@ -44,8 +44,8 @@ FilmAsset::register($this);
                 <div class="flex-wrapper">
                     <?php for ($i = 0 ; $i < count($session['time']); $i++): ?>
                         <button class="film__sessions-info" data-SH="#popup">
-                            <span class="film__session-time"><?= date('H:i', strtotime($session['time'][$i]['time'])); ?></span>
-                            <span class="film__session-price">от <?= $session['base_price'] ?> ₽</span>
+                            <span class="film__session-time session-time"><?= date('H:i', strtotime($session['time'][$i]['time'])); ?></span>
+                            <span class="film__session-price session-price">от <?= $session['base_price'] ?> ₽</span>
                         </button>
                     <?php endfor; ?>
                 </div>

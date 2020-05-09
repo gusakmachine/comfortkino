@@ -31,8 +31,8 @@
             <div class="flex-wrapper">
                 <?php for ($sessions_timeIDX = 0 ; $sessions_timeIDX < count($sessions[$i]['time']); $sessions_timeIDX++): ?>
                     <button class="film__sessions-info" data-SH="#popup">
-                        <span class="film__session-time"><?= date('H:i', strtotime($sessions[$i]['time'][$sessions_timeIDX]['time'])); ?></span>
-                        <span class="film__session-price">от <?= $sessions[$i]['timePrices'][$sessions_timeIDX]['price'] ?> ₽</span>
+                        <span class="film__session-time session-time"><?= date('H:i', strtotime($sessions[$i]['time'][$sessions_timeIDX]['time'])); ?></span>
+                        <span class="film__session-price session-price">от <?= $sessions[$i]['timePrices'][$sessions_timeIDX]['price'] ?> ₽</span>
                     </button>
                 <?php endfor; ?>
             </div>

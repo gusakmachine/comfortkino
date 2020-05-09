@@ -1,5 +1,4 @@
 <?php for ( ; $startIDX < $endIDX; $startIDX++): ?>
-    <?php $ads[$startIDX]['json_content'] = json_decode($ads[$startIDX]['json_content'], true); ?>
     <div class="attention-note" style="background: <?= $ads[$startIDX]['json_content']['background-color']; ?>">
         <div class="container">
             <p class="note__txt">

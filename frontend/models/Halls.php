@@ -12,7 +12,8 @@ use Yii;
  * @property int|null $movie_theaters_id
  *
  * @property MovieTheaters $movieTheaters
- * @property HallsPlaces[] $hallsPlaces
+ * @property HallsPlacesSets[] $hallsPlacesSets
+ * @property PlacesSets[] $placesSets
  * @property Sessions[] $sessions
  * @property Tickets[] $tickets
  */
@@ -60,13 +61,23 @@ class Halls extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[HallsPlaces]].
+     * Gets query for [[HallsPlacesSets]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getHallsPlaces()
+    public function getHallsPlacesSets()
     {
-        return $this->hasMany(HallsPlaces::className(), ['hall_id' => 'id']);
+        return $this->hasMany(HallsPlacesSets::className(), ['halls_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[PlacesSets]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlacesSets()
+    {
+        return $this->hasMany(PlacesSets::className(), ['set_id' => 'places_sets_id'])->viaTable('halls_places_sets', ['halls_id' => 'id']);
     }
 
     /**
