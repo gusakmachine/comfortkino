@@ -25,7 +25,7 @@ MainAsset::register($this);
                 <?php endfor; ?>
             </nav>
         </div>
-        <button class="day-list__btn --next <?= count($dayList['date']) > 8? 'disabled' : '' ?>"><svg class="day-list__svg--right"><use href="/img/static/icons/icons.svg#arrow-empty"></use></svg></button>
+        <button class="day-list__btn --next <?= count($dayList['date']) > 9? '' : 'disabled' ?>"><svg class="day-list__svg--right"><use href="/img/static/icons/icons.svg#arrow-empty"></use></svg></button>
     </div>
     <div class="films"></div>
 </section>

@@ -170,7 +170,7 @@ $(document).ready(function(){
         $(this).addClass('day--active');
 
         date = $(this).attr('data-date');
-        
+
         if (!sessions[date]) {
             getMoviesForThisDay(date);
         } else addMoviesForThisDay();
