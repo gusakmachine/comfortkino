@@ -107,6 +107,6 @@ class PlacesSets extends \yii\db\ActiveRecord
      */
     public function getTickets()
     {
-        return $this->hasMany(Tickets::className(), ['place_id' => 'id']);
+        return $this->hasOne(Tickets::className(), ['place_id' => 'id']);
     }
 }

@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Class m200426_142606_tickets
  */
-class m200426_142634_tickets extends Migration
+class m200428_142708_tickets extends Migration
 {
     /**
      * {@inheritdoc}
@@ -21,6 +21,7 @@ class m200426_142634_tickets extends Migration
             'hall_id' => $this->integer(),
             'movie_theaters_id' => $this->integer(),
             'city_id' => $this->integer(),
+            'time_id' => $this->integer(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
@@ -108,6 +109,19 @@ class m200426_142634_tickets extends Migration
             'id',
             'CASCADE'
         );
+        $this->createIndex(
+            '{{%idx-tickets-time_id}}',
+            '{{%tickets}}',
+            'time_id'
+        );
+        $this->addForeignKey(
+            '{{%fk-tickets-time_id}}',
+            '{{%tickets}}',
+            'time_id',
+            '{{%time}}',
+            'id',
+            'CASCADE'
+        );
     }
 
     /**
@@ -115,6 +129,15 @@ class m200426_142634_tickets extends Migration
      */
     public function safeDown()
     {
+        $this->dropForeignKey(
+            '{{%fk-tickets-time_id}}',
+            '{{%tickets}}'
+        );
+        $this->dropIndex(
+            '{{%idx-tickets-time_id}}',
+            '{{%tickets}}'
+        );
+
         $this->dropForeignKey(
             '{{%fk-tickets-movie_theaters_id}}',
             '{{%tickets}}'
@@ -161,11 +184,11 @@ class m200426_142634_tickets extends Migration
         );
 
         $this->dropForeignKey(
-            '{{%fk-tickets-city_id}}',
+            '{{%fk-tickets-sessions_id}}',
             '{{%tickets}}'
         );
         $this->dropIndex(
-            '{{%idx-tickets-city_id}}',
+            '{{%idx-tickets-sessions_id}}',
             '{{%tickets}}'
         );
 

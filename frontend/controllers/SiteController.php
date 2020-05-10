@@ -1,7 +1,9 @@
 <?php
+
 namespace frontend\controllers;
 
 use app\models\PlacePrices;
+use app\models\Tickets;
 use Yii;
 use yii\web\Controller;
 
@@ -49,7 +51,7 @@ class SiteController extends Controller
                 $j++;
             } else $dayList['empty_day'][$i] = false;
 
-        $futureMovies = Movies::find()->where('release_date > :date', [':date' => $sessions? $sessions[count($sessions) - 1]['date'] : date('Y-m-d')])->with('genres')->asArray()->all();
+        $futureMovies = Movies::find()->where('release_date > :date', [':date' => $sessions ? $sessions[count($sessions) - 1]['date'] : date('Y-m-d')])->with('genres')->asArray()->all();
 
         return $this->render('index', [
             'dayList' => $dayList,
@@ -61,7 +63,7 @@ class SiteController extends Controller
     {
         $movie = Movies::find()->where('id = :id', [':id' => $id])->with('galleries', 'countries', 'genres', 'actors', 'directors')->asArray()->one();
 
-        if(!$movie) return $this->goHome();
+        if (!$movie) return $this->goHome();
 
         $sessions = Sessions::find()
             ->with('time', 'timePrices')
@@ -81,7 +83,7 @@ class SiteController extends Controller
     public function actionMovies()
     {
         $post = Yii::$app->request->post();
-        $post['date'] = '2020-05-09';
+        $post['date'] = '2020-05-11';
 
         if (!isset($post['date']))
             return null;
@@ -115,27 +117,34 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionTickets($sessionID = 1, $sessionTimeIDX = 1){
-        $session = Sessions::find()->with('time','timePrices')->where(['id' => $sessionID])->asArray()->one();
-        $hall = Halls::find()->with('placesSets')->where(['id' => $session['hall_id']])->asArray()->one();
-        $movie = Movies::find()->where(['id' => $session['movie_id']])->asArray()->one();
-        $hall['placesSets'] = PlacesSets::find()->with('colors', 'placePrice')->where(['set_id' => $hall['placesSets'][0]['set_id']])->orderBy('row')->asArray()->all(); // Shit, repair this fucking shit motherfuckers
+    public function actionTickets()
+    {
+        $formData = Yii::$app->request->post();
 
-        $prices = array_unique(array_column(array_column($hall['placesSets'], 'placePrice'),'price'));
-        $colors = array_unique(array_column(array_column($hall['placesSets'], 'colors'),'color'));
+        $session = Sessions::find()->with('time', 'timePrices', 'tickets')->where(['id' => $formData['sessionID']])->asArray()->one();
+        $hall = Halls::find()->with('placesSets')->where(['id' => $session['hall_id']])->asArray()->one();
+        $hall['placesSets'] = PlacesSets::find()->with('colors', 'placePrice', 'tickets')->where(['set_id' => $hall['placesSets'][0]['set_id']])->orderBy('row')->asArray()->all(); // Shit, repair this fucking shit motherfuckers
+
+        $movie = Movies::find()->where(['id' => $session['movie_id']])->asArray()->one();
+
+        $prices = array_unique(array_column(array_column($hall['placesSets'], 'placePrice'), 'price'));
+        $colors = array_unique(array_column(array_column($hall['placesSets'], 'colors'), 'color'));
 
         for ($i = 0; $i < count($hall['placesSets']); $i++)
             $hall['placesSets'][$i]['graphic_display'] = json_decode($hall['placesSets'][$i]['graphic_display'], true);
 
-        //print_r($hall['placesSets']);
+
 
         return $this->renderAjax('tickets', [
             'session' => $session,
             'hall' => $hall,
             'movie' => $movie,
-            'sessionTimeIDX' => $sessionTimeIDX,
+            'sessionTimeIDX' => $formData['timeID'],
             'prices' => $prices,
             'colors' => $colors,
+            'movieTheater' => Yii::$app->cityComponent->getMovieTheaterBySubdomain(Yii::$app->session->get('subdomain'))
         ]);
     }
 }
+
+

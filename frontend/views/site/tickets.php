@@ -20,9 +20,9 @@
     <div class="popup__timetable">
         <div class="flex-wrapper">
             <?php for ($i = 0; $i < count($session['time']); $i++): ?>
-                <button class="popup__timetable-link film__sessions-info" data-SH="#popup">
-                    <span class="popup__timetable-time film__session-time session-time"><?= date('H:i', strtotime($session['time'][$sessionTimeIDX]['time'])); ?></span>
-                    <span class="popup__timetable-price film__session-price session-price rub">от <?= $session['timePrices'][$sessionTimeIDX]['price'] ?></span>
+                <button class="popup__timetable-link film__sessions-info" data-sessionID="<?= $session['id'] ?>" data-timeID="<?= $i ?>">
+                    <span class="popup__timetable-time film__session-time session-time"><?= date('H:i', strtotime($session['time'][$i]['time'])); ?></span>
+                    <span class="popup__timetable-price film__session-price session-price rub">от <?= $session['timePrices'][$i]['price'] ?></span>
                 </button>
             <?php endfor; ?>
         </div>
@@ -45,15 +45,25 @@
                 <div id="scheme__body" class="scheme__body">
                     <div id="scheme-menu" class="scheme-menu">
                         <?php for($i = 0; $i < count($hall['placesSets']); $i++): ?>
+                            <?php
+                                $isSold = false;
+                                if ($hall['placesSets'][$i]['tickets']
+                                    && $hall['placesSets'][$i]['tickets']['time_id'] == $session['time'][$sessionTimeIDX]['id']
+                                    && $hall['placesSets'][$i]['tickets']['sessions_id'] == $session['id']
+                                    && $hall['placesSets'][$i]['tickets']['movie_theaters_id'] == $movieTheater['id']
+                                    && $hall['placesSets'][$i]['tickets']['hall_id'] == $session['hall_id'])
+                                    { $isSold = true; }
+                            ?>
+
                             <?php if (!isset($hall['placesSets'][$i + 1]['row']) || ($i + 1 < count($hall['placesSets']) && $hall['placesSets'][$i]['row'] != $hall['placesSets'][$i + 1]['row'])): ?>
                                 <span class="place-row" style="left: 0; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;"><?= $hall['placesSets'][$i]['row'] ?></span>
                                 <span class="place-row" style="left: 100%; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;"><?= $hall['placesSets'][$i]['row'] ?></span>
                             <?php endif; ?>
-                            <button class="place scheme-menuplace" style="background: <?=  $hall['placesSets'][$i]['colors']['color'] ?> ;left: <?=  $hall['placesSets'][$i]['graphic_display']['left'] ?>px; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;">
+                            <button class="place scheme-menu__place" <?= $isSold ? 'data-sold="true"' : ''?> style="<?= $isSold ? '' : 'background: ' . $hall['placesSets'][$i]['colors']['color'] . ';' ?> left: <?=  $hall['placesSets'][$i]['graphic_display']['left'] ?>px; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;">
                                 <span class="placenumber"><?=  $hall['placesSets'][$i]['place'] ?></span>
                                 <div class="popover">
                                     <span class="big rub"><?= $session['timePrices'][$sessionTimeIDX]['price'] +  $hall['placesSets'][$i]['placePrice']['price'] ?></span>
-                                    <span><?=  $hall['placesSets'][$i]['row'] . 'ряд, ' .  $hall['placesSets'][$i]['place'] . 'место' ?></span>
+                                    <span><?=  $hall['placesSets'][$i]['row'] . ' ряд, ' .  $hall['placesSets'][$i]['place'] . ' место' ?></span>
                                 </div>
                             </button>
                         <?php endfor; ?>

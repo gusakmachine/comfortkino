@@ -4,22 +4,16 @@ $(document).ready(function() {
     var schemeScale = 1;
     var schemeScaleMultiplier = 0.25;
 
-    var orderPlacesCount = 0;
-    var orderPlacesPrice = 0;
-    var placePrices = [];
-
-    // parse tickets prices
-    $('.scheme-ticket__price.rub').each(function () {
-        placePrices.push(parseInt($(this).html()));
-    });
+    var orderPlacesCount;
+    var orderPlacesPrice;
 
     // scheme approximation
-    $('#scheme__control-plus').click(function () {
+    $('#popup-tickets').on('click', '#scheme__control-plus', function () {
         $('#scheme__body').css('transform', 'scale(' + (schemeScale < schemeMaxScale ? schemeScale += schemeScaleMultiplier : schemeMaxScale) + ')');
     });
 
     // scheme estrangement
-    $('#scheme__control-minus').click(function () {
+    $('#popup-tickets').on('click', '#scheme__control-minus', function () {
         $('#scheme__body').css('transform', 'scale(' + (schemeScale > schemeMinScale ? schemeScale -= schemeScaleMultiplier : schemeMinScale) + ')');
     });
 
@@ -30,15 +24,14 @@ $(document).ready(function() {
             $(this).toggleClass('place--active')
 
             if ($(this).hasClass("place--active")) {
-                orderPlacesPrice += placePrices[parseInt($(this).attr('data-price'))];
+                orderPlacesPrice += parseInt($(this).find('.big.rub').text());
                 orderPlacesCount++;
-
             } else {
-                orderPlacesPrice -= placePrices[parseInt($(this).attr('data-price'))];
+                orderPlacesPrice -= parseInt($(this).find('.big.rub').text());
                 orderPlacesCount--;
             }
         }
-        $('#tickets__result').html(orderPlacesCount == 0 ? "Выберите места" : orderPlacesCount + pluralForm(orderPlacesCount, " билет", " билета", " билетов") + " за " + orderPlacesPrice + " руб.")
+        $('#tickets__result').html(orderPlacesCount === 0 ? "Выберите места" : orderPlacesCount + pluralForm(orderPlacesCount, " билет", " билета", " билетов") + " за " + orderPlacesPrice + " руб.")
     });
 
     /** Declension of Nouns with Numerals
@@ -53,7 +46,7 @@ $(document).ready(function() {
         var n1 = n % 10;
         if (n > 10 && n < 20) return form5;
         if (n1 > 1 && n1 < 5) return form2;
-        if (n1 == 1) return form1;
+        if (n1 === 1) return form1;
         return form5;
     }
 
@@ -61,6 +54,10 @@ $(document).ready(function() {
 
     function getPopupTickets(sessionID, timeID) {
         $('#popup-tickets').empty();
+
+        orderPlacesCount = 0;
+        orderPlacesPrice = 0;
+
         var request = $.ajax({
             type: 'post',
             url: getTicketsURL,

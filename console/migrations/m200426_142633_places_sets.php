@@ -66,7 +66,25 @@ class m200426_142633_places_sets extends Migration
     public function safeDown()
     {
         $this->dropIndex(
-            '{{%idx-places_sets-set_id}}',
+            '{{%idx-places_sets_set_id}}',
+            '{{%places_sets}}'
+        );
+
+        $this->dropForeignKey(
+            '{{%fk-price_id}}',
+            '{{%tickets}}'
+        );
+        $this->dropIndex(
+            '{{%idx-places_sets_price_id}}',
+            '{{%places_sets}}'
+        );
+
+        $this->dropForeignKey(
+            '{{%fk-color_id}}',
+            '{{%tickets}}'
+        );
+        $this->dropIndex(
+            '{{%idx-places_sets_color_id}}',
             '{{%places_sets}}'
         );
 
