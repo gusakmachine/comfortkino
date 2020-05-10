@@ -159,6 +159,8 @@ $(document).ready(function(){
         });
     }
 
+
+
     $('.day-list').on('click', '.day', function () {
         // if the user does not scroll, show movies for this day
         if (mousemove) {
@@ -193,4 +195,5 @@ $(document).ready(function(){
     });
 
     getMoviesForThisDay();
+
 });

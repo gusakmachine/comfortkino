@@ -42,10 +42,10 @@ FilmAsset::register($this);
             <?php foreach ($sessions as $key => $session): ?>
                 <span class="film__day-name"><?= $dayList[$key]['day-of-week'] ?></span>
                 <div class="flex-wrapper">
-                    <?php for ($i = 0 ; $i < count($session['time']); $i++): ?>
-                        <button class="film__sessions-info" data-SH="#popup">
-                            <span class="film__session-time session-time"><?= date('H:i', strtotime($session['time'][$i]['time'])); ?></span>
-                            <span class="film__session-price session-price">от <?= $session['base_price'] ?> ₽</span>
+                    <?php for ($sessions_timeIDX = 0 ; $sessions_timeIDX < count($session['time']); $sessions_timeIDX++): ?>
+                        <button class="film__sessions-info" data-SH="#popup-tickets" data-sessionID="<?= $session['id'] ?>" data-timeID="<?= $sessions_timeIDX ?>">
+                            <span class="film__session-time session-time"><?= date('H:i', strtotime($session['time'][$sessions_timeIDX]['time'])); ?></span>
+                            <span class="film__session-price session-price">от <?= $session['timePrices'][$sessions_timeIDX]['price'] ?> ₽</span>
                         </button>
                     <?php endfor; ?>
                 </div>

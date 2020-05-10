@@ -10,13 +10,15 @@ use Yii;
  * @property int $id
  * @property int|null $place
  * @property int|null $row
- * @property int|null $graphic_place
- * @property int|null $graphic_row
- * @property int|null $price
+ * @property string|null $graphic_display
  * @property int|null $set_id
+ * @property int|null $price_id
+ * @property int|null $color_id
  *
  * @property HallsPlacesSets[] $hallsPlacesSets
  * @property Halls[] $halls
+ * @property Colors $color
+ * @property PlacePrices $price
  * @property Tickets[] $tickets
  */
 class PlacesSets extends \yii\db\ActiveRecord
@@ -35,7 +37,10 @@ class PlacesSets extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['place', 'row', 'graphic_place', 'graphic_row', 'price', 'set_id'], 'integer'],
+            [['place', 'row', 'set_id', 'price_id', 'color_id'], 'integer'],
+            [['graphic_display'], 'string'],
+            [['color_id'], 'exist', 'skipOnError' => true, 'targetClass' => Colors::className(), 'targetAttribute' => ['color_id' => 'id']],
+            [['price_id'], 'exist', 'skipOnError' => true, 'targetClass' => PlacePrices::className(), 'targetAttribute' => ['price_id' => 'id']],
         ];
     }
 
@@ -48,10 +53,10 @@ class PlacesSets extends \yii\db\ActiveRecord
             'id' => 'ID',
             'place' => 'Place',
             'row' => 'Row',
-            'graphic_place' => 'Graphic Place',
-            'graphic_row' => 'Graphic Row',
-            'price' => 'Price',
+            'graphic_display' => 'Graphic Display',
             'set_id' => 'Set ID',
+            'price_id' => 'Price ID',
+            'color_id' => 'Color ID',
         ];
     }
 
@@ -73,6 +78,26 @@ class PlacesSets extends \yii\db\ActiveRecord
     public function getHalls()
     {
         return $this->hasMany(Halls::className(), ['id' => 'halls_id'])->viaTable('halls_places_sets', ['places_sets_id' => 'set_id']);
+    }
+
+    /**
+     * Gets query for [[Color]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getColors()
+    {
+        return $this->hasOne(Colors::className(), ['id' => 'color_id']);
+    }
+
+    /**
+     * Gets query for [[Price]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlacePrice()
+    {
+        return $this->hasOne(PlacePrices::className(), ['id' => 'price_id']);
     }
 
     /**

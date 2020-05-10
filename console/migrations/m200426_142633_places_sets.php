@@ -16,10 +16,10 @@ class m200426_142633_places_sets extends Migration
             'id' => $this->primaryKey(),
             'place' => $this->integer(),
             'row' => $this->integer(),
-            'graphic_place' => $this->integer(),
-            'graphic_row' => $this->integer(),
-            'price' => $this->integer(),
+            'graphic_display' => $this->json(),
             'set_id' => $this->integer(),
+            'price_id' => $this->integer(),
+            'color_id' => $this->integer(),
         ]);
 
         $this->createIndex(
@@ -27,6 +27,37 @@ class m200426_142633_places_sets extends Migration
             '{{%places_sets}}',
             'set_id'
         );
+
+        $this->createIndex(
+            '{{%idx-places_sets_price_id}}',
+            '{{%places_sets}}',
+            'price_id'
+        );
+
+        $this->addForeignKey(
+            '{{%fk-price_id}}',
+            '{{%places_sets}}',
+            'price_id',
+            '{{%place_prices}}',
+            'id',
+            'CASCADE'
+        );
+
+        $this->createIndex(
+            '{{%idx-places_sets_color_id}}',
+            '{{%places_sets}}',
+            'color_id'
+        );
+
+        $this->addForeignKey(
+            '{{%fk-color_id}}',
+            '{{%places_sets}}',
+            'color_id',
+            '{{%colors}}',
+            'id',
+            'CASCADE'
+        );
+
     }
 
     /**
