@@ -24,7 +24,8 @@ $(document).ready(function() {
     });
 
     // tickets Prices
-    $('.scheme-menu__place').click(function (e) {
+    $('#popup-tickets').on('click', '.scheme-menu__place', function (e) {
+        console.log('tada');
         if (!$(this).attr('data-sold')) {
 
             $(this).toggleClass('place--active')
@@ -56,4 +57,34 @@ $(document).ready(function() {
         if (n1 == 1) return form1;
         return form5;
     }
+
+
+
+    function getPopupTickets(sessionID, timeID) {
+        $('#popup-tickets').empty();
+        var request = $.ajax({
+            type: 'post',
+            url: getTicketsURL,
+            data: {
+                sessionID: sessionID,
+                timeID: timeID
+            }
+        });
+        request.done(function (data) {
+            if (data) {
+                $('#popup-tickets').append(data);
+            } else {
+                $('#popup-tickets').append('<span class="popup-tickets__error">Нет данных</span>');
+            }
+        });
+
+        request.fail(function () {
+            $('#popup-tickets').append('<span class="popup-tickets__error">Тех. неполадка</span>');
+        });
+    }
+
+    $('body').on('click', '.film__sessions-info', function () {
+        getPopupTickets($(this).attr('data-sessionid'), $(this).attr('data-timeid'));
+    });
+
 });

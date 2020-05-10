@@ -15,7 +15,6 @@ class m200426_142559_sessions extends Migration
         $this->createTable('sessions', [
             'id' => $this->primaryKey(),
             'date' => $this->date(),
-            'base_price' => $this->integer(),
             'movie_id' => $this->integer(),
             'hall_id' => $this->integer(),
         ]);

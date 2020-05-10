@@ -44,6 +44,7 @@ return [
             'rules' => [
                 '/film/<id:\d+>' => 'site/film',
                 '/movies' => 'site/movies',
+                '/tickets' => 'site/tickets',
             ],
         ],
         'cityComponent' => [

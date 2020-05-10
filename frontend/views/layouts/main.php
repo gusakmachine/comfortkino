@@ -6,7 +6,6 @@ use yii\helpers\Url;
 use frontend\assets\AppAsset;
 
 use frontend\widgets\PopupCities\PopupCities;
-use frontend\widgets\PopupTickets\PopupTickets;
 
 AppAsset::register($this);
 ?>
@@ -21,6 +20,7 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <script>
         var getMoviesURL = '<?= Url::to(['site/movies']) ?>';
+        var getTicketsURL = '<?= Url::to(['site/tickets']) ?>';
     </script>
     <?php $this->head() ?>
 </head>
@@ -28,7 +28,8 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <?= PopupCities::widget() ?>
-<?= PopupTickets::widget() ?>
+
+<div id="popup-tickets" class="popup show-hide"></div>
 
 <div class="page-background" style="background-image: url(img/background/50ee4a7ce72c7426ffe2eff30267411e.jpg)"></div>
 <header class="header">

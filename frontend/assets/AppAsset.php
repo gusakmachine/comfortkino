@@ -18,6 +18,7 @@ class AppAsset extends AssetBundle
         'css/modules/popup.css',
         'css/modules/magnific-popup.css',
         'css/main.css',
+        'css/index.css',
     ];
     public $js = [
         'js/drag-scroll.js',

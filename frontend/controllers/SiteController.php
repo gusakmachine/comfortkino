@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\PlacePrices;
 use Yii;
 use yii\web\Controller;
 
@@ -49,12 +50,10 @@ class SiteController extends Controller
             } else $dayList['empty_day'][$i] = false;
 
         $futureMovies = Movies::find()->where('release_date > :date', [':date' => $sessions? $sessions[count($sessions) - 1]['date'] : date('Y-m-d')])->with('genres')->asArray()->all();
-        $halls = Halls::find()->with('placesSets')->where(['id' => Yii::$app->cityComponent->getMovieTheaterBySubdomain(Yii::$app->session->get('subdomain'))['id']])->asArray()->all();
 
         return $this->render('index', [
             'dayList' => $dayList,
             'futureMovies' => $futureMovies,
-            'halls' => $halls,
         ]);
     }
 
@@ -82,7 +81,7 @@ class SiteController extends Controller
     public function actionMovies()
     {
         $post = Yii::$app->request->post();
-        //$post['date'] = '2020-05-04';
+        $post['date'] = '2020-05-09';
 
         if (!isset($post['date']))
             return null;
@@ -113,6 +112,30 @@ class SiteController extends Controller
         return $this->renderPartial('movies', [
             'sessions' => $sessions,
             'movies' => $movies
+        ]);
+    }
+
+    public function actionTickets($sessionID = 1, $sessionTimeIDX = 0){
+
+        $session = Sessions::find()->with('time','timePrices')->where(['id' => $sessionID])->asArray()->one();
+        $hall = Halls::find()->with('placesSets')->where(['id' => $session['hall_id']])->asArray()->one();
+        $movie = Movies::find()->where(['id' => $session['movie_id']])->asArray()->one();
+        $hall['placesSets'] = PlacesSets::find()->with('colors', 'placePrice')->where(['set_id' => $hall['placesSets'][0]['set_id']])->orderBy('row')->asArray()->all(); // Shit, repair this fucking shit motherfuckers
+
+        $prices = array_unique(array_column(array_column($hall['placesSets'], 'placePrice'),'price'));
+        $colors = array_unique(array_column(array_column($hall['placesSets'], 'colors'),'color'));
+
+
+        for ($i = 0; $i < count($hall['placesSets']); $i++)
+            $hall['placesSets'][$i]['graphic_display'] = json_decode($hall['placesSets'][$i]['graphic_display'], true);
+
+        return $this->renderAjax('tickets', [
+            'session' => $session,
+            'hall' => $hall,
+            'movie' => $movie,
+            'sessionTimeIDX' => $sessionTimeIDX,
+            'prices' => $prices,
+            'colors' => $colors,
         ]);
     }
 }

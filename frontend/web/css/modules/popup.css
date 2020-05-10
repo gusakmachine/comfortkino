@@ -48,13 +48,16 @@
 .popup__header-subtitle{
     margin: 15px 0 20px;
 }
-.popup__town-toggler .popup__town{
+.popup__town-toggler .popup__town {
     font-family: Roboto,sans-serif;
-    margin-right: 10px;
+    margin-right: 0px;
     font-size: 1.1rem;
     white-space: nowrap;
     text-align: left;
     color: rgba(4, 18, 26, 0.74);
+}
+.popup__town-toggler svg {
+    margin-right: 10px;
 }
 .popup__header-subtitle span {
     margin: 0 15px 2px 0;
@@ -179,18 +182,18 @@
     cursor: default;
 }
 .scheme-ticket__place:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 9px;
-    background: #30a6f1;
-    z-index: -1;
-    -webkit-transition: .1s ease;
-    -o-transition: .1s ease;
-    transition: .1s ease;
+    /*content: '';*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+    /*border-radius: 9px;*/
+    /*background: #30a6f1;*/
+    /*z-index: -1;*/
+    /*-webkit-transition: .1s ease;*/
+    /*-o-transition: .1s ease;*/
+    /*transition: .1s ease;*/
 }
 .scheme__body {
     width: 100%;
@@ -263,6 +266,7 @@
     -ms-flex-item-align: center;
     -ms-grid-row-align: center;
     align-self: center;
+    color: #000;
 }
 .popup-content .tickets__btn {
     border: 2px solid #e41a69;
@@ -308,19 +312,22 @@
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
 }
+.scheme-menu .place{
+    transition: 0.1s ease background-color;
+}
 .scheme-menu .place:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 9px;
-    background: #30a6f1;
-    z-index: -1;
-    -webkit-transition: .1s ease;
-    -o-transition: .1s ease;
-    transition: .1s ease
+    /*content: '';*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+    /*border-radius: 9px;*/
+    /*background: #30a6f1;*/
+    /*z-index: -1;*/
+    /*-webkit-transition: .1s ease;*/
+    /*-o-transition: .1s ease;*/
+    /*transition: .1s ease*/
 }
 .scheme-menu .place:hover:before {
     -webkit-transform: scale(1.16);
@@ -437,6 +444,7 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+    z-index: 101;
 }
 .popup-cities__top-content {
     padding-top: 150px;
