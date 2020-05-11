@@ -2,8 +2,8 @@
     <?php for ( ; $startIDX < $endIDX; $startIDX++): ?>
         <?php if (isset($ads[$startIDX]['json_content']['movie_id'])): ?>
             <div>
-                <div class="owl-item__blurred-img" style="background-image: url(img/mob_poster/<?= $ads[$startIDX]['movie']['mob_poster'] ?>)"></div>
-                <a href="#" class="owl-item__film-poster" style="background-image: url(img/posters/<?= $ads[$startIDX]['movie']['poster'] ?>)"></a>
+                <div class="owl-item__blurred-img" style="background-image: url(<?= Yii::getAlias('@mob_posters') . $ads[$startIDX]['movie']['mob_poster'] ?>)"></div>
+                <a href="#" class="owl-item__film-poster" style="background-image: url(<?= Yii::getAlias('@posters') . $ads[$startIDX]['movie']['poster'] ?>)"></a>
                 <div class="film">
                     <a href="<?= \yii\helpers\Url::to(['site/film', 'id' => $ads[$startIDX]['movie']['id']]) ?>" class="film__details-link">
                         <span class="film__genre"> <?php for($j = 0; $j < count($ads[$startIDX]['movie']['genres']); $j++) echo $ads[$startIDX]['movie']['genres'][$j]['name'] . ($j + 1 < count($ads[$startIDX]['movie']['genres'])? ', ' : ' '); ?></span>
@@ -23,7 +23,7 @@
                                 </button>
                             <?php endfor; ?>
                             <?php if ($ads[$startIDX]['counter_time'] > 0): ?>
-                                <a href="#" class="film__sessions-info blue">
+                                <a href="<?= \yii\helpers\Url::to(['site/film', 'id' => $ads[$startIDX]['movie']['id']]) ?>" class="film__sessions-info blue">
                                     <span class="film__session-time session-time__more">Ещё <?= $ads[$startIDX]['counter_time'] ?></span>
                                 </a>
                             <?php endif; ?>

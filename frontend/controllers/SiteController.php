@@ -5,7 +5,7 @@ namespace frontend\controllers;
 use app\models\PlacePrices;
 use app\models\Tickets;
 use Yii;
-use yii\web\Controller;
+use frontend\components\Controller;
 
 use app\models\MovieTheaters;
 use app\models\Halls;
@@ -30,32 +30,13 @@ class SiteController extends Controller
             ->asArray()
             ->all();
 
-        $dayList = [];
-
-        if ($sessions) {
-            $length = (
-                    strtotime($sessions[count($sessions) - 1]['date']) //get last session date
-                    - strtotime(date('Y-m-d', strtotime('- 1 day'))) //get yesterday day ('- 1 day' - count today)
-                ) / (60 * 60 * 24); //get difference in days
-        } else $length = 0;
-        $minLengthDayList = 9; //week + this day + 1 because for ($i < 9) so max $i == 8
-
-        if ($length < $minLengthDayList)
-            $length = $minLengthDayList;
-
-        $dayList['date'] = MovieTheater::generateDayList($length, date('Y-m-d'));
-
-        for ($i = 0, $j = 0; $i < $length; $i++)
-            if (isset($sessions[$j]) && $dayList['date'][$i]['Y-m-d'] == $sessions[$j]['date']) {
-                $dayList['empty_day'][$i] = true;
-                $j++;
-            } else $dayList['empty_day'][$i] = false;
-
-        $futureMovies = Movies::find()->where('release_date > :date', [':date' => $sessions ? $sessions[count($sessions) - 1]['date'] : date('Y-m-d')])->with('genres')->asArray()->all();
-
         return $this->render('index', [
-            'dayList' => $dayList,
-            'futureMovies' => $futureMovies,
+            'dayList' => MovieTheater::generateDayList(date('Y-m-d'), $sessions),
+            'futureMovies' => Movies::find() //get movies that are not added to the sessions
+                ->where('release_date > :date', [':date' => $sessions ? $sessions[count($sessions) - 1]['date'] : date('Y-m-d')])
+                ->with('genres')
+                ->asArray()
+                ->all(),
         ]);
     }
 
@@ -67,29 +48,28 @@ class SiteController extends Controller
 
         $sessions = Sessions::find()
             ->with('time', 'timePrices')
-            ->where(['>', 'date', '2020-04-30'])
+            ->where(['>', 'date', date('Y-m-d', strtotime('- 1 day'))])
             ->andWhere(['movie_id' => $movie['id']])
+            ->orderBy('date')
             ->asArray()
             ->all();
 
-        $dayList = $sessions ? MovieTheater::generateDayList(count($sessions), $sessions[0]['date']) : '';
         return $this->render('film', [
             'sessions' => $sessions,
             'movie' => $movie,
-            'dayList' => $dayList,
         ]);
     }
 
     public function actionMovies()
     {
         $post = Yii::$app->request->post();
-        $post['date'] = '2020-05-11';
+        //$post['date'] = '2020-05-11';
 
         if (!isset($post['date']))
             return null;
 
         $sessions = Sessions::find()
-            ->with('time', 'timePrices')
+            ->with('movie', 'time', 'timePrices')
             ->where(['date' => $post['date']])
             ->andWhere(['hall_id' => array_map(
                 'intval', ArrayHelper::getColumn(
@@ -132,8 +112,6 @@ class SiteController extends Controller
 
         for ($i = 0; $i < count($hall['placesSets']); $i++)
             $hall['placesSets'][$i]['graphic_display'] = json_decode($hall['placesSets'][$i]['graphic_display'], true);
-
-
 
         return $this->renderAjax('tickets', [
             'session' => $session,

@@ -16,6 +16,7 @@ class m200426_142545_movie_theaters extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(255),
             'address' => $this->string(255),
+            'gooaddress' => $this->string(255),
             'subdomain_name' => $this->string(255),
             'city_id' => $this->integer(),
         ]);

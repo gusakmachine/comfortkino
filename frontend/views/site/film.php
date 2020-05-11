@@ -40,7 +40,7 @@ FilmAsset::register($this);
         </div>
         <p class="film__description"><?= $movie['description'] ?></p>
             <?php foreach ($sessions as $key => $session): ?>
-                <span class="film__day-name"><?= $dayList[$key]['day-of-week'] ?></span>
+                <span class="film__day-name"><?= Yii::$app->formatter->asDate($session['date'], 'eeee, dd.MM') ?></span>
                 <div class="flex-wrapper">
                     <?php for ($sessions_timeIDX = 0 ; $sessions_timeIDX < count($session['time']); $sessions_timeIDX++): ?>
                         <button class="film__sessions-info" data-SH="#popup-tickets" data-sessionID="<?= $session['id'] ?>" data-timeID="<?= $sessions_timeIDX ?>">

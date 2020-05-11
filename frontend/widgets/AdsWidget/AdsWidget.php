@@ -15,6 +15,7 @@ class AdsWidget extends Widget
     public function run()
     {
         $ads = Ads::find()
+            ->with('pages')
             ->where(['visibility' => 1])
             ->asArray()
             ->all();
@@ -51,11 +52,16 @@ class AdsWidget extends Widget
                         break;
 
                     $ads[$i]['sessions'][] = $sessions[$k];
-                    $ads[$i]['counter_time'] += count($sessions[$k]['time']);
+                    if ($sessions[$k]['date'] != date('Y-m-d'))
+                        $ads[$i]['counter_time'] += count($sessions[$k]['time']);
                 }
 
                 if ($j < count($movies) - 1)
                     $j++;
+            }
+
+            foreach ($ads[$i]['pages'] as $key => $page) {
+                $ads[$i]['pages'][$key] = $page['name'];
             }
         }
 

@@ -1,11 +1,8 @@
 <?php
 use frontend\assets\MainAsset;
 
-use frontend\widgets\AdsWidget\AdsWidget;
-
 MainAsset::register($this);
 ?>
-<?= AdsWidget::widget(); ?>
 <section class="session-schedule">
     <h1 class="session-schedule__title">Расписание сеансов</h1>
     <div class="pos-relative wrapper">
