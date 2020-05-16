@@ -80,6 +80,8 @@ $(document).ready(function(){
     var mousedown = false;
     var mousemove = false;
 
+
+
     // show-hide day-list-btns
     function changeDisplayDayListBTN() {
         if (dayListWrapper.offset().left == dayList.offset().left) {
@@ -138,13 +140,17 @@ $(document).ready(function(){
         });
     }
 
+
+    var csrfParam = $('meta[name=csrf-param]').attr("content");
+    var csrfToken = $('meta[name=csrf-token]').attr("content");
     //Ajax-request and add/remove highlight
     function getMoviesForThisDay() {
         var request = $.ajax({
             type: 'post',
             url: getMoviesURL,
             data: {
-                date: date
+                date,
+                [csrfParam]: csrfToken,
             }
         });
 

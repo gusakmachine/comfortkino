@@ -16,9 +16,9 @@ class Controller extends BaseController
         $movieTheater = Yii::$app->cityComponent->getMovieTheaterBySubdomain(Yii::$app->session->get('subdomain'));
 
         $this->movieTheater = [];
-        $this->movieTheater['google-map-img'] = $movieTheater['google-map-img'];
-        $this->movieTheater['google-map-link'] = $movieTheater['google-map-link'];
-        $this->movieTheater['movie-theater-address'] = $movieTheater['address'];
+        $this->movieTheater['google-map-img'] = $movieTheater ? $movieTheater['google-map-img'] : '';
+        $this->movieTheater['google-map-link'] = $movieTheater ? $movieTheater['google-map-link'] : '';
+        $this->movieTheater['movie-theater-address'] = $movieTheater ? $movieTheater['address'] : '';
 
         return parent::beforeAction($action);
     }
