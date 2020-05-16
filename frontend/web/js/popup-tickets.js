@@ -7,6 +7,9 @@ $(document).ready(function() {
     var orderPlacesCount;
     var orderPlacesPrice;
 
+    var csrfParam = $('meta[name=csrf-param]').attr("content");
+    var csrfToken = $('meta[name=csrf-token]').attr("content");
+
     // scheme approximation
     $('#popup-tickets').on('click', '#scheme__control-plus', function () {
         $('#scheme__body').css('transform', 'scale(' + (schemeScale < schemeMaxScale ? schemeScale += schemeScaleMultiplier : schemeMaxScale) + ')');
@@ -62,8 +65,9 @@ $(document).ready(function() {
             type: 'post',
             url: getTicketsURL,
             data: {
-                sessionID: sessionID,
-                timeID: timeID
+                sessionID,
+                timeID,
+                [csrfParam]: csrfToken,
             }
         });
         request.done(function (data) {
