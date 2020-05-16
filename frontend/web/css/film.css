@@ -560,7 +560,6 @@ button.film-gallery__arrow--left:before{
         flex-direction: column;
     }
     .film__trailer {
-        /*display: none !important;*/
         width: 20%;
     }
     .film__description {

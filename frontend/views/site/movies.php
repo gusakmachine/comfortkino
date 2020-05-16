@@ -10,7 +10,15 @@
                     </span>
                 </div>
             </a>
-            <a href="#" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') .  $movies[$i]['mob_poster'] ?>)"></a>
+            <a href="#" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') .  $movies[$i]['mob_poster'] ?>)">
+                <div class="film__play-wrapper">
+                    <span class="film__play">
+                        <svg class="film__play-svg">
+                            <use href="<?= Yii::getAlias('@svg:#arrow-filled'); ?>"></use>
+                        </svg>
+                    </span>
+                </div>
+            </a>
         </div>
         <div class="film">
             <div class="top-left-content">
