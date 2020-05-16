@@ -63,7 +63,7 @@ class SiteController extends Controller
     public function actionMovies()
     {
         $post = Yii::$app->request->post();
-        //$post['date'] = '2020-05-11';
+        $post['date'] = '2020-05-11';
 
         if (!isset($post['date']))
             return null;
