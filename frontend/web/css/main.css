@@ -253,10 +253,7 @@ body {
     body {background-size: cover;}
     .header {
         margin: 1rem 0 0 0;
-        width: 95%;
-    }
-    .header__town {
-        display: none;
+        width: 992px;
     }
     .footer__contacts {
         display: -webkit-box;
@@ -314,5 +311,15 @@ body {
     .footer__socials a svg {
         width: 60px;
         height: 60px;
+    }
+}
+@media screen and (max-width: 992px) {
+    .header {
+        width: 768px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .header {
+        width: 95%;
     }
 }
