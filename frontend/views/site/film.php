@@ -39,6 +39,7 @@ FilmAsset::register($this);
             </a>
         </div>
         <p class="film__description"><?= $movie['description'] ?></p>
+        <?php if(count($sessions) > 0): ?>
             <?php foreach ($sessions as $key => $session): ?>
                 <span class="film__day-name"><?= Yii::$app->formatter->asDate($session['date'], 'eeee, dd.MM') ?></span>
                 <div class="flex-wrapper">
@@ -50,6 +51,12 @@ FilmAsset::register($this);
                     <?php endfor; ?>
                 </div>
             <?php endforeach; ?>
+        <?php else: ?>
+            <p class="film__premiere">
+                <span class="date"><?= Yii::$app->formatter->asDate($movie['release_date'], 'dd.MM'); ?></span>
+                <span>—&ensp;премьера</span>
+            </p>
+        <?php endif; ?>
         <button class="film__show-all-sessions-btn">Еще сеансы</button>
     </div>
 </section>

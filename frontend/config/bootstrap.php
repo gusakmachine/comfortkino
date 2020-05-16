@@ -15,11 +15,11 @@ Yii::setAlias('@svg:#cross', '/img/static/icons/icons.svg#cross');
 Yii::setAlias('@svg:place-logos', '/img/static/logos/svg/place-logos.svg#otrada');
 
 //image paths
-Yii::setAlias('@map_img', '/img/static/google_maps/');
-Yii::setAlias('@gallery', '/img/gallery/');
-Yii::setAlias('@posters', '/img/posters/');
-Yii::setAlias('@mob_posters', '/img/mob_poster/');
-Yii::setAlias('@backgrounds', '/img/backgrounds/');
+Yii::setAlias('@map_img', '/img/static/google_maps');
+Yii::setAlias('@gallery', '/img/gallery');
+Yii::setAlias('@posters', '/img/posters');
+Yii::setAlias('@mob_posters', '/img/mob_poster');
+Yii::setAlias('@backgrounds', '/img/backgrounds');
 
 
 
