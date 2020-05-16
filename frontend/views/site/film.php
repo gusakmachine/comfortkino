@@ -10,12 +10,12 @@ FilmAsset::register($this);
 ?>
 <section class="main-film">
     <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__poster" style="background-image: url(<?= Yii::getAlias('@posters') . $movie['poster'] ?>)"></a>
-    <a href="<?= Yii::getAlias('@mob_posters') . $movie['mob_poster'] ?>" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') . $movie['mob_poster'] ?>)">
-        <div class="film__play">
-            <svg class="film__play-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="white">
-                <path d="M9.4 6l-7.7 3.9c-.4.2-.8.2-1.2 0-.3-.3-.5-.6-.5-1v-7.8c0-.4.2-.8.6-1 .4-.2.8-.2 1.2 0l7.6 3.9c.6.3.8.9.5 1.5-.1.2-.3.4-.5.5z"></path>
-            </svg>
-        </div>
+    <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') . $movie['mob_poster'] ?>)">
+<!--        <div class="film__play">-->
+<!--            <svg class="film__play-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="white">-->
+<!--                <path d="M9.4 6l-7.7 3.9c-.4.2-.8.2-1.2 0-.3-.3-.5-.6-.5-1v-7.8c0-.4.2-.8.6-1 .4-.2.8-.2 1.2 0l7.6 3.9c.6.3.8.9.5 1.5-.1.2-.3.4-.5.5z"></path>-->
+<!--            </svg>-->
+<!--        </div>-->
     </a>
     <div class="film partially-hidden-content max-height-on">
         <div class="film__top-left-content">
@@ -63,20 +63,28 @@ FilmAsset::register($this);
 <section class="additionally-film">
     <div class="container">
         <div class="film-about">
-            <h3 class="film-about__director">Режиссёр</h3>
-            <p class="film-about__directors-names">
-                <?php for($j = 0; $j < count($movie['directors']); $j++) echo $movie['directors'][$j]['name'] . ($j + 1 < count($movie['directors'])? ', ' : ' '); ?>
-            </p>
-            <h3 class="film-about__genre">Жанр</h3>
-            <p class="film-about__genre-names">
-                <?php for($j = 0; $j < count($movie['genres']); $j++) echo $movie['genres'][$j]['name'] . ($j + 1 < count($movie['genres'])? ', ' : ' '); ?>
-            </p>
-            <h3 class="film-about__actors">Актёры</h3>
-            <p class="film-about__actors-names">
-                <?php for($j = 0; $j < count($movie['actors']); $j++) echo $movie['actors'][$j]['name'] . ($j + 1 < count($movie['actors'])? ', ' : ' '); ?>
-            </p>
-            <h3 class="film-about__description">Описание</h3>
-            <p class="film-description-mobile"><?= $movie['description'] ?></p>
+            <div class="film-about__item">
+                <h3 class="film-about__director">Режиссёр</h3>
+                <p class="film-about__directors-names">
+                    <?php for($j = 0; $j < count($movie['directors']); $j++) echo $movie['directors'][$j]['name'] . ($j + 1 < count($movie['directors'])? ', ' : ' '); ?>
+                </p>
+            </div>
+            <div class="film-about__item">
+                <h3 class="film-about__genre">Жанр</h3>
+                <p class="film-about__genre-names">
+                    <?php for($j = 0; $j < count($movie['genres']); $j++) echo $movie['genres'][$j]['name'] . ($j + 1 < count($movie['genres'])? ', ' : ' '); ?>
+                </p>
+            </div>
+            <div class="film-about__item">
+                <h3 class="film-about__actors">Актёры</h3>
+                <p class="film-about__actors-names">
+                    <?php for($j = 0; $j < count($movie['actors']); $j++) echo $movie['actors'][$j]['name'] . ($j + 1 < count($movie['actors'])? ', ' : ' '); ?>
+                </p>
+            </div>
+            <div class="film-about__item">
+                <h3 class="film-about__description">Описание</h3>
+                <p class="film-description-mobile"><?= $movie['description'] ?></p>
+            </div>
         </div>
         <div class="film-gallery">
             <div class="film-gallery__top-content">
