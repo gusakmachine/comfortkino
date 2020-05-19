@@ -21,6 +21,12 @@
     display: -ms-flexbox;
     display: flex;
 }
+.popup-tickets__wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .popup-content {
     height: 100%;
     -webkit-box-flex: 0;
@@ -276,7 +282,6 @@
 }
 .place-row {
     position: absolute;
-    left: 0;
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
@@ -330,8 +335,6 @@
     border: 2px solid #fff;
     border-top-color: transparent;
     border-radius: 50%;
-    -webkit-animation: loading .25s linear infinite;
-    animation: loading .25s linear infinite;
 }
 .scheme .place[data-price='1']{
     background-color: #144dd1;
@@ -384,27 +387,6 @@
     font-weight: 700;
     font-size: 1.1rem;
 }
-@-webkit-keyframes loading {
-    0% {
-        -webkit-transform: none;
-        transform: none
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg)
-    }
-}
-@keyframes loading {
-    0% {
-        -webkit-transform: none;
-        transform: none
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg)
-    }
-}
-
 
 /* popup-cities */
 .popup-cities {
@@ -571,13 +553,71 @@
         margin-right: 0;
         margin-left: 0;
     }
+    .flex-wrapper {
+        flex-wrap: wrap;
+    }
+    .film__sessions-info {
+        margin-bottom: 10px;
+    }
+    .scheme-ticket {
+        margin-right: 10px;
+    }
 }
 @media screen and (max-width: 576px){
+    .popup-tickets__wrapper{
+        position: absolute;
+        top: 0;
+    }
     .popup-cities__address {
         margin-left: 0;
     }
     .popup-cities__address {
         width: 100px;
         height: 100px;
+    }
+    .scheme__header {
+        flex-direction: column;
+    }
+    .scheme-ticket {
+        margin: 0 0 10px 0;
+    }
+    .scheme__body::before {
+        margin: 50px auto 70px;
+    }
+    .popup-content {
+        padding: 20px;
+    }
+    .popup__header-subtitle span {
+        margin: 0 5px 2px 0;
+        font-size: 0.8rem;
+    }
+    .popup__town-toggler .popup__town {
+        font-size: 0.9rem;
+    }
+    .popup__town-toggler svg {
+        margin-right: 5px;
+    }
+    .popup__close {
+        top: 23px;
+        right: 14px;
+    }
+    .header__arrow-without-bottom {
+        margin-left: 0;
+    }
+    .film__sessions-info {
+        width: 70px;
+    }
+    .session-time {
+        font-size: 0.85rem;
+    }
+    .session-price {
+        font-size: .65rem;
+    }
+    .popup-content .tickets__btn {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+    .popup-content .tickets__result {
+        font-size: 0.8rem;
     }
 }
