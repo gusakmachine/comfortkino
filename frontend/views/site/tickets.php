@@ -1,95 +1,97 @@
-<div class="popup-content">
-    <div id="popupClose" class="popup__close" data-SH="#popup-tickets">
-        <svg viewBox="0 0 18 18" width="18" height="18">
-            <path d="M15.5 17.6l-6.5-6.5-6.5 6.5c-.6.6-1.5.6-2.1 0-.6-.6-.6-1.5 0-2.1l6.5-6.5-6.5-6.5c-.6-.6-.6-1.5 0-2.1.6-.6 1.5-.6 2.1 0l6.5 6.5 6.5-6.5c.6-.6 1.5-.6 2.1 0 .6.6.6 1.5 0 2.1l-6.5 6.5 6.5 6.5c.6.6.6 1.5 0 2.1-.3.3-.6.4-1 .4s-.8-.2-1.1-.4z"></path>
-        </svg>
-    </div>
-    <div class="popup__header">
-        <h3 class="popup__header-title"><?= $movie['title'] ?></h3>
-        <div class="popup__header-subtitle">
-            <a href="#" class="popup__town-toggler" data-SH="#popup-cities">
-                <span class="popup__town"><?= Yii::$app->session->get('city') ?></span>
-                <svg class="header__arrow-without-bottom">
-                    <use href="/img/static/icons/icons.svg#arrow-without-bottom"></use>
-                </svg>
-            </a>
-            <span>Зал <?= $hall['id'] ?></span>
-            <span><?= date('d M Y', strtotime($session['date'])) . ', ' . date('H:i', strtotime($session['time'][$sessionTimeIDX]['time'])); ?></span>
+<div class="popup-tickets__wrapper">
+    <div class="popup-content">
+        <div id="popupClose" class="popup__close" data-SH="#popup-tickets">
+            <svg viewBox="0 0 18 18" width="18" height="18">
+                <path d="M15.5 17.6l-6.5-6.5-6.5 6.5c-.6.6-1.5.6-2.1 0-.6-.6-.6-1.5 0-2.1l6.5-6.5-6.5-6.5c-.6-.6-.6-1.5 0-2.1.6-.6 1.5-.6 2.1 0l6.5 6.5 6.5-6.5c.6-.6 1.5-.6 2.1 0 .6.6.6 1.5 0 2.1l-6.5 6.5 6.5 6.5c.6.6.6 1.5 0 2.1-.3.3-.6.4-1 .4s-.8-.2-1.1-.4z"></path>
+            </svg>
         </div>
-    </div>
-    <div class="popup__timetable">
-        <div class="flex-wrapper">
-            <?php for ($i = 0; $i < count($session['time']); $i++): ?>
-                <button class="popup__timetable-link film__sessions-info" data-sessionID="<?= $session['id'] ?>" data-timeID="<?= $i ?>">
-                    <span class="popup__timetable-time film__session-time session-time"><?= date('H:i', strtotime($session['time'][$i]['time'])); ?></span>
-                    <span class="popup__timetable-price film__session-price session-price rub">от <?= $session['timePrices'][$i]['price'] ?></span>
-                </button>
-            <?php endfor; ?>
+        <div class="popup__header">
+            <h3 class="popup__header-title"><?= $movie['title'] ?></h3>
+            <div class="popup__header-subtitle">
+                <a href="#" class="popup__town-toggler" data-SH="#popup-cities">
+                    <span class="popup__town"><?= Yii::$app->session->get('city') ?></span>
+                    <svg class="header__arrow-without-bottom">
+                        <use href="/img/static/icons/icons.svg#arrow-without-bottom"></use>
+                    </svg>
+                </a>
+                <span>Зал <?= $hall['id'] ?></span>
+                <span><?= date('d M Y', strtotime($session['date'])) . ', ' . date('H:i', strtotime($session['time'][$sessionTimeIDX]['time'])); ?></span>
+            </div>
         </div>
-    </div>
-    <div class="popup__scheme">
-        <div class="popup__scheme-inner dragscroll">
-            <div class="scheme">
-                <div class="scheme__header">
-                    <?php foreach ($prices as $key => $price): ?>
+        <div class="popup__timetable">
+            <div class="flex-wrapper">
+                <?php for ($i = 0; $i < count($session['time']); $i++): ?>
+                    <button class="popup__timetable-link film__sessions-info" data-sessionID="<?= $session['id'] ?>" data-timeID="<?= $i ?>">
+                        <span class="popup__timetable-time film__session-time session-time"><?= date('H:i', strtotime($session['time'][$i]['time'])); ?></span>
+                        <span class="popup__timetable-price film__session-price session-price rub">от <?= $session['timePrices'][$i]['price'] ?></span>
+                    </button>
+                <?php endfor; ?>
+            </div>
+        </div>
+        <div class="popup__scheme">
+            <div class="popup__scheme-inner dragscroll">
+                <div class="scheme">
+                    <div class="scheme__header">
+                        <?php foreach ($prices as $key => $price): ?>
+                            <div class="scheme-ticket">
+                                <div class="place scheme-ticket__place" style="background: <?= $colors[$key] ?>"></div>
+                                <div class="scheme-ticket__price rub"><?= $price ?></div>
+                            </div>
+                        <?php endforeach; ?>
                         <div class="scheme-ticket">
-                            <div class="place scheme-ticket__place" style="background: <?= $colors[$key] ?>"></div>
-                            <div class="scheme-ticket__price rub"><?= $price ?></div>
+                            <div class="place scheme-ticket__place" data-sold="true"></div>
+                            <div class="scheme-ticket__price">Место занято</div>
                         </div>
-                    <?php endforeach; ?>
-                    <div class="scheme-ticket">
-                        <div class="place scheme-ticket__place" data-sold="true"></div>
-                        <div class="scheme-ticket__price">Место занято</div>
                     </div>
-                </div>
-                <div id="scheme__body" class="scheme__body">
-                    <div id="scheme-menu" class="scheme-menu">
-                        <?php for($i = 0; $i < count($hall['placesSets']); $i++): ?>
-                            <?php
-                                $isSold = false;
-                                if ($hall['placesSets'][$i]['tickets']
-                                    && $hall['placesSets'][$i]['tickets']['time_id'] == $session['time'][$sessionTimeIDX]['id']
-                                    && $hall['placesSets'][$i]['tickets']['sessions_id'] == $session['id']
-                                    && $hall['placesSets'][$i]['tickets']['movie_theaters_id'] == $movieTheater['id']
-                                    && $hall['placesSets'][$i]['tickets']['hall_id'] == $session['hall_id'])
-                                    { $isSold = true; }
-                            ?>
+                    <div id="scheme__body" class="scheme__body">
+                        <div id="scheme-menu" class="scheme-menu">
+                            <?php for($i = 0; $i < count($hall['placesSets']); $i++): ?>
+                                <?php
+                                    $isSold = false;
+                                    if ($hall['placesSets'][$i]['tickets']
+                                        && $hall['placesSets'][$i]['tickets']['time_id'] == $session['time'][$sessionTimeIDX]['id']
+                                        && $hall['placesSets'][$i]['tickets']['sessions_id'] == $session['id']
+                                        && $hall['placesSets'][$i]['tickets']['movie_theaters_id'] == $movieTheater['id']
+                                        && $hall['placesSets'][$i]['tickets']['hall_id'] == $session['hall_id'])
+                                        { $isSold = true; }
+                                ?>
 
-                            <?php if (!isset($hall['placesSets'][$i + 1]['row']) || ($i + 1 < count($hall['placesSets']) && $hall['placesSets'][$i]['row'] != $hall['placesSets'][$i + 1]['row'])): ?>
-                                <span class="place-row" style="left: 0; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;"><?= $hall['placesSets'][$i]['row'] ?></span>
-                                <span class="place-row" style="left: 100%; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;"><?= $hall['placesSets'][$i]['row'] ?></span>
-                            <?php endif; ?>
-                            <button class="place scheme-menu__place" <?= $isSold ? 'data-sold="true"' : ''?> style="<?= $isSold ? '' : 'background: ' . $hall['placesSets'][$i]['colors']['color'] . ';' ?> left: <?=  $hall['placesSets'][$i]['graphic_display']['left'] ?>px; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;">
-                                <span class="placenumber"><?=  $hall['placesSets'][$i]['place'] ?></span>
-                                <div class="popover">
-                                    <span class="big rub"><?= $session['timePrices'][$sessionTimeIDX]['price'] +  $hall['placesSets'][$i]['placePrice']['price'] ?></span>
-                                    <span><?=  $hall['placesSets'][$i]['row'] . ' ряд, ' .  $hall['placesSets'][$i]['place'] . ' место' ?></span>
-                                </div>
-                            </button>
-                        <?php endfor; ?>
+                                <?php if (!isset($hall['placesSets'][$i + 1]['row']) || ($i + 1 < count($hall['placesSets']) && $hall['placesSets'][$i]['row'] != $hall['placesSets'][$i + 1]['row'])): ?>
+                                    <span class="place-row" style="left: 0; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;"><?= $hall['placesSets'][$i]['row'] ?></span>
+                                    <span class="place-row" style="right: 0; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;"><?= $hall['placesSets'][$i]['row'] ?></span>
+                                <?php endif; ?>
+                                <button class="place scheme-menu__place" <?= $isSold ? 'data-sold="true"' : ''?> style="<?= $isSold ? '' : 'background: ' . $hall['placesSets'][$i]['colors']['color'] . ';' ?> left: <?=  $hall['placesSets'][$i]['graphic_display']['left'] ?>px; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;">
+                                    <span class="placenumber"><?=  $hall['placesSets'][$i]['place'] ?></span>
+                                    <div class="popover">
+                                        <span class="big rub"><?= $session['timePrices'][$sessionTimeIDX]['price'] +  $hall['placesSets'][$i]['placePrice']['price'] ?></span>
+                                        <span><?=  $hall['placesSets'][$i]['row'] . ' ряд, ' .  $hall['placesSets'][$i]['place'] . ' место' ?></span>
+                                    </div>
+                                </button>
+                            <?php endfor; ?>
+                        </div>
                     </div>
-                </div>
-                <div class="scheme__controls">
-                    <div class="controls">
-                        <button id="scheme__control-plus" class="control" type="button">
-                            <svg width="14" height="14" viewBox="0 0 14 14">
-                                <path d="M12 5h-3v-3c0-1.1-.9-2-2-2s-2 .9-2 2v3h-3c-1.1 0-2 .9-2 2s.9 2 2 2h3v3c0 1.1.9 2 2 2s2-.9 2-2v-3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
-                            </svg>
-                        </button>
-                        <button id="scheme__control-minus" class="control" type="button">
-                            <svg width="14" height="14" viewBox="0 0 14 14">
-                                <path d="M12 5h-10c-1.1 0-2 .9-2 2s.9 2 2 2h10c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
-                            </svg>
-                        </button>
+                    <div class="scheme__controls">
+                        <div class="controls">
+                            <button id="scheme__control-plus" class="control" type="button">
+                                <svg width="14" height="14" viewBox="0 0 14 14">
+                                    <path d="M12 5h-3v-3c0-1.1-.9-2-2-2s-2 .9-2 2v3h-3c-1.1 0-2 .9-2 2s.9 2 2 2h3v3c0 1.1.9 2 2 2s2-.9 2-2v-3h3c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+                                </svg>
+                            </button>
+                            <button id="scheme__control-minus" class="control" type="button">
+                                <svg width="14" height="14" viewBox="0 0 14 14">
+                                    <path d="M12 5h-10c-1.1 0-2 .9-2 2s.9 2 2 2h10c1.1 0 2-.9 2-2s-.9-2-2-2z"></path>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="popup__text">
-        <div class="tickets popup__content-tickets">
-            <button id="tickets__result" class="tickets__result">Выберите места</button>
-            <button class="tickets__btn">Купить билеты</button>
+        <div class="popup__text">
+            <div class="tickets popup__content-tickets">
+                <button id="tickets__result" class="tickets__result">Выберите места</button>
+                <button class="tickets__btn">Купить билеты</button>
+            </div>
         </div>
     </div>
 </div>
