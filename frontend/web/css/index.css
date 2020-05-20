@@ -922,6 +922,10 @@
         flex: 0 0 20%;
     }
 
+    .day-list-wrapper {
+        width: unset;
+    }
+
     .poster {
         flex: 0 0 45%;
         margin: 0 5px 40px 0;
