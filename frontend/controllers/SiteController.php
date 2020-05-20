@@ -12,6 +12,12 @@ use app\models\Halls;
 use app\models\Sessions;
 use app\models\Movies;
 use app\models\PlacesSets;
+use app\models\Notes;
+use app\models\OwlAds;
+use app\models\OwlMovies;
+use app\models\BrandingNotes;
+
+use app\models\services\OwlMoviesService;
 
 use frontend\components\CacheDuration;
 use frontend\components\MovieTheater;
@@ -20,6 +26,8 @@ use yii\helpers\ArrayHelper;
 
 class SiteController extends Controller
 {
+
+    public $model;
 
     public function actionIndex()
     {
@@ -30,6 +38,26 @@ class SiteController extends Controller
             ->asArray()
             ->all();
 
+        $brandingNotes = BrandingNotes::find()
+            ->where('end_date > :date', [':date' => date('Y-m-d')])
+            ->asArray()
+            ->all();
+        $notes = Notes::find()
+            ->where('end_date > :date', [':date' => date('Y-m-d')])
+            ->asArray()
+            ->all();
+        $owlAds = OwlAds::find()
+            ->where('end_date > :date', [':date' => date('Y-m-d')])
+            ->asArray()
+            ->all();
+        $owlMovies = OwlMoviesService::collectAll(
+            OwlMovies::find()
+                ->where('end_date > :date', [':date' => date('Y-m-d')])
+                ->asArray()
+                ->all(),
+            Yii::$app->params['maxCountTimesInOwl']
+        );
+
         return $this->render('index', [
             'dayList' => MovieTheater::generateDayList(date('Y-m-d'), $sessions),
             'futureMovies' => Movies::find() //get movies that are not added to the sessions
@@ -37,6 +65,10 @@ class SiteController extends Controller
                 ->with('genres')
                 ->asArray()
                 ->all(),
+            'notes' => $notes,
+            'owlAds' => $owlAds,
+            'owlMovies' => $owlMovies,
+            'branding_notes' => $brandingNotes,
         ]);
     }
 
@@ -63,7 +95,6 @@ class SiteController extends Controller
     public function actionMovies()
     {
         $post = Yii::$app->request->post();
-        $post['date'] = '2020-05-11';
 
         if (!isset($post['date']))
             return null;

@@ -3,6 +3,84 @@ use frontend\assets\MainAsset;
 
 MainAsset::register($this);
 ?>
+<?php forEach($notes as $note) : ?>
+<div id="attention-note" class="attention-note" style="background: <?= $note['background_color']; ?>" data-sh="#attention-note">
+    <div class="container">
+        <p class="note__txt">
+            <svg width="20" height="18"><use href="/img/static/icons/<?= $note['svg_image_name']; ?>"></use></svg>
+            <?= $note['text']; ?>
+        </p>
+    </div>
+    <button class="note__close" type="button">
+        <svg width="20" height="20">
+            <use href="/img/static/icons/icons.svg#cross"></use>
+        </svg>
+    </button>
+</div>
+<?php endforeach; ?>
+<div class="info-carousel owl-carousel">
+    <?php forEach($owlMovies as $owlMovie) : ?>
+    <div>
+        <div class="owl-item__blurred-img" style="background-image: url(<?= Yii::getAlias('@mob_posters') . $owlMovie['mob_poster'] ?>)"></div>
+        <a href="#" class="owl-item__film-poster" style="background-image: url(<?= Yii::getAlias('@posters') . $owlMovie['poster'] ?>)"></a>
+        <div class="film">
+            <a href="<?= \yii\helpers\Url::to(['site/film', 'id' => $owlMovie['id']]) ?>" class="film__details-link">
+                <span class="film__genre"> <?php for($j = 0; $j < count($owlMovie['genres']); $j++) echo $owlMovie['genres'][$j]['name'] . ($j + 1 < count($owlMovie['genres'])? ', ' : ' '); ?></span>
+                <h1 class="film__title"><?= $owlMovie['title'] ?></h1>
+            </a>
+            <div class="film__short-info">
+                <a href="<?= $owlMovie['trailer'] ?>" class="film__trailer btn">Смотреть трейлер</a>
+                <span class="film__age-rating"><?= $owlMovie['age'] ?>+</span>
+            </div>
+            <?php if(isset($owlMovie['sessions'][0])): ?>
+                <h5 class="film__upcoming-sessions">Ближайшие сеансы <?= Yii::$app->formatter->asDate($owlMovie['sessions'][0]['date'], 'dd.MM'); ?>:</h5>
+                <div class="flex-wrapper">
+                    <?php for ($k = 0; $k < count($owlMovie['sessions'][0]['time']); $k++): ?>
+                        <button class="film__sessions-info" data-SH="#popup">
+                            <span class="film__session-time session-time"><?= date('H:i', strtotime($owlMovie['sessions'][0]['time'][$k]['time'])); ?></span>
+                            <span class="film__session-price session-price">от <?= $owlMovie['sessions'][0]['timePrices'][$k]['price'] ?> ₽</span>
+                        </button>
+                    <?php endfor; ?>
+                    <?php if ($owlMovie['counter_time'] > 0): ?>
+                        <a href="<?= \yii\helpers\Url::to(['site/film', 'id' => $owlMovie['id']]) ?>" class="film__sessions-info blue">
+                            <span class="film__session-time session-time__more">Ещё <?= $owlMovie['counter_time'] ?></span>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            <?php else: ?>
+                <h5 class="film__upcoming-sessions">Дата выхода <?= Yii::$app->formatter->asDate($owlMovie['release_date'], 'MM.dd'); ?></h5>
+            <?php endif; ?>
+        </div>
+        <div class="owl__progress-bar">
+            <div class="owl__progress-indicator"></div>
+        </div>
+    </div>
+    <?php endforeach; ?>
+    <?php forEach($owlAds as $owlAd) : ?>
+    <div>
+        <div class="owl__ad-background" style="background-image: url('/img/ads/<?= $owlAd['background_image_name']; ?>')"></div>
+        <a href="#" class="owl__ad-link">
+            <p class="owl__ad-subtitle"><?= $owlAd['subtitle']; ?></p>
+            <h3 class="owl__ad-title"><?= $owlAd['title']; ?></h3>
+            <span class="owl__ad-btn btn"><?= $owlAd['button_text']; ?></span>
+        </a>
+        <div class="owl__progress-bar">
+            <div class="owl__progress-indicator"></div>
+        </div>
+    </div>
+    <?php endforeach; ?>
+</div>
+<?php forEach($branding_notes as $branding_note) : ?>
+<div class="branding-note">
+    <img width="20" height="20" src="/img/static/icons/<?= $branding_note['svg_image_name']; ?>">
+    <p class="branding-note__link">
+        <?= $branding_note['text']; ?>
+        <a href="<?= $branding_note['href']; ?>">
+            <?= $branding_note['link-text']; ?>
+        </a>
+    </p>
+</div>
+<?php endforeach; ?>
 <section class="session-schedule">
     <h1 class="session-schedule__title">Расписание сеансов</h1>
     <div class="pos-relative wrapper">

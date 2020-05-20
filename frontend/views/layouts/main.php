@@ -6,7 +6,6 @@ use yii\helpers\Url;
 use frontend\assets\AppAsset;
 
 use frontend\widgets\PopupCities\PopupCities;
-use frontend\widgets\AdsWidget\AdsWidget;
 
 AppAsset::register($this);
 ?>
@@ -38,8 +37,7 @@ AppAsset::register($this);
         <svg class="header__arrow-without-bottom"><use href="<?= Yii::getAlias('@svg:#arrow-without-bottom'); ?>"></use></svg>
     </button>
 </header>
-
-<?= AdsWidget::widget(); ?>
+<div class="page-background" style="background-image: url(<?= Yii::getAlias('@backgrounds') . $this->context->pageBackgroundPath['background_image_name']; ?>)"></div>
 
 <?= $content ?>
 

@@ -127,4 +127,5 @@ class Sessions extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Tickets::className(), ['sessions_id' => 'id']);
     }
+
 }

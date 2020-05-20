@@ -3,36 +3,33 @@
 use yii\db\Migration;
 
 /**
- * Class m200503_084731_ads
+ * Class m200519_150032_notes
  */
-class m200503_084731_ads extends Migration
+class m200519_150032_notes extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function safeUp()
     {
-        $this->createTable('ads', [
+        $this->createTable('notes', [
             'id' => $this->primaryKey(),
-            'render_file_name' => $this->string(255),
-            'page_pos' => $this->integer(),
-            'movie_theater_id' => $this->integer(),
-            'visibility' => $this->boolean(),
-            'json_content' => $this->json(),
+            'text' => $this->string(255),
+            'svg_image_name' => $this->string(255),
+            'background_color' => $this->string(255),
+            'movie_theaters_id' => $this->integer(),
+            'end_date' => $this->date(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
 
         $this->createIndex(
-            '{{%idx-ads-movie_theater}}',
-            '{{%ads}}',
-            'movie_theater_id'
+            '{{%idx-notes_movie_theaters_id}}',
+            '{{%notes}}',
+            'movie_theaters_id'
         );
 
         $this->addForeignKey(
-            '{{%fk-ads-movie_theater}}',
-            '{{%ads}}',
-            'movie_theater_id',
+            '{{%fk-notes_movie_theaters_id}}',
+            '{{%notes}}',
+            'movie_theaters_id',
             '{{%movie_theaters}}',
             'id',
             'CASCADE'
@@ -45,16 +42,16 @@ class m200503_084731_ads extends Migration
     public function safeDown()
     {
         $this->dropForeignKey(
-            '{{%fk-ads-movie_theater}}',
-            '{{%ads}}'
+            '{{%fk-notes_movie_theaters_id}}',
+            '{{%notes}}'
         );
 
         $this->dropIndex(
-            '{{%idx-ads-movie_theater}}',
-            '{{%ads}}'
+            '{{%idx-notes_movie_theaters_id}}',
+            '{{%notes}}'
         );
 
-        $this->dropTable('ads');
+        $this->dropTable('notes');
     }
 
     /*
@@ -66,7 +63,7 @@ class m200503_084731_ads extends Migration
 
     public function down()
     {
-        echo "m200503_084731_ads cannot be reverted.\n";
+        echo "m200519_150032_notes cannot be reverted.\n";
 
         return false;
     }
