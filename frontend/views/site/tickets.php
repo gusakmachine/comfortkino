@@ -1,6 +1,3 @@
-<script>
-    dragscroll.reset()
-</script>
 <div class="popup-tickets__wrapper">
     <div class="popup-content">
         <div id="popupClose" class="popup__close" data-SH="#popup-tickets">

@@ -73,6 +73,7 @@ $(document).ready(function() {
         request.done(function (data) {
             if (data) {
                 $('#popup-tickets').append(data);
+                dragscroll.reset();
             } else {
                 $('#popup-tickets').append('<span class="popup-tickets__error">Нет данных</span>');
             }
