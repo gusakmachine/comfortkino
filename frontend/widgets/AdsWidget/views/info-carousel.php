@@ -16,15 +16,16 @@
                     <?php if(isset($ads[$startIDX]['sessions'][0])): ?>
                         <h5 class="film__upcoming-sessions">Ближайшие сеансы <?= Yii::$app->formatter->asDate($ads[$startIDX]['sessions'][0]['date'], 'dd.MM'); ?>:</h5>
                         <div class="flex-wrapper">
-                            <?php for ($k = 0; $k < count($ads[$startIDX]['sessions'][0]['time']); $k++): ?>
+                            <?php $maxCountTimesInOwl = count($ads[$startIDX]['sessions'][0]['time']) > 4 ? 4 : count($ads[$startIDX]['sessions'][0]['time'])?>
+                            <?php for ($k = 0; $k < $maxCountTimesInOwl; $k++): ?>
                                 <button class="film__sessions-info" data-SH="#popup">
                                     <span class="film__session-time session-time"><?= date('H:i', strtotime($ads[$startIDX]['sessions'][0]['time'][$k]['time'])); ?></span>
                                     <span class="film__session-price session-price">от <?= $ads[$startIDX]['sessions'][0]['timePrices'][$k]['price'] ?> ₽</span>
                                 </button>
                             <?php endfor; ?>
-                            <?php if ($ads[$startIDX]['counter_time'] > 0): ?>
+                            <?php if ($ads[$startIDX]['counter_time'] > $maxCountTimesInOwl): ?>
                                 <a href="<?= \yii\helpers\Url::to(['site/film', 'id' => $ads[$startIDX]['movie']['id']]) ?>" class="film__sessions-info blue">
-                                    <span class="film__session-time session-time__more">Ещё <?= $ads[$startIDX]['counter_time'] ?></span>
+                                    <span class="film__session-time session-time__more">Ещё <?= ($ads[$startIDX]['counter_time'] - $maxCountTimesInOwl) ?></span>
                                 </a>
                             <?php endif; ?>
                         </div>
