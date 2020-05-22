@@ -7,6 +7,7 @@ use backend\assets\AppAsset;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 
@@ -41,14 +42,23 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
+        $logout = Html::beginForm(['/site/logout'], 'post')
+            . Html::submitButton('Выход', ['class' => 'btn menu-btn'])
+            . Html::endForm();
+        $menuItems[] = '
+            <li class="dropdown">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                  Меню ('. Yii::$app->user->identity->username .' ) 
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="'. Url::to(['site/request-password-reset']) .'">Изменить пароль</a></li>
+                    <li class="divider"></li>
+                    <li>
+                        '. $logout. '
+                    </li>
+                </ul>
+            </li>';
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
