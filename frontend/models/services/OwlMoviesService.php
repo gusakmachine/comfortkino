@@ -1,9 +1,9 @@
 <?php
 
-namespace app\models\services;
+namespace frontend\models\services;
 
-use app\models\Movies;
-use app\models\Sessions;
+use common\models\movies\Movies;
+use common\models\sessions\Sessions;
 
 class OwlMoviesService
 {

@@ -6,7 +6,7 @@ use yii\web\Controller as BaseController;
 use yii\base\Action;
 use Yii;
 
-use app\models\PageBackground;
+use common\models\ads\PageBackground;
 
 class Controller extends BaseController
 {

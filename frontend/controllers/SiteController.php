@@ -2,22 +2,25 @@
 
 namespace frontend\controllers;
 
-use app\models\PlacePrices;
-use app\models\Tickets;
 use Yii;
 use frontend\components\Controller;
 
-use app\models\MovieTheaters;
-use app\models\Halls;
-use app\models\Sessions;
-use app\models\Movies;
-use app\models\PlacesSets;
-use app\models\Notes;
-use app\models\OwlAds;
-use app\models\OwlMovies;
-use app\models\BrandingNotes;
+use common\models\theaters\MovieTheaters;
+use common\models\theaters\Halls;
+use common\models\theaters\PlacesSets;
+use common\models\theaters\PlacePrices;
 
-use app\models\services\OwlMoviesService;
+use common\models\sessions\Sessions;
+use common\models\sessions\Tickets;
+
+use common\models\movies\Movies;
+
+use common\models\ads\Notes;
+use common\models\ads\OwlAds;
+use common\models\ads\OwlMovies;
+use common\models\ads\BrandingNotes;
+
+use frontend\models\services\OwlMoviesService;
 
 use frontend\components\CacheDuration;
 use frontend\components\MovieTheater;
@@ -95,6 +98,7 @@ class SiteController extends Controller
     public function actionMovies()
     {
         $post = Yii::$app->request->post();
+        $post['date'] = '2020-05-25';
 
         if (!isset($post['date']))
             return null;

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace frontend\components;
 
 use Yii;
