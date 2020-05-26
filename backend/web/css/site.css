@@ -119,3 +119,17 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.owl-movies__select-movie {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.model-owl-backgrounds {
+    margin-bottom: 10px;
+    width: 825px;
+    max-height: 400px;
+}
+.model-page-background {
+    margin-bottom: 10px;
+    max-width: 50%;
+}

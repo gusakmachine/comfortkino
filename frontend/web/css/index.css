@@ -15,7 +15,9 @@
     align-items: center;
     height: 20px;
 }
-.note__txt > svg {
+.note__txt > img {
+    width: 20px;
+    height: 20px;
     margin-right: 15px;
 }
 .note__close {
@@ -246,6 +248,7 @@
 }
 
 .branding-note {
+    margin-bottom: 3px;
     display: flex;
     width: 800px;
 }

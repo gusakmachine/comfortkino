@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'text') ?>
 
-    <?= $form->field($model, 'link-text') ?>
+    <?= $form->field($model, 'link_text') ?>
 
     <?= $form->field($model, 'svg_image_name') ?>
 

@@ -2,12 +2,14 @@
 
 namespace backend\controllers\ads;
 
+use common\models\UploadForm;
 use Yii;
 use common\models\ads\OwlAds;
 use common\models\ads\SearchOwlAds;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * OwlAdsController implements the CRUD actions for OwlAds model.
@@ -65,13 +67,19 @@ class OwlAdsController extends Controller
     public function actionCreate()
     {
         $model = new OwlAds();
+        $file = new UploadForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $file->imageFile = UploadedFile::getInstance($file, 'imageFile');
+            $model['background_image_name'] = '/' . $file->imageFile->name;
+
+            if ($model->save() && $file->upload())
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'file' => $file
         ]);
     }
 
@@ -86,12 +94,19 @@ class OwlAdsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $file = new UploadForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $file->imageFile = UploadedFile::getInstance($file, 'imageFile');
+            $model['background_image_name'] = '/' . $file->imageFile->name;
+
+            if ($model->save() && $file->upload())
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'file' => $file
         ]);
     }
 

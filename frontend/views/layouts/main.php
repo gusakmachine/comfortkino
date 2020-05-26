@@ -21,6 +21,8 @@ AppAsset::register($this);
     <script>
         var getMoviesURL = '<?= Url::to(['site/movies']) ?>';
         var getTicketsURL = '<?= Url::to(['site/tickets']) ?>';
+
+        var staticSvgIconsPATH = '<?= Yii::getAlias('@static_svg_icons'); ?>';
     </script>
     <?php $this->head() ?>
 </head>
@@ -37,7 +39,7 @@ AppAsset::register($this);
         <svg class="header__arrow-without-bottom"><use href="<?= Yii::getAlias('@svg:#arrow-without-bottom'); ?>"></use></svg>
     </button>
 </header>
-<div class="page-background" style="background-image: url(<?= Yii::getAlias('@backgrounds') . $this->context->pageBackgroundPath['background_image_name']; ?>)"></div>
+<div class="page-background" style="background-image: url(<?= Yii::getAlias('@page-backgrounds') . $this->context->pageBackgroundPath['background_image_name']; ?>)"></div>
 
 <?= $content ?>
 
@@ -56,17 +58,17 @@ AppAsset::register($this);
                     <div class="footer__socials">
                         <a class="sm--facebook" href="#" target="_blank" rel="nofollow noopener">
                             <span>
-                                <svg><use href="/img/static/icons/icons.svg#facebook"></use></svg>
+                                <svg><use href="<?= Yii::getAlias('@svg:#facebook'); ?>"></use></svg>
                             </span>
                         </a>
                         <a class="sm--insta" href="#" target="_blank" rel="nofollow noopener">
                             <span>
-                                <svg><use href="/img/static/icons/icons.svg#inst"></use></svg>
+                                <svg><use href="<?= Yii::getAlias('@svg:#inst'); ?>"></use></svg>
                             </span>
                         </a>
                         <a class="sm--vk" href="#" target="_blank" rel="nofollow noopener">
                             <span>
-                                <svg><use href="/img/static/icons/icons.svg#vk"></use></svg>
+                                <svg><use href="<?= Yii::getAlias('@svg:#vk'); ?>"></use></svg>
                             </span>
                         </a>
                     </div>

@@ -15,7 +15,7 @@ class m200519_150019_branding_notes extends Migration
         $this->createTable('branding_notes', [
             'id' => $this->primaryKey(),
             'text' => $this->string(255),
-            'link-text' => $this->string(255),
+            'link_text' => $this->string(255),
             'svg_image_name' => $this->string(255),
             'href' => $this->string(512),
             'movie_theaters_id' => $this->integer(),

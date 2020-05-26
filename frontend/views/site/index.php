@@ -7,13 +7,13 @@ MainAsset::register($this);
 <div id="attention-note" class="attention-note" style="background: <?= $note['background_color']; ?>" data-sh="#attention-note">
     <div class="container">
         <p class="note__txt">
-            <svg width="20" height="18"><use href="/img/static/icons/<?= $note['svg_image_name']; ?>"></use></svg>
+            <img src="<?= Yii::getAlias('@svg_icons') . $note['svg_image_name']; ?>" />
             <?= $note['text']; ?>
         </p>
     </div>
     <button class="note__close" type="button">
         <svg width="20" height="20">
-            <use href="/img/static/icons/icons.svg#cross"></use>
+            <use href="<?= Yii::getAlias('@svg:#cross'); ?>"></use>
         </svg>
     </button>
 </div>
@@ -58,7 +58,7 @@ MainAsset::register($this);
     <?php endforeach; ?>
     <?php forEach($owlAds as $owlAd) : ?>
     <div>
-        <div class="owl__ad-background" style="background-image: url('/img/ads/<?= $owlAd['background_image_name']; ?>')"></div>
+        <div class="owl__ad-background" style="background-image: url('<?= Yii::getAlias('@owl-backgrounds') . $owlAd['background_image_name']; ?>')"></div>
         <a href="#" class="owl__ad-link">
             <p class="owl__ad-subtitle"><?= $owlAd['subtitle']; ?></p>
             <h3 class="owl__ad-title"><?= $owlAd['title']; ?></h3>
@@ -72,11 +72,11 @@ MainAsset::register($this);
 </div>
 <?php forEach($branding_notes as $branding_note) : ?>
 <div class="branding-note">
-    <img width="20" height="20" src="/img/static/icons/<?= $branding_note['svg_image_name']; ?>">
+    <img width="20" height="20" src="<?= Yii::getAlias('@svg_icons') . $branding_note['svg_image_name']; ?>">
     <p class="branding-note__link">
         <?= $branding_note['text']; ?>
         <a href="<?= $branding_note['href']; ?>">
-            <?= $branding_note['link-text']; ?>
+            <?= $branding_note['link_text']; ?>
         </a>
     </p>
 </div>
@@ -84,7 +84,7 @@ MainAsset::register($this);
 <section class="session-schedule">
     <h1 class="session-schedule__title">Расписание сеансов</h1>
     <div class="pos-relative wrapper">
-        <button class="day-list__btn --prev disabled"><svg class="day-list__svg--left"><use href="/img/static/icons/icons.svg#arrow-empty"></use></svg></button>
+        <button class="day-list__btn --prev disabled"><svg class="day-list__svg--left"><use href="<?= Yii::getAlias('@svg:#arrow-empty'); ?>"></use></svg></button>
         <div class="day-list-wrapper dragscroll">
             <nav class="day-list tabs__header">
                 <?php for ($i = 0; $i < count($dayList['date']); $i++):?>
@@ -100,7 +100,7 @@ MainAsset::register($this);
                 <?php endfor; ?>
             </nav>
         </div>
-        <button class="day-list__btn --next <?= count($dayList['date']) > 9? '' : 'disabled' ?>"><svg class="day-list__svg--right"><use href="/img/static/icons/icons.svg#arrow-empty"></use></svg></button>
+        <button class="day-list__btn --next <?= count($dayList['date']) > 9? '' : 'disabled' ?>"><svg class="day-list__svg--right"><use href="<?= Yii::getAlias('@svg:#arrow-empty'); ?>"></use></svg></button>
     </div>
     <div class="films"></div>
 </section>

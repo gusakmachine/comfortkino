@@ -16,15 +16,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($file, 'imageFile')->fileInput() ?>
+    <?php if (isset($model['background_image_name'])): ?>
+        <img class="model-owl-backgrounds" src="<?= Yii::getAlias('@frontend_link') . Yii::getAlias('@owl-backgrounds') . $model['background_image_name']; ?>" alt="image" />
+    <?php endif; ?>
+
     <?= $form->field($model, 'button_text')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'movie_theaters_id')->textInput() ?>
 
     <?= $form->field($model, 'end_date')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

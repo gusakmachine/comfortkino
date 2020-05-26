@@ -5,7 +5,6 @@ namespace common\models\ads;
 use Yii;
 
 use common\models\theaters\MovieTheaters;
-
 /**
  * This is the model class for table "page_background".
  *

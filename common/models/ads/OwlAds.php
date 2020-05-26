@@ -5,14 +5,13 @@ namespace common\models\ads;
 use Yii;
 
 use common\models\theaters\MovieTheaters;
-
 /**
  * This is the model class for table "owl_ads".
  *
  * @property int $id
  * @property string|null $subtitle
  * @property string|null $title
- * @property string|null $background_image
+ * @property string|null $background_image_name
  * @property string|null $button_text
  * @property int|null $movie_theaters_id
  * @property string|null $end_date
@@ -39,7 +38,7 @@ class OwlAds extends \yii\db\ActiveRecord
         return [
             [['movie_theaters_id'], 'integer'],
             [['end_date', 'created_at', 'updated_at'], 'safe'],
-            [['subtitle', 'title', 'background_image', 'button_text'], 'string', 'max' => 255],
+            [['subtitle', 'title', 'background_image_name', 'button_text'], 'string', 'max' => 255],
             [['movie_theaters_id'], 'exist', 'skipOnError' => true, 'targetClass' => MovieTheaters::className(), 'targetAttribute' => ['movie_theaters_id' => 'id']],
         ];
     }
@@ -53,7 +52,7 @@ class OwlAds extends \yii\db\ActiveRecord
             'id' => 'ID',
             'subtitle' => 'Subtitle',
             'title' => 'Title',
-            'background_image' => 'Background Image',
+            'background_image_name' => 'Background Image Name',
             'button_text' => 'Button Text',
             'movie_theaters_id' => 'Movie Theaters ID',
             'end_date' => 'End Date',

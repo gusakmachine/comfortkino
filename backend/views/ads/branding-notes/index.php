@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'text',
-            'link-text',
+            'link_text',
             'svg_image_name',
             'href',
             //'movie_theaters_id',

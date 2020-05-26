@@ -15,7 +15,7 @@ $(document).ready(function(){
         margin: 20,
         autoWidth:true,
         nav: true,
-        navText: ['<svg><use href=\"/img/static/icons/icons.svg#arrow-without-bottom\"\" /></svg>', '<svg><use href=\"/img/static/icons/icons.svg#arrow-without-bottom\"\" /></svg>'],
+        navText: ['<svg><use href=\"' + staticSvgIconsPATH + '/icons.svg#arrow-without-bottom\"\" /></svg>', '<svg><use href=\"' + staticSvgIconsPATH + '/icons.svg#arrow-without-bottom\"\" /></svg>'],
         onInitialized: start,
         onTranslate: function () {
             $(".owl__progress-indicator").width(0);

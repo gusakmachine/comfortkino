@@ -4,9 +4,8 @@ namespace common\models\ads;
 
 use Yii;
 
-use common\models\movies\Movies;
 use common\models\theaters\MovieTheaters;
-
+use common\models\movies\Movies;
 /**
  * This is the model class for table "owl_movies".
  *

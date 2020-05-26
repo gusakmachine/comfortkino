@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model common\models\ads\OwlMovies */
 /* @var $form yii\widgets\ActiveForm */
@@ -13,14 +13,11 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'movie_id')->textInput() ?>
+    <a class="owl-movies__select-movie" href="<?= Url::toRoute(['movies/movies']); ?>">Select movie</a>
 
     <?= $form->field($model, 'movie_theaters_id')->textInput() ?>
 
     <?= $form->field($model, 'end_date')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

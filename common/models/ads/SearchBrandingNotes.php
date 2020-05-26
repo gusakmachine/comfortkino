@@ -18,7 +18,7 @@ class SearchBrandingNotes extends BrandingNotes
     {
         return [
             [['id', 'movie_theaters_id'], 'integer'],
-            [['text', 'link-text', 'svg_image_name', 'href', 'end_date', 'created_at', 'updated_at'], 'safe'],
+            [['text', 'link_text', 'svg_image_name', 'href', 'end_date', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -66,7 +66,7 @@ class SearchBrandingNotes extends BrandingNotes
         ]);
 
         $query->andFilterWhere(['like', 'text', $this->text])
-            ->andFilterWhere(['like', 'link-text', $this->link-text])
+            ->andFilterWhere(['like', 'link_text', $this->link_text])
             ->andFilterWhere(['like', 'svg_image_name', $this->svg_image_name])
             ->andFilterWhere(['like', 'href', $this->href]);
 
