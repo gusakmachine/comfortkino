@@ -24,6 +24,20 @@ class m130524_201442_init extends Migration
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
+
+        $this->createTestUser();
+    }
+
+    private function createTestUser() {
+        $this->insert('{{%user}}', [
+            'id' => 1,
+            'username' => 'admin',
+            'auth_key' => 'ma03gwLhiUaSQTSZk-hUTRwHmfutaMFh',
+            'password_hash' => '$2y$13$2HhwwODgD02RfpCjZIZYFe7nWZztRGrt7X1up8SD3wJw742w8rBy.',
+            'password_reset_token' => null,
+            'email' => 'admin@test.test',
+            'status' => 10,
+        ]);
     }
 
     public function down()
