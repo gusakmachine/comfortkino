@@ -29,11 +29,11 @@ class SessionsTime extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sessions_id', 'time_id'], 'required'],
-            [['sessions_id', 'time_id'], 'integer'],
-            [['sessions_id', 'time_id'], 'unique', 'targetAttribute' => ['sessions_id', 'time_id']],
-            [['sessions_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sessions::className(), 'targetAttribute' => ['sessions_id' => 'id']],
-            [['time_id'], 'exist', 'skipOnError' => true, 'targetClass' => Time::className(), 'targetAttribute' => ['time_id' => 'id']],
+            [['time_id'], 'required'],
+            //[['sessions_id'], 'integer'],
+            //[['sessions_id', 'time_id'], 'unique', 'targetAttribute' => ['sessions_id', 'time_id[]']],
+            //[['sessions_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sessions::className(), 'targetAttribute' => ['sessions_id' => 'id']],
+            //[['time_id'], 'exist', 'skipOnError' => true, 'targetClass' => Time::className(), 'targetAttribute' => ['time_id' => 'id']],
         ];
     }
 
@@ -66,5 +66,15 @@ class SessionsTime extends \yii\db\ActiveRecord
     public function getTime()
     {
         return $this->hasOne(Time::className(), ['id' => 'time_id']);
+    }
+
+    public function saveMultiply($times, $session_id) {
+        for ($i = 0; $i < count($times); $i++) {
+            $this->setIsNewRecord(true);
+            $this->sessions_id = $session_id;
+            $this->time_id = $times[$i];
+            $this->save();
+        }
+        return $this;
     }
 }

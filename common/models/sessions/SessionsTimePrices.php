@@ -29,11 +29,11 @@ class SessionsTimePrices extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sessions_id', 'time_prices_id'], 'required'],
-            [['sessions_id', 'time_prices_id'], 'integer'],
-            [['sessions_id', 'time_prices_id'], 'unique', 'targetAttribute' => ['sessions_id', 'time_prices_id']],
-            [['sessions_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sessions::className(), 'targetAttribute' => ['sessions_id' => 'id']],
-            [['time_prices_id'], 'exist', 'skipOnError' => true, 'targetClass' => TimePrices::className(), 'targetAttribute' => ['time_prices_id' => 'id']],
+            [['time_prices_id'], 'required'],
+            //[['sessions_id'], 'integer'],
+            //[['sessions_id', 'time_prices_id'], 'unique', 'targetAttribute' => ['sessions_id', 'time_prices_id']],
+            //[['sessions_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sessions::className(), 'targetAttribute' => ['sessions_id' => 'id']],
+            //[['time_prices_id'], 'exist', 'skipOnError' => true, 'targetClass' => TimePrices::className(), 'targetAttribute' => ['time_prices_id' => 'id']],
         ];
     }
 
@@ -66,5 +66,15 @@ class SessionsTimePrices extends \yii\db\ActiveRecord
     public function getTimePrices()
     {
         return $this->hasOne(TimePrices::className(), ['id' => 'time_prices_id']);
+    }
+
+    public function saveMultiply($times, $session_id) {
+        for ($i = 0; $i < count($times); $i++) {
+            $this->setIsNewRecord(true);
+            $this->sessions_id = $session_id;
+            $this->time_prices_id = $times[$i];
+            $this->save();
+        }
+        return $this;
     }
 }

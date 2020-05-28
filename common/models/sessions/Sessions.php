@@ -40,8 +40,9 @@ class Sessions extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date'], 'safe'],
-            [['base_price', 'movie_id', 'hall_id'], 'integer'],
+            [['date'], 'required'],
+            [['date'], 'date', 'format' => 'php:Y-m-d'],
+            [['movie_id', 'hall_id'], 'integer'],
             [['hall_id'], 'exist', 'skipOnError' => true, 'targetClass' => Halls::className(), 'targetAttribute' => ['hall_id' => 'id']],
             [['movie_id'], 'exist', 'skipOnError' => true, 'targetClass' => Movies::className(), 'targetAttribute' => ['movie_id' => 'id']],
         ];

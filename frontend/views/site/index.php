@@ -36,7 +36,7 @@ MainAsset::register($this);
                 <h5 class="film__upcoming-sessions">Ближайшие сеансы <?= Yii::$app->formatter->asDate($owlMovie['sessions'][0]['date'], 'dd.MM'); ?>:</h5>
                 <div class="flex-wrapper">
                     <?php for ($k = 0; $k < count($owlMovie['sessions'][0]['time']); $k++): ?>
-                        <button class="film__sessions-info" data-SH="#popup-tickets" data-sessionID="<?= $owlMovie['sessions'][$k]['id'] ?>" data-timeID="<?= $k ?>">
+                        <button class="film__sessions-info" data-SH="#popup-tickets" data-sessionID="<?= $owlMovie['sessions'][0]['id'] ?>" data-timeID="<?= $k ?>">
                             <span class="film__session-time session-time"><?= date('H:i', strtotime($owlMovie['sessions'][0]['time'][$k]['time'])); ?></span>
                             <span class="film__session-price session-price">от <?= $owlMovie['sessions'][0]['timePrices'][$k]['price'] ?> ₽</span>
                         </button>
