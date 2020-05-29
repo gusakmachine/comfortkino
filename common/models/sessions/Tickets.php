@@ -2,13 +2,12 @@
 
 namespace common\models\sessions;
 
-use Yii;
-
+use common\models\movies\Movies;
 use common\models\theaters\Cities;
 use common\models\theaters\Halls;
-use common\models\movies\Movies;
 use common\models\theaters\MovieTheaters;
 use common\models\theaters\PlacesSets;
+use Yii;
 
 /**
  * This is the model class for table "tickets".
@@ -21,7 +20,7 @@ use common\models\theaters\PlacesSets;
  * @property int|null $hall_id
  * @property int|null $movie_theaters_id
  * @property int|null $city_id
- * @property int|null $time_id
+ * @property int|null $times_id
  * @property string $created_at
  * @property string $updated_at
  *
@@ -31,7 +30,7 @@ use common\models\theaters\PlacesSets;
  * @property MovieTheaters $movieTheaters
  * @property PlacesSets $place
  * @property Sessions $sessions
- * @property Time $time
+ * @property Times $times
  */
 class Tickets extends \yii\db\ActiveRecord
 {
@@ -49,7 +48,7 @@ class Tickets extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['full_price', 'sessions_id', 'place_id', 'movie_id', 'hall_id', 'movie_theaters_id', 'city_id', 'time_id'], 'integer'],
+            [['full_price', 'sessions_id', 'place_id', 'movie_id', 'hall_id', 'movie_theaters_id', 'city_id', 'times_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cities::className(), 'targetAttribute' => ['city_id' => 'id']],
             [['hall_id'], 'exist', 'skipOnError' => true, 'targetClass' => Halls::className(), 'targetAttribute' => ['hall_id' => 'id']],
@@ -57,7 +56,7 @@ class Tickets extends \yii\db\ActiveRecord
             [['movie_theaters_id'], 'exist', 'skipOnError' => true, 'targetClass' => MovieTheaters::className(), 'targetAttribute' => ['movie_theaters_id' => 'id']],
             [['place_id'], 'exist', 'skipOnError' => true, 'targetClass' => PlacesSets::className(), 'targetAttribute' => ['place_id' => 'id']],
             [['sessions_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sessions::className(), 'targetAttribute' => ['sessions_id' => 'id']],
-            [['time_id'], 'exist', 'skipOnError' => true, 'targetClass' => Time::className(), 'targetAttribute' => ['time_id' => 'id']],
+            [['times_id'], 'exist', 'skipOnError' => true, 'targetClass' => Times::className(), 'targetAttribute' => ['times_id' => 'id']],
         ];
     }
 
@@ -75,7 +74,7 @@ class Tickets extends \yii\db\ActiveRecord
             'hall_id' => 'Hall ID',
             'movie_theaters_id' => 'Movie Theaters ID',
             'city_id' => 'City ID',
-            'time_id' => 'Time ID',
+            'times_id' => 'Times ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -142,12 +141,12 @@ class Tickets extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Time]].
+     * Gets query for [[Times]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTime()
+    public function getTimes()
     {
-        return $this->hasOne(Time::className(), ['id' => 'time_id']);
+        return $this->hasOne(Times::className(), ['id' => 'times_id']);
     }
 }

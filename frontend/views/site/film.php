@@ -11,11 +11,6 @@ FilmAsset::register($this);
 <section class="main-film">
     <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__poster" style="background-image: url(<?= Yii::getAlias('@posters') . $movie['poster'] ?>)"></a>
     <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') . $movie['mob_poster'] ?>)">
-<!--        <div class="film__play">-->
-<!--            <svg class="film__play-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="white">-->
-<!--                <path d="M9.4 6l-7.7 3.9c-.4.2-.8.2-1.2 0-.3-.3-.5-.6-.5-1v-7.8c0-.4.2-.8.6-1 .4-.2.8-.2 1.2 0l7.6 3.9c.6.3.8.9.5 1.5-.1.2-.3.4-.5.5z"></path>-->
-<!--            </svg>-->
-<!--        </div>-->
     </a>
     <div class="film partially-hidden-content max-height-on">
         <div class="film__top-left-content">
@@ -43,10 +38,10 @@ FilmAsset::register($this);
             <?php foreach ($sessions as $key => $session): ?>
                 <span class="film__day-name"><?= Yii::$app->formatter->asDate($session['date'], 'eeee, dd.MM') ?></span>
                 <div class="flex-wrapper">
-                    <?php for ($sessions_timeIDX = 0 ; $sessions_timeIDX < count($session['time']); $sessions_timeIDX++): ?>
+                    <?php for ($sessions_timeIDX = 0 ; $sessions_timeIDX < count($session['times']); $sessions_timeIDX++): ?>
                         <button class="film__sessions-info" data-SH="#popup-tickets" data-sessionID="<?= $session['id'] ?>" data-timeID="<?= $sessions_timeIDX ?>">
-                            <span class="film__session-time session-time"><?= date('H:i', strtotime($session['time'][$sessions_timeIDX]['time'])); ?></span>
-                            <span class="film__session-price session-price">от <?= $session['timePrices'][$sessions_timeIDX]['price'] ?> ₽</span>
+                            <span class="film__session-time session-time"><?= date('H:i', strtotime($session['times'][$sessions_timeIDX]['time'])); ?></span>
+                            <span class="film__session-price session-price">от <?= $session['times'][$sessions_timeIDX]['price'] ?> ₽</span>
                         </button>
                     <?php endfor; ?>
                 </div>

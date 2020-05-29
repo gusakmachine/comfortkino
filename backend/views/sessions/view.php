@@ -38,21 +38,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'attribute' => 'Time',
+                'attribute' => 'Times',
                 'value' => function($model) {
                     $array = [];
-                    foreach ($model->time as $item){
-                        $array[] = $item['time'];
-                    }
-                    return $array ? join(', ', $array) : null;
-                }
-            ],
-            [
-                'attribute' => 'TimePrices',
-                'value' => function($model) {
-                    $array = [];
-                    foreach ($model->timePrices as $item){
-                        $array[] = $item['price'];
+                    foreach ($model->times as $item){
+                        $array[] = $item['time'] . ' ( '. $item['price'] .' ₽ ) ';
                     }
                     return $array ? join(', ', $array) : null;
                 }

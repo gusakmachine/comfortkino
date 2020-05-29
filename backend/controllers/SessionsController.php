@@ -2,10 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\sessions\SessionsTime;
-use common\models\sessions\SessionsTimePrices;
-use common\models\sessions\Time;
-use common\models\sessions\TimePrices;
+use common\models\sessions\Times;
 use Yii;
 use common\models\sessions\Sessions;
 use yii\data\ActiveDataProvider;
@@ -40,7 +37,7 @@ class SessionsController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Sessions::find()->with('movie', 'time', 'timePrices'),
+            'query' => Sessions::find()->with('movie', 'times'),
             'pagination' => [
                 'pageSize' => 10,
             ],
@@ -72,23 +69,22 @@ class SessionsController extends Controller
     public function actionCreate()
     {
         $sessions = new Sessions();
-        $sessionsTime = new SessionsTime();
-        $sessionsTimePrices = new SessionsTimePrices();
+        $times = [new Times()];
 
-        if ($sessions->load(Yii::$app->request->post()) && $sessionsTime->load(Yii::$app->request->post()) && $sessionsTimePrices->load(Yii::$app->request->post())) {
-            if ($sessions->validate() && $sessionsTime->validate() && $sessionsTimePrices->validate()){
-                if ($sessions->save() && $sessionsTime->saveMultiply($sessionsTime->time_id, $sessions->id) && $sessionsTimePrices->saveMultiply($sessionsTimePrices->time_prices_id, $sessions->id)) {
-                    return $this->redirect(['view', 'id' => $sessions->id]);
+        if (Yii::$app->request->isPost) {
+            $times = $this->prepareTimesArray(Yii::$app->request->post('Times', []), $times);
+            if ($sessions->load(Yii::$app->request->post()) && Times::loadMultiple($times, Yii::$app->request->post())) {
+                if ($sessions->validate() && Times::validateMultiple($times)) {
+                    if ($sessions->save() && Times::saveMultiple($times,  $sessions->id)) {
+                        return $this->redirect(['view', 'id' => $sessions->id]);
+                    }
                 }
             }
         }
 
         return $this->render('create', [
             'sessions' => $sessions,
-            'sessionsTime' => $sessionsTime,
-            'sessionsTimePrices' => $sessionsTimePrices,
-            'time' => Time::find()->all(),
-            'timePrice' => TimePrices::find()->all()
+            'times' => $times,
         ]);
     }
 
@@ -102,29 +98,23 @@ class SessionsController extends Controller
     public function actionUpdate($id)
     {
         $sessions = $this->findModel($id);
-        $sessionsTime = new SessionsTime();
-        $sessionsTimePrices = new SessionsTimePrices();
+        $times = $this->getTimesBySessionId($id);
 
-        $sessionsTime->time_id = $sessions->getTime()->all();
-        $sessionsTimePrices->time_prices_id = $sessions->getTimePrices()->all();
-
-        if ($sessions->load(Yii::$app->request->post()) && $sessionsTime->load(Yii::$app->request->post()) && $sessionsTimePrices->load(Yii::$app->request->post())) {
-            if ($sessions->validate() && $sessionsTime->validate() && $sessionsTimePrices->validate()){
-                SessionsTime::deleteAll('sessions_id = :sessions_id', [':sessions_id' => $sessions->id]);
-                SessionsTimePrices::deleteAll('sessions_id = :sessions_id', [':sessions_id' => $sessions->id]);
-
-                if ($sessions->save() && $sessionsTime->saveMultiply($sessionsTime->time_id, $sessions->id) && $sessionsTimePrices->saveMultiply($sessionsTimePrices->time_prices_id, $sessions->id)) {
-                    return $this->redirect(['view', 'id' => $sessions->id]);
+        if (Yii::$app->request->isPost) {
+            Times::deleteAll('sessions_id = :sessions_id', [':sessions_id' => $id]);
+            $times = $this->prepareTimesArray(Yii::$app->request->post('Times', []));
+            if ($sessions->load(Yii::$app->request->post()) && Times::loadMultiple($times, Yii::$app->request->post())) {
+                if ($sessions->validate() && Times::validateMultiple($times)) {
+                    if ($sessions->save() && Times::saveMultiple($times, $id)) {
+                        return $this->redirect(['view', 'id' => $id]);
+                    }
                 }
             }
         }
 
         return $this->render('update', [
             'sessions' => $sessions,
-            'sessionsTime' => $sessionsTime,
-            'sessionsTimePrices' => $sessionsTimePrices,
-            'time' => Time::find()->all(),
-            'timePrice' => TimePrices::find()->all()
+            'times' => $times,
         ]);
     }
 
@@ -134,6 +124,8 @@ class SessionsController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -157,4 +149,33 @@ class SessionsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
+    /**
+     * @param $id
+     * @return array
+     */
+    private function getTimesBySessionId($id)
+    {
+        $data = Times::find()->where(['sessions_id' => $id])->asArray()->all();
+        $items = [];
+        foreach ($data as $row) {
+            $item = new Times();
+            $item->setAttributes($row);
+            $items[] = $item;
+        }
+        return $items;
+    }
+
+    /**
+     * @param $times
+     * @return mixed
+     */
+    private function prepareTimesArray($formData, $times = []) {
+        foreach (array_keys($formData) as $index) {
+            $times[$index] = new Times();
+        }
+        return $times;
+    }
+
 }

@@ -9,8 +9,6 @@ use yii\grid\GridView;
 $this->title = 'Sessions';
 $this->params['breadcrumbs'][] = $this->title;
 
-//print_r($dataProvider);die;
-
 ?>
 <div class="sessions-index">
 
@@ -25,7 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            //'id',
             'date',
             [
                 'attribute' => 'movie_id',
@@ -35,23 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'attribute' => 'time',
+                'attribute' => 'Times',
                 'value' => function($model) {
-                    $array = [];
-                    foreach ($model->time as $item){
-                        $array[] = $item['time'];
+                    $times = [];
+                    foreach ($model->times as $item){
+                        $times[] = $item['time'] . ' ( '. $item['price'] .' ₽ ) ';
                     }
-                    return $array ? join(', ', $array) : null;
-                }
-            ],
-            [
-                'attribute' => 'timePrices',
-                'value' => function($model) {
-                    $array = [];
-                    foreach ($model->timePrices as $item){
-                        $array[] = $item['price'];
-                    }
-                    return $array ? join(', ', $array) : null;
+                    return $times ? join(', ', $times) : null;
                 }
             ],
             'hall_id',

@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\ArrayHelper;
+use unclead\multipleinput\TabularInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -21,9 +21,25 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($sessions, 'movie_id')->textInput() ?>
 
-    <?= $form->field($sessionsTime, 'time_id')->checkboxList(ArrayHelper::map($time, 'id', 'time'))->label('Выберите время сеанса'); ?>
-
-    <?= $form->field($sessionsTimePrices, 'time_prices_id')->checkboxList(ArrayHelper::map($timePrice, 'id', 'price'))->label('Выберите цены сеанса'); ?>
+    <?= TabularInput::widget([
+        'models' => $times,
+        'columns' => [
+            [
+                'name'  => 'time',
+                'title' => 'Time',
+                'options' => [
+                    'pluginOptions' => [
+                        'format' => 'yyyy-mm-dd',
+                        'todayHighlight' => true
+                    ]
+                ]
+            ],
+            [
+                'name'  => 'price',
+                'title' => 'Price',
+            ],
+        ],
+    ]) ?>
 
     <?= $form->field($sessions, 'hall_id')->textInput() ?>
 
