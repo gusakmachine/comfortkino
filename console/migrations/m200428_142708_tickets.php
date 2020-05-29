@@ -21,7 +21,7 @@ class m200428_142708_tickets extends Migration
             'hall_id' => $this->integer(),
             'movie_theaters_id' => $this->integer(),
             'city_id' => $this->integer(),
-            'time_id' => $this->integer(),
+            'times_id' => $this->integer(),
             'created_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
             'updated_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);
@@ -110,15 +110,15 @@ class m200428_142708_tickets extends Migration
             'CASCADE'
         );
         $this->createIndex(
-            '{{%idx-tickets-time_id}}',
+            '{{%idx-tickets-times_id}}',
             '{{%tickets}}',
-            'time_id'
+            'times_id'
         );
         $this->addForeignKey(
-            '{{%fk-tickets-time_id}}',
+            '{{%fk-tickets-times_id}}',
             '{{%tickets}}',
-            'time_id',
-            '{{%time}}',
+            'times_id',
+            '{{%times}}',
             'id',
             'CASCADE'
         );
@@ -130,11 +130,11 @@ class m200428_142708_tickets extends Migration
     public function safeDown()
     {
         $this->dropForeignKey(
-            '{{%fk-tickets-time_id}}',
+            '{{%fk-tickets-times_id}}',
             '{{%tickets}}'
         );
         $this->dropIndex(
-            '{{%idx-tickets-time_id}}',
+            '{{%idx-tickets-times_id}}',
             '{{%tickets}}'
         );
 

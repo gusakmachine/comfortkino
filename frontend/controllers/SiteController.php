@@ -82,7 +82,7 @@ class SiteController extends Controller
         if (!$movie) return $this->goHome();
 
         $sessions = Sessions::find()
-            ->with('time', 'timePrices')
+            ->with('times')
             ->where(['>', 'date', date('Y-m-d', strtotime('- 1 day'))])
             ->andWhere(['movie_id' => $movie['id']])
             ->orderBy('date')
@@ -104,7 +104,7 @@ class SiteController extends Controller
             return null;
 
         $sessions = Sessions::find()
-            ->with('movie', 'time', 'timePrices')
+            ->with('movie', 'times')
             ->where(['date' => $post['date']])
             ->andWhere(['hall_id' => array_map(
                 'intval', ArrayHelper::getColumn(
@@ -136,7 +136,7 @@ class SiteController extends Controller
     {
         $formData = Yii::$app->request->post();
 
-        $session = Sessions::find()->with('time', 'timePrices', 'tickets')->where(['id' => $formData['sessionID']])->asArray()->one();
+        $session = Sessions::find()->with('times', 'tickets')->where(['id' => $formData['sessionID']])->asArray()->one();
         $hall = Halls::find()->with('placesSets')->where(['id' => $session['hall_id']])->asArray()->one();
         $hall['placesSets'] = PlacesSets::find()->with('colors', 'placePrice', 'tickets')->where(['set_id' => $hall['placesSets'][0]['set_id']])->orderBy('row')->asArray()->all(); // Shit, repair this fucking shit motherfuckers
 

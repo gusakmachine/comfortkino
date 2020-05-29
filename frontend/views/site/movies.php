@@ -37,10 +37,10 @@
                 <span class="film__age-rating"><?= $movies[$i]['age'] ?>+</span>
             </div>
             <div class="flex-wrapper">
-                <?php for ($sessions_timeIDX = 0 ; $sessions_timeIDX < count($sessions[$i]['time']); $sessions_timeIDX++): ?>
+                <?php for ($sessions_timeIDX = 0 ; $sessions_timeIDX < count($sessions[$i]['times']); $sessions_timeIDX++): ?>
                     <button class="film__sessions-info" data-SH="#popup-tickets" data-sessionID="<?= $sessions[$i]['id'] ?>" data-timeID="<?= $sessions_timeIDX ?>">
-                        <span class="film__session-time session-time"><?= date('H:i', strtotime($sessions[$i]['time'][$sessions_timeIDX]['time'])); ?></span>
-                        <span class="film__session-price session-price">от <?= $sessions[$i]['timePrices'][$sessions_timeIDX]['price'] ?> ₽</span>
+                        <span class="film__session-time session-time"><?= date('H:i', strtotime($sessions[$i]['times'][$sessions_timeIDX]['time'])); ?></span>
+                        <span class="film__session-price session-price">от <?= $sessions[$i]['times'][$sessions_timeIDX]['price'] ?> ₽</span>
                     </button>
                 <?php endfor; ?>
             </div>
