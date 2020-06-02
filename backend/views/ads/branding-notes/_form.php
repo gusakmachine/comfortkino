@@ -2,9 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use backend\widgets\SvgIconsViewer\SvgIconsViewer;
+use backend\widgets\Images\Images;
 /* @var $this yii\web\View */
 /* @var $model common\models\ads\BrandingNotes */
+/* @var $svg_model common\models\img\SvgIcons */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -16,8 +17,13 @@ use backend\widgets\SvgIconsViewer\SvgIconsViewer;
 
     <?= $form->field($model, 'link_text')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'svg_image_name')->textInput(['maxlength' => true, 'id' => 'svg_image_name', 'type' => 'hidden']) ?>
-    <?= SvgIconsViewer::widget(['name' => $model['svg_image_name'] , 'element_name' => '#svg_image_name']); ?>
+    <?= $form->field($model, 'svg_image_name')->textInput(['maxlength' => true, 'id' => 'svg_image_input_id', 'type' => 'hidden']) ?>
+    <?= Images::widget([
+            'name' => $model['svg_image_name'],
+            'input_id' => '#svg_image_input_id',
+            'model' => $svg_model,
+            'images_path' => Yii::getAlias('@frontend_link') . Yii::getAlias('@svg')
+        ]); ?>
 
     <?= $form->field($model, 'href')->textInput(['maxlength' => true]) ?>
 

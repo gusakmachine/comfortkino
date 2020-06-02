@@ -6,15 +6,16 @@ use yii\web\AssetBundle;
 /**
  * Main backend application asset bundle.
  */
-class ViewersAsset extends AssetBundle
+class ImagesAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/Viewers.css',
+        'css/images.css',
     ];
     public $js = [
-        'js/Viewers.js',
+        'js/images.js',
+        'js/gallery-helper.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

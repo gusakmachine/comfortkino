@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use backend\assets\ImagesAsset;
+
+ImagesAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model common\models\ads\OwlAds */
@@ -16,7 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($file, 'imageFile')->fileInput() ?>
+    <?= $form->field($file, 'imageFiles')->fileInput(['class' => 'view-img-after-dwn', 'data-image-name' => 'model-owl-backgrounds']) ?>
     <?php if (isset($model['background_image_name'])): ?>
         <img class="model-owl-backgrounds" src="<?= Yii::getAlias('@frontend_link') . Yii::getAlias('@owl-backgrounds') . $model['background_image_name']; ?>" alt="image" />
     <?php endif; ?>

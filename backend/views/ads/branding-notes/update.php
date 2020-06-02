@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\ads\BrandingNotes */
+/* @var $svg_model common\models\img\SvgIcons */
 
 $this->title = 'Update Branding Notes: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Branding Notes', 'url' => ['index']];
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'svg_model' => $svg_model
     ]) ?>
 
 </div>

@@ -14,7 +14,7 @@ Yii::setAlias('@posters', '/img/posters');
 Yii::setAlias('@mob_posters', '/img/mob_poster');
 Yii::setAlias('@owl-backgrounds', '/img/ads/owl-backgrounds');
 Yii::setAlias('@page-backgrounds', '/img/ads/page-backgrounds');
-Yii::setAlias('@svg_icons', '/img/svg_icons');
+Yii::setAlias('@svg', '/img/svg');
 Yii::setAlias('@static_svg_icons', '/img/static');
 Yii::setAlias('@map_img', Yii::getAlias('@static_svg_icons') . '/google_maps');
 

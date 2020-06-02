@@ -77,7 +77,7 @@ class SiteController extends Controller
 
     public function actionFilm($id)
     {
-        $movie = Movies::find()->where('id = :id', [':id' => $id])->with('galleries', 'countries', 'genres', 'actors', 'directors')->asArray()->one();
+        $movie = Movies::find()->where('id = :id', [':id' => $id])->with('gallery', 'countries', 'genres', 'actors', 'directors')->asArray()->one();
 
         if (!$movie) return $this->goHome();
 

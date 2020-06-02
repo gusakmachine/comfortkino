@@ -23,6 +23,10 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+
+    <script>
+        var gallery_URL = '<?=  Yii::getAlias('@frontend_link') . Yii::getAlias('@gallery') ?>';
+    </script>
 </head>
 <body>
 <?php $this->beginBody() ?>

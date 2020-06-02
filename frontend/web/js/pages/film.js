@@ -4,7 +4,7 @@ $(document).ready(function() {
 		margin:15,
 		nav: true,
 		navClass: ['film-gallery__btn --prev','film-gallery__btn --next'],
-		navText: ["<svg><use href=\"/img/static/icons/icons.svg#arrow-empty\"></use></svg>","<svg><use href=\"/img/static/icons/icons.svg#arrow-empty\"></use></svg>"],
+		navText: ["<svg><use href=\"" + icons_arrow_empty + "\"></use></svg>","<svg><use href=\"" + icons_arrow_empty + "\"></use></svg>"],
 		items:1,
 	});
 

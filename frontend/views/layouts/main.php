@@ -23,6 +23,8 @@ AppAsset::register($this);
         var getTicketsURL = '<?= Url::to(['site/tickets']) ?>';
 
         var staticSvgIconsPATH = '<?= Yii::getAlias('@static_svg_icons'); ?>';
+
+        var icons_arrow_empty = '<?= Yii::getAlias('@svg:#arrow-empty'); ?>';
     </script>
     <?php $this->head() ?>
 </head>

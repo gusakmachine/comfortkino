@@ -2,6 +2,7 @@
 
 namespace backend\controllers\ads;
 
+use common\models\img\SvgIcons;
 use Yii;
 use common\models\ads\Notes;
 use common\models\ads\SearchNotes;
@@ -72,6 +73,7 @@ class NotesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'svg_model' => new SvgIcons(),
         ]);
     }
 
@@ -92,6 +94,7 @@ class NotesController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'svg_model' => new SvgIcons(),
         ]);
     }
 

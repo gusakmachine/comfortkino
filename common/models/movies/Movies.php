@@ -3,9 +3,8 @@
 namespace common\models\movies;
 
 use Yii;
-
-use common\models\sessions\Sessions;
-use common\models\sessions\Tickets;
+use yii\helpers\ArrayHelper;
+use zxbodya\yii2\galleryManager\GalleryBehavior;
 
 /**
  * This is the model class for table "movies".
@@ -18,10 +17,10 @@ use common\models\sessions\Tickets;
  * @property string|null $poster
  * @property string|null $mob_poster
  * @property string|null $trailer
- * @property string|null $gallery
  * @property string|null $release_date
  * @property string $created_at
  * @property string $updated_at
+ *
  * @property Gallery[] $galleries
  * @property MoviesActors[] $moviesActors
  * @property Actors[] $actors
@@ -31,11 +30,15 @@ use common\models\sessions\Tickets;
  * @property Directors[] $directors
  * @property MoviesGenres[] $moviesGenres
  * @property Genres[] $genres
+ * @property OwlMovies[] $owlMovies
  * @property Sessions[] $sessions
  * @property Tickets[] $tickets
  */
 class Movies extends \yii\db\ActiveRecord
 {
+    public $file_poster;
+    public $file_mob_poster;
+    public $files_gallery;
     /**
      * {@inheritdoc}
      */
@@ -53,7 +56,7 @@ class Movies extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['duration', 'release_date', 'created_at', 'updated_at'], 'safe'],
             [['age'], 'integer'],
-            [['title', 'poster', 'mob_poster', 'trailer', 'gallery'], 'string', 'max' => 255],
+            [['title', 'poster', 'mob_poster', 'trailer'], 'string', 'max' => 255],
         ];
     }
 
@@ -71,7 +74,6 @@ class Movies extends \yii\db\ActiveRecord
             'poster' => 'Poster',
             'mob_poster' => 'Mob Poster',
             'trailer' => 'Trailer',
-            'gallery' => 'Gallery',
             'release_date' => 'Release Date',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -83,7 +85,7 @@ class Movies extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGalleries()
+    public function getGallery()
     {
         return $this->hasMany(Gallery::className(), ['movies_id' => 'id']);
     }
@@ -129,7 +131,6 @@ class Movies extends \yii\db\ActiveRecord
     }
 
     /**
-<<<<<<< HEAD
      * Gets query for [[MoviesDirectors]].
      *
      * @return \yii\db\ActiveQuery
@@ -150,8 +151,6 @@ class Movies extends \yii\db\ActiveRecord
     }
 
     /**
-=======
->>>>>>> c0b945ca8421d635002c60a643b9cf82c47245a8
      * Gets query for [[MoviesGenres]].
      *
      * @return \yii\db\ActiveQuery
@@ -169,6 +168,16 @@ class Movies extends \yii\db\ActiveRecord
     public function getGenres()
     {
         return $this->hasMany(Genres::className(), ['id' => 'genres_id'])->viaTable('movies_genres', ['movies_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[OwlMovies]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOwlMovies()
+    {
+        return $this->hasMany(OwlMovies::className(), ['movie_id' => 'id']);
     }
 
     /**

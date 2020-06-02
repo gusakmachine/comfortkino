@@ -1,21 +1,22 @@
 <?php
 namespace backend\widgets\AllowedBackgroundColorsViewer;
 
+use common\models\ads\AllowedBackgroundColors;
+use common\models\Colors;
 use yii\base\Widget;
-
-use common\models\AllowedBackgroundColors;
 
 class AllowedBackgroundColorsViewer extends Widget
 {
-    public $name;
-    public $element_name;
+    public $input_id;
+    public $current_color;
 
-    public function run()
-    {
+    public function run() {
+        $model = Colors::find()->where(['id' => AllowedBackgroundColors::find()->asArray()->all()])->asArray()->all();
+
         return $this->render('index', [
-            'model' => AllowedBackgroundColors::find()->asArray()->all(),
-            'element_name' => $this->element_name,
-            'name' => $this->name
+            'current_color' => $this->current_color,
+            'input_id' => $this->input_id,
+            'model' => $model,
         ]);
     }
 }

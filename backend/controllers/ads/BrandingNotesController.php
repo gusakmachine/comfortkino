@@ -8,6 +8,7 @@ use common\models\ads\SearchBrandingNotes;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\img\SvgIcons;
 
 /**
  * BrandingNotesController implements the CRUD actions for BrandingNotes model.
@@ -72,6 +73,7 @@ class BrandingNotesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'svg_model' => new SvgIcons,
         ]);
     }
 
@@ -92,6 +94,7 @@ class BrandingNotesController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'svg_model' => new SvgIcons,
         ]);
     }
 

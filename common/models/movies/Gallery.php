@@ -56,4 +56,12 @@ class Gallery extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Movies::className(), ['id' => 'movies_id']);
     }
+
+    public static function saveMultiple($models) {
+        foreach ($models as $model)
+            if (!$model->save())
+                return false;
+
+        return true;
+    }
 }
