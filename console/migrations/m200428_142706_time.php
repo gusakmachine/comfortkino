@@ -12,10 +12,29 @@ class m200428_142706_time extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('time', [
+        $this->createTable('times', [
             'id' => $this->primaryKey(),
             'time' => $this->time(255),
+            'price' => $this->integer(),
+            'sessions_id' => $this->integer(),
         ]);
+
+        // creates index for column `sessions_id`
+        $this->createIndex(
+            '{{%idx-times-sessions_id}}',
+            '{{%times}}',
+            'sessions_id'
+        );
+
+        // add foreign key for table `{{%sessions}}`
+        $this->addForeignKey(
+            '{{%fk-times-sessions_id}}',
+            '{{%times}}',
+            'sessions_id',
+            '{{%sessions}}',
+            'id',
+            'CASCADE'
+        );
     }
 
     /**
@@ -23,7 +42,19 @@ class m200428_142706_time extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('time');
+        // drops foreign key for table `{{%sessions}}`
+        $this->dropForeignKey(
+            '{{%fk-times-sessions_id}}',
+            '{{%times}}'
+        );
+
+        // drops index for column `sessions_id`
+        $this->dropIndex(
+            '{{%idx-times-sessions_id}}',
+            '{{%times}}'
+        );
+
+        $this->dropTable('times');
     }
 
     /*

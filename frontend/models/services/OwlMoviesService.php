@@ -15,7 +15,7 @@ class OwlMoviesService
             ->all();
 
         $sessions = Sessions::find()
-            ->with('time', 'timePrices')
+            ->with('times')
             ->where(['>', 'date', date('Y-m-d', strtotime('- 1 day'))])
             ->andWhere(['movie_id' => array_map('intval', array_column($owlMovies, 'id'))])
             ->orderBy('movie_id, date')
@@ -23,14 +23,14 @@ class OwlMoviesService
             ->all();
 
         for ($i = 0, $j = 0; $i < count($owlMovies); $i++) {
-            if (isset($sessions[$j]['time']))
-                $owlMovies[$i]['counter_time'] = 0 - (count($sessions[$j]['time']) > $maxCountTimesInOwl ? $maxCountTimesInOwl : count($sessions[$j]['time'])) ;
+            if (isset($sessions[$j]['times']))
+                $owlMovies[$i]['counter_time'] = 0 - (count($sessions[$j]['times']) > $maxCountTimesInOwl ? $maxCountTimesInOwl : count($sessions[$j]['times'])) ;
             for ( ; $j < count($sessions); $j++) {
                 if ($sessions[$j]['movie_id'] != $owlMovies[$i]['id'])
                     break;
 
                 $owlMovies[$i]['sessions'][] = $sessions[$j];
-                $owlMovies[$i]['counter_time'] += count($sessions[$j]['time']);
+                $owlMovies[$i]['counter_time'] += count($sessions[$j]['times']);
             }
         }
 

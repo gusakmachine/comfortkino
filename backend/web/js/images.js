@@ -13,7 +13,7 @@ $(document).ready(function(){
             var reader = new FileReader();
 
             reader.onload = function(e) {
-                $('.' + $(input).attr('data-image-name')).attr('src', e.target.result);
+                $('.' + $(input).attr('data-image-name')).attr('src', e.target.result).css('display', 'block');
             }
 
             reader.readAsDataURL(input.files[0]);
