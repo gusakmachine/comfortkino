@@ -114,9 +114,8 @@ class MoviesController extends Controller
             $existing_gallery_names = Yii::$app->request->post();
 
             for ($i = 0; $i < count($gallery_models); $i++)
-                if (boolval($existing_gallery_names['existing_gallery_names'][$i]) == false) {
+                if (boolval($existing_gallery_names['existing_gallery_names'][$i]) == false)
                     $gallery_models[$i]->delete();
-                }
 
             foreach ($files->imageFiles['gallery'] as $image) {
                 foreach ($gallery_models as $gallery_model)

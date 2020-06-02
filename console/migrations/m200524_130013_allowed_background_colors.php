@@ -43,12 +43,12 @@ class m200524_130013_allowed_background_colors extends Migration
     {
         $this->dropForeignKey(
             '{{%fk-allowed_background_colors_colors}}',
-            '{{%owl_movies}}'
+            '{{%allowed_background_colors}}'
         );
 
         $this->dropIndex(
             '{{%idx-allowed_background_colors_color_id}}',
-            '{{%owl_movies}}'
+            '{{%allowed_background_colors}}'
         );
 
         $this->dropTable('allowed_background_colors');
