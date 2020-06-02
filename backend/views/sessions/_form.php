@@ -36,10 +36,14 @@ use kartik\select2\Select2;
             [
                 'name'  => 'time',
                 'title' => 'Time',
+                'type'  => \kartik\time\TimePicker::className(),
+                'defaultValue' => '12:00:00',
                 'options' => [
                     'pluginOptions' => [
-                        'format' => 'yyyy-mm-dd',
-                        'todayHighlight' => true
+                        'showSeconds' => true,
+                        'showMeridian' => false,
+                        'minuteStep' => 1,
+                        'secondStep' => 5,
                     ]
                 ]
             ],

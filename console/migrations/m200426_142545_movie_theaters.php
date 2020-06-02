@@ -16,8 +16,10 @@ class m200426_142545_movie_theaters extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string(255),
             'address' => $this->string(255),
-            'google-map-img' => $this->string(255),
-            'google-map-link' => $this->string(512),
+            'google_map_img' => $this->string(255),
+            'google_map_link' => $this->string(512),
+            'start_work_time' => $this->time(255),
+            'end_work_time' => $this->time(255),
             'subdomain_name' => $this->string(255),
             'city_id' => $this->integer(),
         ]);
