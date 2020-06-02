@@ -8,7 +8,6 @@ use frontend\components\Controller;
 use common\models\theaters\MovieTheaters;
 use common\models\theaters\Halls;
 use common\models\theaters\PlacesSets;
-use common\models\theaters\PlacePrices;
 
 use common\models\sessions\Sessions;
 use common\models\sessions\Tickets;

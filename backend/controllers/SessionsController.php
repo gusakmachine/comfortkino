@@ -2,10 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\movies\Movies;
 use common\models\sessions\Times;
 use Yii;
 use common\models\sessions\Sessions;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -70,6 +72,7 @@ class SessionsController extends Controller
     {
         $sessions = new Sessions();
         $times = [new Times()];
+        $movies = Movies::find()->asArray()->all();
 
         if (Yii::$app->request->isPost) {
             $times = $this->prepareTimesArray(Yii::$app->request->post('Times', []), $times);
@@ -85,6 +88,7 @@ class SessionsController extends Controller
         return $this->render('create', [
             'sessions' => $sessions,
             'times' => $times,
+            'movies' => ArrayHelper::map($movies, 'id', 'title'),
         ]);
     }
 
@@ -99,6 +103,7 @@ class SessionsController extends Controller
     {
         $sessions = $this->findModel($id);
         $times = $this->getTimesBySessionId($id);
+        $movies = Movies::find()->asArray()->all();
 
         if (Yii::$app->request->isPost) {
             Times::deleteAll('sessions_id = :sessions_id', [':sessions_id' => $id]);
@@ -115,6 +120,7 @@ class SessionsController extends Controller
         return $this->render('update', [
             'sessions' => $sessions,
             'times' => $times,
+            'movies' => ArrayHelper::map($movies, 'id', 'title'),
         ]);
     }
 

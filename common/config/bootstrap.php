@@ -17,6 +17,7 @@ Yii::setAlias('@page-backgrounds', '/img/ads/page-backgrounds');
 Yii::setAlias('@svg_icons', '/img/svg_icons');
 Yii::setAlias('@static_svg_icons', '/img/static');
 Yii::setAlias('@map_img', Yii::getAlias('@static_svg_icons') . '/google_maps');
+Yii::setAlias('@frontend_link', 'http://otrada.comfortkino.com/');
 
 //Installing aliases for static images
 Yii::setAlias('@logo-image', Yii::getAlias('@static_svg_icons') . '/logos/logo.png');
@@ -25,7 +26,7 @@ Yii::setAlias('@svg:#arrow-filled', Yii::getAlias('@static_svg_icons') . '/icons
 Yii::setAlias('@svg:#arrow-without-bottom', Yii::getAlias('@static_svg_icons') . '/icons.svg#arrow-without-bottom');
 Yii::setAlias('@svg:#arrow-empty', Yii::getAlias('@static_svg_icons') . '/icons.svg#arrow-empty');
 Yii::setAlias('@svg:#facebook', Yii::getAlias('@static_svg_icons') . '/icons.svg#facebook');
-Yii::setAlias('@svg:#inst', Yii::getAlias('@static_svg_icons') . '/icons.svg#inst');
+Yii::setAlias('@svg:#instagram', Yii::getAlias('@static_svg_icons') . '/icons.svg#instagram');
 Yii::setAlias('@svg:#vk', Yii::getAlias('@static_svg_icons') . '/icons.svg#vk');
 Yii::setAlias('@svg:#cross', Yii::getAlias('@static_svg_icons') . '/icons.svg#cross');
 

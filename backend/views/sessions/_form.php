@@ -3,6 +3,7 @@
 use unclead\multipleinput\TabularInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $sessions common\models\sessions\Sessions */
@@ -11,6 +12,7 @@ use yii\widgets\ActiveForm;
 /* @var array $time common\models\sessions\Sessions */
 /* @var array $timePrice common\models\sessions\Sessions */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <div class="sessions-form">
@@ -19,7 +21,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($sessions, 'date')->textInput() ?>
 
-    <?= $form->field($sessions, 'movie_id')->textInput() ?>
+    <?= $form->field($sessions, 'movie_id')->widget(Select2::classname(), [
+            'data' => $movies,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label('Movie');
+    ?>
+
 
     <?= TabularInput::widget([
         'models' => $times,
@@ -27,10 +36,14 @@ use yii\widgets\ActiveForm;
             [
                 'name'  => 'time',
                 'title' => 'Time',
+                'type'  => \kartik\time\TimePicker::className(),
+                'defaultValue' => '12:00:00',
                 'options' => [
                     'pluginOptions' => [
-                        'format' => 'yyyy-mm-dd',
-                        'todayHighlight' => true
+                        'showSeconds' => true,
+                        'showMeridian' => false,
+                        'minuteStep' => 1,
+                        'secondStep' => 5,
                     ]
                 ]
             ],

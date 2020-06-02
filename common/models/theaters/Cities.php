@@ -2,6 +2,7 @@
 
 namespace common\models\theaters;
 
+use common\models\sessions\Tickets;
 use Yii;
 
 /**

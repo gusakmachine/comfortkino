@@ -3,26 +3,27 @@
 namespace common\models;
 
 use yii\base\Model;
-use yii\web\UploadedFile;
 
 class UploadForm extends Model
 {
-    /**
-     * @var UploadedFile
-     */
-    public $imageFile;
+    public $imageFiles;
 
     public function rules()
     {
         return [
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'svg, jpg'],
+            [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'svg, jpg, jpeg, png', 'maxFiles' => 10],
         ];
     }
 
     public function upload()
     {
         if ($this->validate()) {
-            $this->imageFile->saveAs($this->imageFile->baseName . '.' . $this->imageFile->extension);
+            /*foreach ($this->imageFiles as $file) {
+                if (is_array($file))
+                    foreach ($file as $item)
+                        $item->saveAs($item->baseName . '.' . $item->extension);
+                else $file->saveAs($file->baseName . '.' . $file->extension);
+            }*/
             return true;
         } else {
             return false;
