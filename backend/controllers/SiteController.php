@@ -11,6 +11,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use backend\models\LoginForm;
+use common\components\ControllerURLs;
 
 /**
  * Site controller
@@ -66,6 +67,9 @@ class SiteController extends Controller
         ];
     }
 
+    public static function controllerName() {
+        return 'Главная';
+    }
     /**
      * Displays homepage.
      *
@@ -73,7 +77,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+       return $this->render('index');
     }
 
     /**

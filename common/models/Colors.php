@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property string|null $color
  *
+ * @property AllowedBackgroundColors[] $allowedBackgroundColors
  * @property PlacesSets[] $placesSets
  */
 class Colors extends \yii\db\ActiveRecord
@@ -29,6 +30,7 @@ class Colors extends \yii\db\ActiveRecord
     {
         return [
             [['color'], 'string', 'max' => 255],
+            [['color'], 'unique'],
         ];
     }
 
@@ -41,6 +43,16 @@ class Colors extends \yii\db\ActiveRecord
             'id' => 'ID',
             'color' => 'Color',
         ];
+    }
+
+    /**
+     * Gets query for [[AllowedBackgroundColors]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAllowedBackgroundColors()
+    {
+        return $this->hasMany(AllowedBackgroundColors::className(), ['color_id' => 'id']);
     }
 
     /**

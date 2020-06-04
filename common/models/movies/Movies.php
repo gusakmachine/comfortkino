@@ -39,6 +39,11 @@ class Movies extends \yii\db\ActiveRecord
     public $file_poster;
     public $file_mob_poster;
     public $files_gallery;
+
+    public $actors;
+    public $directors;
+    public $genres;
+    public $countries;
     /**
      * {@inheritdoc}
      */

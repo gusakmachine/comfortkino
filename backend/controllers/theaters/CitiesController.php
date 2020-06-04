@@ -29,6 +29,10 @@ class CitiesController extends Controller
         ];
     }
 
+    public static function controllerName() {
+        return 'Города';
+    }
+
     /**
      * Lists all Cities models.
      * @return mixed

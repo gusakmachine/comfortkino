@@ -3,12 +3,20 @@
 namespace backend\controllers\movies;
 
 use common\models\movies\Actors;
+use common\models\movies\Countries;
+use common\models\movies\Directors;
 use common\models\movies\Gallery;
+use common\models\movies\Genres;
+use common\models\movies\MoviesActors;
+use common\models\movies\MoviesCountries;
+use common\models\movies\MoviesDirectors;
+use common\models\movies\MoviesGenres;
 use common\models\UploadForm;
 use Yii;
 use common\models\movies\Movies;
 use common\models\movies\SearchMovies;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -32,6 +40,10 @@ class MoviesController extends Controller
                 ],
             ],
         ];
+    }
+
+    public static function controllerName() {
+        return 'Фильмы';
     }
 
     /**
@@ -73,18 +85,41 @@ class MoviesController extends Controller
         $files = new UploadForm();
 
         if ($model->load(Yii::$app->request->post())) {
-            $files->imageFiles = UploadedFile::getInstances($files, 'imageFile');
+            //Upload images
+            $files->imageFiles['poster'] = UploadedFile::getInstances($model, 'file_poster');
+            $files->imageFiles['mob_poster'] = UploadedFile::getInstances($model, 'file_mob_poster');
+            $files->imageFiles['gallery'] = UploadedFile::getInstances($model, 'files_gallery');
 
-            $model['poster'] = (isset($files->imageFiles[0])) ? '/' . $model[$id] . '/' . $files->imageFiles[0]->name : '';
-            $model['mob_poster'] = (isset($files->imageFiles[1])) ? '/' . $model[$id] . '/' . $files->imageFiles[1]->name : '';
+            if (!empty($files->imageFiles['poster']))
+                $model['poster'] = $files->imageFiles['poster'][0]->name;
+            if (!empty($files->imageFiles['mob_poster']))
+                $model['mob_poster'] = $files->imageFiles['mob_poster'][0]->name;
 
-            if ($model->save() && $files->upload())
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->save() && $files->upload()) {
+                //Upload actors, directors, genres, countries, gallery
+                $new_actors = MoviesActors::loadActors($model->id, Yii::$app->request->post()['Movies']['actors']);
+                $new_directors = MoviesDirectors::loadDirectors($model->id, Yii::$app->request->post()['Movies']['directors']);
+                $new_genres = MoviesGenres::loadGenres($model->id, Yii::$app->request->post()['Movies']['genres']);
+                $new_countries = MoviesCountries::loadCountries($model->id, Yii::$app->request->post()['Movies']['countries']);
+                $new_gallery_models = Gallery::loadImageFiles($model->id, $files->imageFiles['gallery']);
+
+                if (MoviesActors::saveMultiple($new_actors)
+                    && MoviesDirectors::saveMultiple($new_directors)
+                    && MoviesGenres::saveMultiple($new_genres)
+                    && MoviesCountries::saveMultiple($new_countries)
+                    && Gallery::saveMultiple($new_gallery_models)
+                )
+                    return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
-            'files' => $files,
+            'actors' => ArrayHelper::map(Actors::find()->asArray()->all(), 'id', 'name'),
+            'directors' => ArrayHelper::map(Directors::find()->asArray()->all(), 'id', 'name'),
+            'genres' => ArrayHelper::map(Genres::find()->asArray()->all(), 'id', 'name'),
+            'countries' => ArrayHelper::map(Countries::find()->asArray()->all(), 'id', 'name'),
+            'gallery' => $model->getGallery()->asArray()->all(),
         ]);
     }
 
@@ -98,48 +133,59 @@ class MoviesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $gallery_models = Gallery::find()->where(['movies_id' => $id])->all();
         $files = new UploadForm();
+        $gallery_models = Gallery::find()->where(['movies_id' => $id])->all();
+
+        $model->actors = $model->getActors()->all();
+        $model->directors = $model->getDirectors()->all();
+        $model->genres = $model->getGenres()->all();
+        $model->countries = $model->getCountries()->all();
 
         if ($model->load(Yii::$app->request->post())) {
+            //Upload images
             $files->imageFiles['poster'] = UploadedFile::getInstances($model, 'file_poster');
             $files->imageFiles['mob_poster'] = UploadedFile::getInstances($model, 'file_mob_poster');
             $files->imageFiles['gallery'] = UploadedFile::getInstances($model, 'files_gallery');
 
-            if (count($files->imageFiles['poster']) > 0)
-                $model['poster'] = '/' . $id . '/' . $files->imageFiles['poster'][0]->name;
-            if (count($files->imageFiles['mob_poster']) > 0)
-                $model['mob_poster'] = '/' . $id . '/' . $files->imageFiles['mob_poster'][0]->name;
+            if (!empty($files->imageFiles['poster']))
+                $model['poster'] = $files->imageFiles['poster'][0]->name;
+            if (!empty($files->imageFiles['mob_poster']))
+                $model['mob_poster'] = $files->imageFiles['mob_poster'][0]->name;
 
-            $existing_gallery_names = Yii::$app->request->post();
+            $new_gallery_models = Gallery::loadImageFiles($id, $files->imageFiles['gallery'], $gallery_models);
 
-            for ($i = 0; $i < count($gallery_models); $i++)
-                if (boolval($existing_gallery_names['existing_gallery_names'][$i]) == false)
-                    $gallery_models[$i]->delete();
+            if(isset(Yii::$app->request->post()['to_delete_gallery_images']))
+                Gallery::deleteImageFiles($gallery_models, Yii::$app->request->post()['to_delete_gallery_images']);
 
-            foreach ($files->imageFiles['gallery'] as $image) {
-                foreach ($gallery_models as $gallery_model)
-                    if ($gallery_model->path == '/' . $id . '/' . $image->name)
-                        continue 2;
+            //Upload actors, directors, genres, countries
+            MoviesActors::deleteAll('movies_id = :movies_id', [':movies_id' => $id]);
+            MoviesDirectors::deleteAll('movies_id = :movies_id', [':movies_id' => $id]);
+            MoviesGenres::deleteAll('movies_id = :movies_id', [':movies_id' => $id]);
+            MoviesCountries::deleteAll('movies_id = :movies_id', [':movies_id' => $id]);
 
-                $gallery_image = new Gallery();
-                $gallery_image->path = '/' . $id . '/' . $image->name;
-                $gallery_image->movies_id = $id;
+            $new_actors = MoviesActors::loadActors($id, Yii::$app->request->post()['Movies']['actors']);
+            $new_directors = MoviesDirectors::loadDirectors($id, Yii::$app->request->post()['Movies']['directors']);
+            $new_genres = MoviesGenres::loadGenres($id, Yii::$app->request->post()['Movies']['genres']);
+            $new_countries = MoviesCountries::loadCountries($id, Yii::$app->request->post()['Movies']['countries']);
 
-                $gallery_models[] = $gallery_image;
-            }
-
-            if ($model->save() && $files->upload() && Gallery::saveMultiple($gallery_models))
+            if ($model->save()
+                && $files->upload()
+                && Gallery::saveMultiple($new_gallery_models)
+                && MoviesActors::saveMultiple($new_actors)
+                && MoviesDirectors::saveMultiple($new_directors)
+                && MoviesGenres::saveMultiple($new_genres)
+                && MoviesCountries::saveMultiple($new_countries)
+            )
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
-            'actors' => implode(', ', array_column($model->getActors()->asArray()->all(), 'name')),
-            'directors' => implode(', ', array_column($model->getDirectors()->asArray()->all(), 'name')),
-            'genres' => implode(', ', array_column($model->getGenres()->asArray()->all(), 'name')),
-            'countries' => implode(', ', array_column($model->getCountries()->asArray()->all(), 'name')),
-            'gallery_paths' => $model->getGallery()->asArray()->all(),
+            'actors' => ArrayHelper::map(Actors::find()->asArray()->all(), 'id', 'name'),
+            'directors' => ArrayHelper::map(Directors::find()->asArray()->all(), 'id', 'name'),
+            'genres' => ArrayHelper::map(Genres::find()->asArray()->all(), 'id', 'name'),
+            'countries' => ArrayHelper::map(Countries::find()->asArray()->all(), 'id', 'name'),
+            'gallery' => $model->getGallery()->asArray()->all(),
         ]);
     }
 

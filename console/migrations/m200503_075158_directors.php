@@ -14,7 +14,7 @@ class m200503_075158_directors extends Migration
     {
         $this->createTable('directors', [
             'id' => $this->primaryKey(),
-            'name' => $this->string(255),
+            'name' => $this->string(255)->unique(),
         ]);
     }
 

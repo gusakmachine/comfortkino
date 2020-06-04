@@ -14,7 +14,7 @@ class m200501_170559_gallery extends Migration
     {
         $this->createTable('gallery', [
             'id' => $this->primaryKey(),
-            'path' => $this->string(255),
+            'image_name' => $this->string(255),
             'movies_id' => $this->integer(),
         ]);
 

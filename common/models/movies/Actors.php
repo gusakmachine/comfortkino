@@ -30,7 +30,7 @@ class Actors extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 255],
-            [['actors_str'], 'safe'],
+            [['name'], 'unique'],
         ];
     }
 
@@ -63,5 +63,30 @@ class Actors extends \yii\db\ActiveRecord
     public function getMovies()
     {
         return $this->hasMany(Movies::className(), ['id' => 'movies_id'])->viaTable('movies_actors', ['actors_id' => 'id']);
+    }
+
+    public static function loadImageFiles($id, $imageFiles, $exist_gallery_models)
+    {
+        $new_gallery_models = [];
+
+        foreach ($imageFiles as $image) {
+            foreach ($exist_gallery_models as $exist_gallery_model)
+                if ($exist_gallery_model->image_name == $image->name)
+                    continue 2;
+
+            $gallery_image = new Gallery();
+            $gallery_image->load(['Gallery' => ['image_name' => $image->name, 'movies_id' => $id]]);
+            $new_gallery_models[] = $gallery_image;
+        }
+
+        return $new_gallery_models;
+    }
+
+    public static function saveMultiple($models) {
+        foreach ($models as $model)
+            if (!$model->save())
+                return false;
+
+        return true;
     }
 }

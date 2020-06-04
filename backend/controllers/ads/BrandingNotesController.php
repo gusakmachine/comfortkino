@@ -30,6 +30,10 @@ class BrandingNotesController extends Controller
         ];
     }
 
+    public static function controllerName() {
+        return 'Нижние объявления';
+    }
+
     /**
      * Lists all BrandingNotes models.
      * @return mixed

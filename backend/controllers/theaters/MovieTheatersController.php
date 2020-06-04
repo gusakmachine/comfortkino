@@ -35,6 +35,10 @@ class MovieTheatersController extends Controller
         ];
     }
 
+    public static function controllerName() {
+        return 'Кинотеатры';
+    }
+
     /**
      * Lists all MovieTheaters models.
      * @return mixed

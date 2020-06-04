@@ -32,6 +32,9 @@ class SessionsController extends Controller
         ];
     }
 
+    public static function controllerName() {
+        return 'Сеансы';
+    }
     /**
      * Lists all Sessions models.
      * @return mixed

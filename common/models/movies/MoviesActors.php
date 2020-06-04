@@ -67,4 +67,25 @@ class MoviesActors extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Movies::className(), ['id' => 'movies_id']);
     }
+
+    public static function loadActors($movie_id, $data)
+    {
+        $new_actors = [];
+
+        foreach ($data as $item) {
+            $actor = new MoviesActors();
+            $actor->load(['MoviesActors' => ['actors_id' => $item, 'movies_id' => $movie_id]]);
+            $new_actors[] = $actor;
+        }
+
+        return $new_actors;
+    }
+
+    public static function saveMultiple($models) {
+        foreach ($models as $model)
+            if (!$model->save())
+                return false;
+
+        return true;
+    }
 }

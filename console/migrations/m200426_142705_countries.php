@@ -14,7 +14,7 @@ class m200426_142705_countries extends Migration
     {
         $this->createTable('countries', [
             'id' => $this->primaryKey(),
-            'name' => $this->string(255),
+            'name' => $this->string(255)->unique(),
         ]);
     }
 

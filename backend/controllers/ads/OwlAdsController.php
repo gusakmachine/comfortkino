@@ -31,6 +31,10 @@ class OwlAdsController extends Controller
         ];
     }
 
+    public static function controllerName() {
+        return 'Карусель-объявления';
+    }
+
     /**
      * Lists all OwlAds models.
      * @return mixed

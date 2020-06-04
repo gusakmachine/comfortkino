@@ -14,7 +14,7 @@ class m200426_142632_colors extends Migration
     {
         $this->createTable('colors', [
             'id' => $this->primaryKey(),
-            'color' => $this->string('255'),
+            'color' => $this->string('255')->unique(),
         ]);
     }
 

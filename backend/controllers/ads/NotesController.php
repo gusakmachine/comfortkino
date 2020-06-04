@@ -30,6 +30,10 @@ class NotesController extends Controller
         ];
     }
 
+    public static function controllerName() {
+        return 'Верхние объявления';
+    }
+
     /**
      * Lists all Notes models.
      * @return mixed

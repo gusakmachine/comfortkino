@@ -10,6 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
+use common\components\ControllerURLs;
 
 AppAsset::register($this);
 ?>
@@ -34,15 +35,14 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
+
+    $menuItems = ControllerURLs::generateMenuItems(ControllerURLs::getControllersURL(Yii::getAlias('@backend') . '\\controllers'));
+
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
@@ -52,7 +52,7 @@ AppAsset::register($this);
         $menuItems[] = '
             <li class="dropdown">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                  Меню ('. Yii::$app->user->identity->username .' ) 
+                  '. Yii::$app->user->identity->username .' 
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">

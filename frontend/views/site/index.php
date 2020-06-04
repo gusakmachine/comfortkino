@@ -21,8 +21,8 @@ MainAsset::register($this);
 <div class="info-carousel owl-carousel">
     <?php forEach($owlMovies as $owlMovie) : ?>
     <div>
-        <div class="owl-item__blurred-img" style="background-image: url(<?= Yii::getAlias('@mob_posters') . $owlMovie['mob_poster'] ?>)"></div>
-        <a href="#" class="owl-item__film-poster" style="background-image: url(<?= Yii::getAlias('@posters') . $owlMovie['poster'] ?>)"></a>
+        <div class="owl-item__blurred-img" style="background-image: url(<?= Yii::getAlias('@mob_posters')  . '/' . $owlMovie['id'] . '/'   . $owlMovie['mob_poster'] ?>)"></div>
+        <a href="#" class="owl-item__film-poster" style="background-image: url(<?= Yii::getAlias('@posters')  . '/' . $owlMovie['id'] . '/'    . $owlMovie['poster'] ?>)"></a>
         <div class="film">
             <a href="<?= \yii\helpers\Url::to(['site/film', 'id' => $owlMovie['id']]) ?>" class="film__details-link">
                 <span class="film__genre"> <?php for($j = 0; $j < count($owlMovie['genres']); $j++) echo $owlMovie['genres'][$j]['name'] . ($j + 1 < count($owlMovie['genres'])? ', ' : ' '); ?></span>
@@ -112,7 +112,7 @@ MainAsset::register($this);
             <div class="posters__list">
                 <?php foreach ($futureMovies as $movie): ?>
                     <div class="poster posters__item"
-                         style="background-image: url(<?= Yii::getAlias('@posters') . $movie['poster']?>)">
+                         style="background-image: url(<?= Yii::getAlias('@posters')  . '/' . $movie['id'] . '/'   . $movie['poster']?>)">
                         <a href="<?= \yii\helpers\Url::to(['site/film', 'id' => $movie['id']]) ?>" class="poster__link">
                             <span class="poster__age"><?= $movie['age'] ?>+</span>
                             <div class="poster__content">

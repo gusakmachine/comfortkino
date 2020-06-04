@@ -67,4 +67,25 @@ class MoviesCountries extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Movies::className(), ['id' => 'movies_id']);
     }
+
+    public static function loadCountries($movie_id, $data)
+    {
+        $new_countries = [];
+
+        foreach ($data as $item) {
+            $country = new MoviesCountries();
+            $country->load(['MoviesCountries' => ['countries_id' => $item, 'movies_id' => $movie_id]]);
+            $new_countries[] = $country;
+        }
+
+        return $new_countries;
+    }
+
+    public static function saveMultiple($models) {
+        foreach ($models as $model)
+            if (!$model->save())
+                return false;
+
+        return true;
+    }
 }

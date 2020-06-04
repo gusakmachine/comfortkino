@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = 'Update';
         'directors' => $directors,
         'genres' => $genres,
         'countries' => $countries,
-        'gallery_paths' => $gallery_paths,
+        'gallery' => $gallery,
     ]) ?>
 
 </div>

@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'actors' => implode(', ', array_column($model->getActors()->asArray()->all(), 'name')),
-        'directors' => implode(', ', array_column($model->getDirectors()->asArray()->all(), 'name')),
-        'genres' => implode(', ', array_column($model->getGenres()->asArray()->all(), 'name')),
-        'countries' => implode(', ', array_column($model->getCountries()->asArray()->all(), 'name')),
-        'gallery_paths' => $model->getGallery()->asArray()->all(),
+        'actors' => $actors,
+        'directors' => $directors,
+        'genres' => $genres,
+        'countries' => $countries,
+        'gallery' => $gallery,
     ]) ?>
 
 </div>

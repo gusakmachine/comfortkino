@@ -83,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $gallery = '';
 
                     foreach ($model->relatedRecords['gallery'] as $gallery_image)
-                        $gallery = $gallery . Html::img(Yii::getAlias('@frontend_link'). Yii::getAlias('@gallery') . $gallery_image->path, ['class' => 'model-gallery-image']);
+                        $gallery = $gallery . Html::img(Yii::getAlias('@frontend_link'). Yii::getAlias('@gallery') . '/' . $model['id'] . '/'  . $gallery_image->image_name, ['class' => 'model-gallery-image']);
 
                     return $gallery;
                 },
@@ -93,12 +93,12 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Poster',
                 'format' => ['image',['class' => 'model-poster']],
-                'value' => Yii::getAlias('@frontend_link'). Yii::getAlias('@posters') . $model->poster,
+                'value' => Yii::getAlias('@frontend_link'). Yii::getAlias('@posters') . '/' . $model['id'] . '/'  . $model->poster,
             ],
             [
                 'label' => 'Mobile preview',
                 'format' => ['image',['class' => 'model-mob-poster']],
-                'value' => Yii::getAlias('@frontend_link'). Yii::getAlias('@mob_posters') . $model->mob_poster,
+                'value' => Yii::getAlias('@frontend_link'). Yii::getAlias('@mob_posters') . '/' . $model['id'] . '/'  . $model->mob_poster,
             ],
             'trailer',
             'release_date',

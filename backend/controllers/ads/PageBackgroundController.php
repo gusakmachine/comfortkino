@@ -30,6 +30,10 @@ class PageBackgroundController extends Controller
         ];
     }
 
+    public static function controllerName() {
+        return 'Фон';
+    }
+
     /**
      * Lists all PageBackground models.
      * @return mixed

@@ -67,4 +67,25 @@ class MoviesDirectors extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Movies::className(), ['id' => 'movies_id']);
     }
+
+    public static function loadDirectors($movie_id, $data)
+    {
+        $directors = [];
+
+        foreach ($data as $item) {
+            $director = new MoviesDirectors();
+            $director->load(['MoviesDirectors' => ['directors_id' => $item, 'movies_id' => $movie_id]]);
+            $directors[] = $director;
+        }
+
+        return $directors;
+    }
+
+    public static function saveMultiple($models) {
+        foreach ($models as $model)
+            if (!$model->save())
+                return false;
+
+        return true;
+    }
 }

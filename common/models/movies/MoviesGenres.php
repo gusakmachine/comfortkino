@@ -67,4 +67,25 @@ class MoviesGenres extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Movies::className(), ['id' => 'movies_id']);
     }
+
+    public static function loadGenres($movie_id, $data)
+    {
+        $new_genres = [];
+
+        foreach ($data as $item) {
+            $genre = new MoviesGenres();
+            $genre->load(['MoviesGenres' => ['genres_id' => $item, 'movies_id' => $movie_id]]);
+            $new_genres[] = $genre;
+        }
+
+        return $new_genres;
+    }
+
+    public static function saveMultiple($models) {
+        foreach ($models as $model)
+            if (!$model->save())
+                return false;
+
+        return true;
+    }
 }

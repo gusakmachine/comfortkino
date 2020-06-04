@@ -14,7 +14,7 @@ class m200503_075152_actors extends Migration
     {
         $this->createTable('actors', [
             'id' => $this->primaryKey(),
-            'name' => $this->string(255),
+            'name' => $this->string(255)->unique(),
         ]);
     }
 

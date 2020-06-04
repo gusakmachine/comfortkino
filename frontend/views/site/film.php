@@ -9,8 +9,8 @@ $this->title = 'Фильм «' . $movie['title'] . '» — Мягкий кино
 FilmAsset::register($this);
 ?>
 <section class="main-film">
-    <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__poster" style="background-image: url(<?= Yii::getAlias('@posters') . $movie['poster'] ?>)"></a>
-    <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') . $movie['mob_poster'] ?>)">
+    <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__poster" style="background-image: url(<?= Yii::getAlias('@posters') . '/' . $movie['id'] . '/'    . $movie['poster'] ?>)"></a>
+    <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') . '/' . $movie['id'] . '/'  . $movie['mob_poster'] ?>)">
     </a>
     <div class="film partially-hidden-content max-height-on">
         <div class="film__top-left-content">
@@ -90,10 +90,10 @@ FilmAsset::register($this);
                     <?php switch ($i):
                         case 0: ?>
                             <div class="film-gallery__item">
-                                <a href="<?= Yii::getAlias('@gallery') . $movie['gallery'][$i]['path'] ?>" class="film-gallery__big-image" style="background-image: url('<?= Yii::getAlias('@gallery') . $movie['gallery'][$i]['path'] ?>')"></a>
+                                <a href="<?= Yii::getAlias('@gallery')  . '/' . $movie['id'] . '/' . $movie['gallery'][$i]['image_name'] ?>" class="film-gallery__big-image" style="background-image: url('<?= Yii::getAlias('@gallery') . '/' . $movie['id'] . '/' . $movie['gallery'][$i]['image_name'] ?>')"></a>
                                 <div class="wrap">
                                     <?php for($i = 1; $i < count($movie['gallery']); $i++): ?>
-                                        <a href="<?= Yii::getAlias('@gallery') . $movie['gallery'][$i]['path'] ?>" class="film-gallery__middle-image" style="background-image: url('<?= Yii::getAlias('@gallery') . $movie['gallery'][$i]['path'] ?>')"></a>
+                                        <a href="<?= Yii::getAlias('@gallery')  . '/' . $movie['id'] . '/' . $movie['gallery'][$i]['image_name'] ?>" class="film-gallery__middle-image" style="background-image: url('<?= Yii::getAlias('@gallery') . '/' . $movie['id'] . '/' . $movie['gallery'][$i]['image_name'] ?>')"></a>
                                         <?php if ($i == 2) break; ?>
                                     <?php endfor; ?>
                                 </div>
@@ -102,7 +102,7 @@ FilmAsset::register($this);
                         <?php default: ?>
                             <div class="film-gallery__item">
                                 <?php for ($k = 1; $i < (count($movie['gallery'])); $i++, $k++): ?>
-                                    <a href="<?= Yii::getAlias('@gallery') . $movie['gallery'][$i]['path'] ?>" class="film-gallery__middle-image" style="background-image: url('<?= Yii::getAlias('@gallery') .  $movie['gallery'][$i]['path'] ?>')"></a>
+                                    <a href="<?= Yii::getAlias('@gallery') . '/' . $movie['id'] . '/' . $movie['gallery'][$i]['image_name'] ?>" class="film-gallery__middle-image" style="background-image: url('<?= Yii::getAlias('@gallery') . '/' . $movie['id'] . '/' . $movie['gallery'][$i]['image_name'] ?>')"></a>
                                     <?php if ($k == 3) break; ?>
                                 <?php endfor; ?>
                             </div>

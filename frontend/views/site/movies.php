@@ -1,7 +1,7 @@
 <?php for ($i = 0; $i < count($sessions); $i++): ?>
     <div class="films-item">
         <div class="wrapper">
-            <a href="<?= $movies[$i]['trailer'] ?>" class="film__poster" style="background-image: url(<?= Yii::getAlias('@posters') . $movies[$i]['poster'] ?>)">
+            <a href="<?= $movies[$i]['trailer'] ?>" class="film__poster" style="background-image: url(<?= Yii::getAlias('@posters')  . '/' . $movies[$i]['id'] . '/'  . $movies[$i]['poster'] ?>)">
                 <div class="film__play-wrapper">
                     <span class="film__play">
                         <svg class="film__play-svg">
@@ -10,7 +10,7 @@
                     </span>
                 </div>
             </a>
-            <a href="#" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') .  $movies[$i]['mob_poster'] ?>)">
+            <a href="#" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters')  . '/' . $movies[$i]['id'] . '/'  .  $movies[$i]['mob_poster'] ?>)">
                 <div class="film__play-wrapper">
                     <span class="film__play">
                         <svg class="film__play-svg">

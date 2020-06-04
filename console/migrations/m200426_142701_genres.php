@@ -14,7 +14,7 @@ class m200426_142701_genres extends Migration
     {
         $this->createTable('genres', [
             'id' => $this->primaryKey(),
-            'name' => $this->string(255),
+            'name' => $this->string(255)->unique(),
         ]);
     }
 

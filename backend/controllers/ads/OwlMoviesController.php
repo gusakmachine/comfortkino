@@ -29,6 +29,10 @@ class OwlMoviesController extends Controller
         ];
     }
 
+    public static function controllerName() {
+        return 'Карусель-фильмы';
+    }
+
     /**
      * Lists all OwlMovies models.
      * @return mixed
