@@ -126,25 +126,30 @@ class SiteController extends Controller
         ]);
     }
 
+
     /**
-     * Resets password.
-     *
-     * @param string $token
-     * @return mixed
+     * @param null $token
+     * @return string|\yii\web\Response
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
+    public function actionResetPassword($token = null)
     {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidArgumentException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
-
-            return $this->goHome();
+        if (Yii::$app->user->isGuest) {
+            try {
+                $model = new ResetPasswordForm($token);
+            } catch (InvalidArgumentException $e) {
+                throw new BadRequestHttpException($e->getMessage());
+            }
+            if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+                Yii::$app->session->setFlash('success', 'New password saved.');
+                return $this->goHome();
+            }
+        } else {
+            $model = Yii::$app->user->identity;
+            if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
+                Yii::$app->session->setFlash('success', 'New password saved.');
+                return $this->goHome();
+            }
         }
 
         return $this->render('resetPassword', [

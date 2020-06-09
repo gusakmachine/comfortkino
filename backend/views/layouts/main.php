@@ -41,14 +41,13 @@ AppAsset::register($this);
         ],
     ]);
 
-    $menuItems = ControllerURLs::generateMenuItems(ControllerURLs::getControllersURL(Yii::getAlias('@backend') . '\\controllers'));
-
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $logout = Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton('Выход', ['class' => 'btn menu-btn'])
             . Html::endForm();
+        $menuItems = ControllerURLs::generateMenuItems(ControllerURLs::getControllersURL(Yii::getAlias('@backend') . '\\controllers'));
         $menuItems[] = '
             <li class="dropdown">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">
@@ -56,7 +55,8 @@ AppAsset::register($this);
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="'. Url::to(['site/request-password-reset']) .'">Изменить пароль</a></li>
+                    '. (Yii::$app->user->can('CRUDUsersList') ? '<li><a href="'. Url::to(['/user/manage']) .'">Пользователи</a></li>' : '') .' 
+                    <li><a href="'. Url::to(['/site/reset-password']) .'">Изменить пароль</a></li>
                     <li class="divider"></li>
                     <li>
                         '. $logout. '

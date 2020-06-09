@@ -1,19 +1,20 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\modules\user\controllers;
 
+use backend\models\SignupForm;
 use Yii;
-use common\models\Colors;
-use common\models\ColorsSearch;
-use yii\filters\AccessControl;
+use backend\models\User;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
- * ColorsController implements the CRUD actions for Colors model.
+ * ManageController implements the CRUD actions for User model.
  */
-class ColorsController extends Controller
+class ManageController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -33,34 +34,30 @@ class ColorsController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'update', 'delete', 'create'],
-                        'roles' => ['moderator'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
         ];
     }
 
-    public static function controllerName() {
-        return 'Цвета';
-    }
-
     /**
-     * Lists all Colors models.
+     * Lists all User models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ColorsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find(),
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Colors model.
+     * Displays a single User model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -73,25 +70,27 @@ class ColorsController extends Controller
     }
 
     /**
-     * Creates a new Colors model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Colors();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $user = new User();
+        if ($user->load(Yii::$app->request->post())) {
+            $user->generateAuthKey();
+            if ($user->save()) {
+                return $this->redirect(['view', 'id' => $user->id]);
+            }
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'user' => $user,
         ]);
     }
 
     /**
-     * Updates an existing Colors model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -99,19 +98,21 @@ class ColorsController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $user = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $user->setAttribute('password_hash', null);
+
+        if ($user->load(Yii::$app->request->post()) && $user->save()) {
+            return $this->redirect(['view', 'id' => $user->id]);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'user' => $user,
         ]);
     }
 
     /**
-     * Deletes an existing Colors model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -125,15 +126,15 @@ class ColorsController extends Controller
     }
 
     /**
-     * Finds the Colors model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Colors the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Colors::findOne($id)) !== null) {
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         }
 
