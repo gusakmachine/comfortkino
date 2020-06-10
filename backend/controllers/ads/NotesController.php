@@ -6,7 +6,7 @@ use common\models\img\SvgIcons;
 use Yii;
 use common\models\ads\Notes;
 use common\models\ads\SearchNotes;
-use yii\web\Controller;
+use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 

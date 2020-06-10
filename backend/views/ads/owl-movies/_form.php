@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model common\models\ads\OwlMovies */
 /* @var $form yii\widgets\ActiveForm */
@@ -12,12 +13,17 @@ use yii\helpers\Url;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'movie_id')->textInput() ?>
-    <a class="owl-movies__select-movie" href="<?= Url::toRoute(['movies/movies']); ?>">Select movie</a>
+    <?= $form->field($model, 'movie_id')->widget(Select2::classname(), [
+        'data' => $movies,
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ])->label('Фильм');
+    ?>
 
-    <?= $form->field($model, 'movie_theaters_id')->textInput() ?>
+    <?= $form->field($model, 'movie_theaters_id')->textInput()->label('ID кинотеатра') ?>
 
-    <?= $form->field($model, 'end_date')->textInput() ?>
+    <?= $form->field($model, 'end_date')->textInput()->label('Дата окончания') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

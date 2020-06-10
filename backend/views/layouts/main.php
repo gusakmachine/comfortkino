@@ -41,14 +41,13 @@ AppAsset::register($this);
         ],
     ]);
 
-    $menuItems = ControllerURLs::generateMenuItems(ControllerURLs::getControllersURL(Yii::getAlias('@backend') . '\\controllers'));
-
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $logout = Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton('Выход', ['class' => 'btn menu-btn'])
             . Html::endForm();
+        $menuItems = ControllerURLs::generateMenuItems($this->context->pages);
         $menuItems[] = '
             <li class="dropdown">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle">

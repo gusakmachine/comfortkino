@@ -53,8 +53,6 @@ $(document).ready(function() {
         return form5;
     }
 
-
-
     function getPopupTickets(sessionID, timeID) {
         $('#popup-tickets').empty();
 
@@ -74,6 +72,7 @@ $(document).ready(function() {
             if (data) {
                 $('#popup-tickets').append(data);
                 dragscroll.reset();
+
             } else {
                 $('#popup-tickets').append('<span class="popup-tickets__error">Нет данных</span>');
             }
@@ -87,5 +86,4 @@ $(document).ready(function() {
     $('body').on('click', '.film__sessions-info', function () {
         getPopupTickets($(this).attr('data-sessionid'), $(this).attr('data-timeid'));
     });
-
 });

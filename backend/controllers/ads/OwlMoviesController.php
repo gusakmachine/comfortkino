@@ -2,10 +2,12 @@
 
 namespace backend\controllers\ads;
 
+use common\models\movies\Movies;
 use Yii;
 use common\models\ads\OwlMovies;
 use common\models\ads\SearchOwlMovies;
-use yii\web\Controller;
+use backend\components\Controller;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -69,6 +71,7 @@ class OwlMoviesController extends Controller
     public function actionCreate()
     {
         $model = new OwlMovies();
+        $movies = Movies::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,6 +79,7 @@ class OwlMoviesController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'movies' => ArrayHelper::map($movies, 'id', 'title'),
         ]);
     }
 
@@ -89,6 +93,7 @@ class OwlMoviesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $movies = Movies::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -96,6 +101,7 @@ class OwlMoviesController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'movies' => ArrayHelper::map($movies, 'id', 'title'),
         ]);
     }
 

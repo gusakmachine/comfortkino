@@ -6,7 +6,7 @@ use common\models\UploadForm;
 use Yii;
 use common\models\ads\OwlAds;
 use common\models\ads\SearchOwlAds;
-use yii\web\Controller;
+use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;

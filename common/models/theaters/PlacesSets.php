@@ -2,10 +2,11 @@
 
 namespace common\models\theaters;
 
-use Yii;
-
 use common\models\sessions\Tickets;
+use common\models\theaters\PlacePrices;
+use Yii;
 use common\models\Colors;
+use common\models\theaters\Halls;
 
 /**
  * This is the model class for table "places_sets".
@@ -18,7 +19,6 @@ use common\models\Colors;
  * @property int|null $price_id
  * @property int|null $color_id
  *
- * @property HallsPlacesSets[] $hallsPlacesSets
  * @property Halls[] $halls
  * @property Colors $color
  * @property PlacePrices $price
@@ -64,23 +64,13 @@ class PlacesSets extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[HallsPlacesSets]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getHallsPlacesSets()
-    {
-        return $this->hasMany(HallsPlacesSets::className(), ['places_sets_id' => 'set_id']);
-    }
-
-    /**
      * Gets query for [[Halls]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getHalls()
     {
-        return $this->hasMany(Halls::className(), ['id' => 'halls_id'])->viaTable('halls_places_sets', ['places_sets_id' => 'set_id']);
+        return $this->hasMany(Halls::className(), ['places_sets_id' => 'id']);
     }
 
     /**
@@ -88,7 +78,7 @@ class PlacesSets extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getColors()
+    public function getColor()
     {
         return $this->hasOne(Colors::className(), ['id' => 'color_id']);
     }
@@ -98,7 +88,7 @@ class PlacesSets extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPlacePrice()
+    public function getPrice()
     {
         return $this->hasOne(PlacePrices::className(), ['id' => 'price_id']);
     }
@@ -110,6 +100,49 @@ class PlacesSets extends \yii\db\ActiveRecord
      */
     public function getTickets()
     {
-        return $this->hasOne(Tickets::className(), ['place_id' => 'id']);
+        return $this->hasMany(Tickets::className(), ['place_id' => 'id']);
+    }
+
+    public static function loadPlaces($placesSets, $set_id = false)
+    {
+        $new_models = [];
+
+        if (!$set_id)
+            $set_id = intval(PlacesSets::find()->max('set_id')) + 1;
+
+        foreach ($placesSets as $row => $placeSet)
+            foreach ($placeSet as $placeKey => $place) {
+                $model = new PlacesSets();
+                $model->load(['PlacesSets' => [
+                    'place' => $placeKey,
+                    'row' => $row,
+                    'graphic_display' => $place['graphic_display'],
+                    'set_id' => $set_id,
+                    'price_id' => $place['price_id'],
+                    'color_id' => $place['color_id'],
+                ]]);
+                $new_models[] = $model;
+            }
+
+        return $new_models;
+    }
+
+    public static function saveMultiple($models) {
+        foreach ($models as $model)
+            if (!$model->save())
+                return false;
+
+        return true;
+    }
+
+    public static function getSet($id) {
+        $places = PlacesSets::find()->where(['set_id' => $id])->orderBy('row, place')->asArray()->all();
+
+        for ($i = 0; $i < count($places); $i++) {
+            $places[$i]['price_id'] = PlacePrices::find()->where(['id' => $places[$i]['price_id']])->one();
+            $places[$i]['color_id'] = Colors::find()->where(['id' => $places[$i]['color_id']])->one();
+        }
+
+        return $places;
     }
 }

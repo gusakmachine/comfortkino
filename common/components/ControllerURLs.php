@@ -55,8 +55,6 @@ class ControllerURLs
 
         while ($controller = current($controllers)) {
             if (is_array($controller)) {
-                //$menuItems[] = self::getMenuItems($controller);
-
                 $menuItem = '
                 <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle">

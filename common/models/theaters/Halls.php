@@ -4,19 +4,15 @@ namespace common\models\theaters;
 
 use Yii;
 
-use common\models\sessions\Sessions;
-use common\models\sessions\Tickets;
-
 /**
  * This is the model class for table "halls".
  *
  * @property int $id
  * @property int|null $capacity
  * @property int|null $movie_theaters_id
+ * @property int|null $places_sets_id
  *
  * @property MovieTheaters $movieTheaters
- * @property HallsPlacesSets[] $hallsPlacesSets
- * @property PlacesSets[] $placesSets
  * @property Sessions[] $sessions
  * @property Tickets[] $tickets
  */
@@ -36,7 +32,7 @@ class Halls extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['capacity', 'movie_theaters_id'], 'integer'],
+            [['capacity', 'movie_theaters_id', 'places_sets_id'], 'integer'],
             [['movie_theaters_id'], 'exist', 'skipOnError' => true, 'targetClass' => MovieTheaters::className(), 'targetAttribute' => ['movie_theaters_id' => 'id']],
         ];
     }
@@ -50,6 +46,7 @@ class Halls extends \yii\db\ActiveRecord
             'id' => 'ID',
             'capacity' => 'Capacity',
             'movie_theaters_id' => 'Movie Theaters ID',
+            'places_sets_id' => 'Places Sets ID',
         ];
     }
 
@@ -61,26 +58,6 @@ class Halls extends \yii\db\ActiveRecord
     public function getMovieTheaters()
     {
         return $this->hasOne(MovieTheaters::className(), ['id' => 'movie_theaters_id']);
-    }
-
-    /**
-     * Gets query for [[HallsPlacesSets]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getHallsPlacesSets()
-    {
-        return $this->hasMany(HallsPlacesSets::className(), ['halls_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[PlacesSets]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlacesSets()
-    {
-        return $this->hasMany(PlacesSets::className(), ['set_id' => 'places_sets_id'])->viaTable('halls_places_sets', ['halls_id' => 'id']);
     }
 
     /**
@@ -101,5 +78,33 @@ class Halls extends \yii\db\ActiveRecord
     public function getTickets()
     {
         return $this->hasMany(Tickets::className(), ['hall_id' => 'id']);
+    }
+
+    public static function loadPlaces($data) {
+        $new_model = [];
+        $set_id = intval(PlacesSets::find()->max('set_id')) + 1;
+
+        foreach ($data as $key => $item)
+            foreach ($item as $sub_key => $sub_item) {
+                $model = new PlacesSets();
+                $model->load(['PlacesSets' => [
+                    'place' => $sub_key,
+                    'row' => $key,
+                    'graphic_display' => $sub_item['graphic_display'],
+                    'set_id' => $set_id,
+                    'price_id' => $sub_item['price_id'],
+                    'color_id' => $sub_item['color_id'],
+                ]]);
+            }
+
+        return $new_model;
+    }
+
+    public static function saveMultiple($models) {
+        foreach ($models as $model)
+            if (!$model->save())
+                return false;
+
+        return true;
     }
 }

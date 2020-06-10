@@ -45,26 +45,23 @@
                     </div>
                     <div id="scheme__body" class="scheme__body">
                         <div id="scheme-menu" class="scheme-menu">
-                            <?php for($i = 0; $i < count($hall['placesSets']); $i++): ?>
+                            <?php for($i = 0; $i < count($hall['places']); $i++): ?>
                                 <?php
-                                    $isSold = false;
-                                    if ($hall['placesSets'][$i]['tickets']
-                                        && $hall['placesSets'][$i]['tickets']['times_id'] == $session['times'][$sessionTimeIDX]['id']
-                                        && $hall['placesSets'][$i]['tickets']['sessions_id'] == $session['id']
-                                        && $hall['placesSets'][$i]['tickets']['movie_theaters_id'] == $movieTheater['id']
-                                        && $hall['placesSets'][$i]['tickets']['hall_id'] == $session['hall_id'])
-                                        { $isSold = true; }
+                                    $isSold = 0;
+
+                                    if(in_array($hall['places'][$i]['id'], array_column($session['tickets'], 'place_id')))
+                                        $isSold = 1;
                                 ?>
 
-                                <?php if (!isset($hall['placesSets'][$i + 1]['row']) || ($i + 1 < count($hall['placesSets']) && $hall['placesSets'][$i]['row'] != $hall['placesSets'][$i + 1]['row'])): ?>
-                                    <span class="place-row" style="left: 0; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;"><?= $hall['placesSets'][$i]['row'] ?></span>
-                                    <span class="place-row" style="right: 0; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;"><?= $hall['placesSets'][$i]['row'] ?></span>
+                                <?php if (!isset($hall['places'][$i + 1]['row']) || ($i + 1 < count($hall['places']) && $hall['places'][$i]['row'] != $hall['places'][$i + 1]['row'])): ?>
+                                    <span class="place-row" style="left: 0; top: <?=  $hall['places'][$i]['graphic_display']['top'] ?>px;"><?= $hall['places'][$i]['row'] ?></span>
+                                    <span class="place-row" style="right: 0; top: <?=  $hall['places'][$i]['graphic_display']['top'] ?>px;"><?= $hall['places'][$i]['row'] ?></span>
                                 <?php endif; ?>
-                                <button class="place scheme-menu__place" <?= $isSold ? 'data-sold="true"' : ''?> style="<?= $isSold ? '' : 'background: ' . $hall['placesSets'][$i]['colors']['color'] . ';' ?> left: <?=  $hall['placesSets'][$i]['graphic_display']['left'] ?>px; top: <?=  $hall['placesSets'][$i]['graphic_display']['top'] ?>px;">
-                                    <span class="placenumber"><?=  $hall['placesSets'][$i]['place'] ?></span>
+                                <button class="place scheme-menu__place" <?= $isSold ? 'data-sold="true"' : ''?> style="<?= $isSold ? '' : 'background: ' . $hall['places'][$i]['color_id']['color'] . ';' ?> left: <?=  $hall['places'][$i]['graphic_display']['left'] ?>px; top: <?=  $hall['places'][$i]['graphic_display']['top'] ?>px;">
+                                    <span class="placenumber"><?=  $hall['places'][$i]['place'] ?></span>
                                     <div class="popover">
-                                        <span class="big rub"><?= $session['times'][$sessionTimeIDX]['price'] +  $hall['placesSets'][$i]['placePrice']['price'] ?></span>
-                                        <span><?=  $hall['placesSets'][$i]['row'] . ' ряд, ' .  $hall['placesSets'][$i]['place'] . ' место' ?></span>
+                                        <span class="big rub"><?= $session['times'][$sessionTimeIDX]['price'] +  $hall['places'][$i]['price_id']['price'] ?></span>
+                                        <span><?=  $hall['places'][$i]['row'] . ' ряд, ' .  $hall['places'][$i]['place'] . ' место' ?></span>
                                     </div>
                                 </button>
                             <?php endfor; ?>

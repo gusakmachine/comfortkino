@@ -13,11 +13,11 @@ use backend\widgets\Images\Images;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'text')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'text')->textInput(['maxlength' => true])->label('Текст') ?>
 
-    <?= $form->field($model, 'link_text')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'link_text')->textInput(['maxlength' => true])->label('Текст-ссылка') ?>
 
-    <?= $form->field($model, 'svg_image_name')->textInput(['maxlength' => true, 'id' => 'svg_image_input_id', 'type' => 'hidden']) ?>
+    <?= $form->field($model, 'svg_image_name')->textInput(['maxlength' => true, 'id' => 'svg_image_input_id', 'type' => 'hidden'])->label('Значок') ?>
     <?= Images::widget([
             'name' => $model['svg_image_name'],
             'input_id' => '#svg_image_input_id',
@@ -25,11 +25,11 @@ use backend\widgets\Images\Images;
             'images_path' => Yii::getAlias('@frontend_link') . Yii::getAlias('@svg')
         ]); ?>
 
-    <?= $form->field($model, 'href')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'href')->textInput(['maxlength' => true])->label('Ссылка') ?>
 
-    <?= $form->field($model, 'movie_theaters_id')->textInput() ?>
+    <?= $form->field($model, 'movie_theaters_id')->textInput()->label('ID кинотеатра') ?>
 
-    <?= $form->field($model, 'end_date')->textInput() ?>
+    <?= $form->field($model, 'end_date')->textInput()->label('Дата окончания') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

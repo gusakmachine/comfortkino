@@ -5,7 +5,7 @@ namespace backend\controllers\movies;
 use Yii;
 use common\models\movies\Actors;
 use common\models\movies\ActorsSearch;
-use yii\web\Controller;
+use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 

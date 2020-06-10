@@ -18,15 +18,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($movieTheaters, 'name')->textInput() ?>
+    <?= $form->field($movieTheaters, 'name')->textInput()->label('Название') ?>
 
-    <?= $form->field($movieTheaters, 'address')->textInput() ?>
+    <?= $form->field($movieTheaters, 'address')->textInput()->label('Адресс') ?>
 
-    <?= $form->field($movieTheaters, 'google_map_img')->fileInput(['class' => 'view-img-after-dwn', 'data-image-name' => 'google-map-img']) ?>
+    <?= $form->field($movieTheaters, 'google_map_img')->fileInput(['class' => 'view-img-after-dwn', 'data-image-name' => 'google-map-img'])->label('Google-картинка') ?>
 
     <img class="google-map-img model-poster" style="display: <?= $movieTheaters['google_map_img'] ? 'block' : 'none' ?>" src="<?= Yii::getAlias('@frontend_link') . Yii::getAlias('@map_img') . $movieTheaters['google_map_img']; ?>" alt="image" />
 
-    <?= $form->field($movieTheaters, 'google_map_link')->textInput()->label('<a href="https://www.google.com/maps/place/" target="_blank">Google map link</a>') ?>
+    <?= $form->field($movieTheaters, 'google_map_link')->textInput()->label('<a href="https://www.google.com/maps/place/" target="_blank">Google, ссылка на место</a>') ?>
 
     <?= $form->field($movieTheaters, 'start_work_time')->widget(TimePicker::classname(),[
         'name' => 'start_work_time',
@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
             'minuteStep' => 1,
             'secondStep' => 5,
         ]
-    ])?>
+    ])->label('Время начала работа кинотеатра')?>
 
     <?= $form->field($movieTheaters, 'end_work_time')->widget(TimePicker::classname(),[
         'name' => 'end_work_time',
@@ -46,7 +46,7 @@ use yii\widgets\ActiveForm;
             'minuteStep' => 1,
             'secondStep' => 5,
         ]
-    ])?>
+    ])->label('Время конца работы кинотеатра')?>
 
     <?= $form->field($socials, 'vk')->textInput() ?>
     <?= $form->field($socials, 'facebook')->textInput() ?>
@@ -57,19 +57,19 @@ use yii\widgets\ActiveForm;
         'columns' => [
             [
                 'name'  => 'phone',
-                'title' => 'Phone',
+                'title' => 'Телефоны',
             ],
         ],
     ]) ?>
 
-    <?= $form->field($movieTheaters, 'subdomain_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($movieTheaters, 'subdomain_name')->textInput(['maxlength' => true])->label('Название кинотеатра на английском') ?>
 
     <?= $form->field($movieTheaters, 'city_id')->widget(Select2::classname(), [
         'data' => $cities,
         'pluginOptions' => [
             'allowClear' => true
         ],
-    ])->label('City');
+    ])->label('Город');
     ?>
 
     <div class="form-group">

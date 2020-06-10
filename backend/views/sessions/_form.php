@@ -19,14 +19,14 @@ use kartik\select2\Select2;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($sessions, 'date')->textInput() ?>
+    <?= $form->field($sessions, 'date')->textInput()->label('Дата') ?>
 
     <?= $form->field($sessions, 'movie_id')->widget(Select2::classname(), [
             'data' => $movies,
             'pluginOptions' => [
                 'allowClear' => true
             ],
-        ])->label('Movie');
+        ])->label('Фильм');
     ?>
 
 
@@ -35,7 +35,7 @@ use kartik\select2\Select2;
         'columns' => [
             [
                 'name'  => 'time',
-                'title' => 'Time',
+                'title' => 'Время',
                 'type'  => \kartik\time\TimePicker::className(),
                 'defaultValue' => '12:00:00',
                 'options' => [
@@ -49,12 +49,12 @@ use kartik\select2\Select2;
             ],
             [
                 'name'  => 'price',
-                'title' => 'Price',
+                'title' => 'Цена',
             ],
         ],
     ]) ?>
 
-    <?= $form->field($sessions, 'hall_id')->textInput() ?>
+    <?= $form->field($sessions, 'hall_id')->textInput()->label('ID зала') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

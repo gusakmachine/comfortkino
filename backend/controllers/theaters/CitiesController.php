@@ -5,7 +5,7 @@ namespace backend\controllers\theaters;
 use Yii;
 use common\models\theaters\Cities;
 use yii\data\ActiveDataProvider;
-use yii\web\Controller;
+use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 

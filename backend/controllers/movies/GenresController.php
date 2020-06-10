@@ -5,7 +5,7 @@ namespace backend\controllers\movies;
 use Yii;
 use common\models\movies\Genres;
 use common\models\movies\GenresSearch;
-use yii\web\Controller;
+use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 

@@ -17,7 +17,7 @@ use common\models\movies\Movies;
 use common\models\movies\SearchMovies;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
-use yii\web\Controller;
+use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;

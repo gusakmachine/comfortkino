@@ -5,7 +5,7 @@ namespace backend\controllers\ads;
 use Yii;
 use common\models\ads\PageBackground;
 use common\models\ads\SearchPageBackground;
-use yii\web\Controller;
+use backend\components\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\UploadForm;

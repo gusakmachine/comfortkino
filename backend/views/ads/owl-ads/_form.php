@@ -15,20 +15,20 @@ ImagesAsset::register($this);
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'subtitle')->textInput(['maxlength' => true])->label('Подзаголовок') ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true])->label('Заголовок') ?>
 
-    <?= $form->field($file, 'imageFiles')->fileInput(['class' => 'view-img-after-dwn', 'data-image-name' => 'model-owl-backgrounds']) ?>
+    <?= $form->field($file, 'imageFiles')->fileInput(['class' => 'view-img-after-dwn', 'data-image-name' => 'model-owl-backgrounds'])->label('Фоновое изображение') ?>
     <?php if (isset($model['background_image_name'])): ?>
         <img class="model-owl-backgrounds" src="<?= Yii::getAlias('@frontend_link') . Yii::getAlias('@owl-backgrounds') . $model['background_image_name']; ?>" alt="image" />
     <?php endif; ?>
 
-    <?= $form->field($model, 'button_text')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'button_text')->textInput(['maxlength' => true])->label('Текст кнопки') ?>
 
-    <?= $form->field($model, 'movie_theaters_id')->textInput() ?>
+    <?= $form->field($model, 'movie_theaters_id')->textInput()->label('ID кинотеатра') ?>
 
-    <?= $form->field($model, 'end_date')->textInput() ?>
+    <?= $form->field($model, 'end_date')->textInput()->label('Дата окончания') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

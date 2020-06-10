@@ -16,16 +16,16 @@ ImagesAsset::register($this);
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label('Название фона') ?>
 
-    <?= $form->field($file, 'imageFiles')->fileInput(['class' => 'view-img-after-dwn', 'data-image-name' => 'model-page-background']) ?>
+    <?= $form->field($file, 'imageFiles')->fileInput(['class' => 'view-img-after-dwn', 'data-image-name' => 'model-page-background'])->label('Фоновое изображение') ?>
     <?php if (isset($model['background_image_name'])): ?>
         <img class="model-page-background" src="<?= Yii::getAlias('@frontend_link') . Yii::getAlias('@page-backgrounds') . $model['background_image_name']; ?>" alt="page_background_image"/>
     <?php endif; ?>
 
-    <?= $form->field($model, 'movie_theaters_id')->textInput() ?>
+    <?= $form->field($model, 'movie_theaters_id')->textInput()->label('ID кинотеатра') ?>
 
-    <?= $form->field($model, 'end_date')->textInput() ?>
+    <?= $form->field($model, 'end_date')->textInput()->label('Дата окончания') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

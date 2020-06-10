@@ -136,24 +136,23 @@ class SiteController extends Controller
         $formData = Yii::$app->request->post();
 
         $session = Sessions::find()->with('times', 'tickets')->where(['id' => $formData['sessionID']])->asArray()->one();
-        $hall = Halls::find()->with('placesSets')->where(['id' => $session['hall_id']])->asArray()->one();
-        $hall['placesSets'] = PlacesSets::find()->with('colors', 'placePrice', 'tickets')->where(['set_id' => $hall['placesSets'][0]['set_id']])->orderBy('row')->asArray()->all(); // Shit, repair this fucking shit motherfuckers
-
+        $hall = Halls::find()->where(['id' => $session['hall_id']])->asArray()->one();
+        $hall['places'] = PlacesSets::getSet($hall['places_sets_id']);
         $movie = Movies::find()->where(['id' => $session['movie_id']])->asArray()->one();
 
-        $prices = array_unique(array_column(array_column($hall['placesSets'], 'placePrice'), 'price'));
-        $colors = array_unique(array_column(array_column($hall['placesSets'], 'colors'), 'color'));
+        for ($i = 0; $i < count($hall['places']); $i++)
+            $hall['places'][$i]['graphic_display'] = json_decode($hall['places'][$i]['graphic_display'], true);
 
-        for ($i = 0; $i < count($hall['placesSets']); $i++)
-            $hall['placesSets'][$i]['graphic_display'] = json_decode($hall['placesSets'][$i]['graphic_display'], true);
+        $prices = array_unique(array_column(array_column($hall['places'], 'price_id'), 'price'));
+        $colors = array_unique(array_column(array_column($hall['places'], 'color_id'), 'color'));
 
         return $this->renderAjax('tickets', [
             'session' => $session,
             'hall' => $hall,
             'movie' => $movie,
             'sessionTimeIDX' => $formData['timeID'],
-            'prices' => $prices,
             'colors' => $colors,
+            'prices' => $prices,
             'movieTheater' => Yii::$app->cityComponent->getMovieTheaterBySubdomain(Yii::$app->session->get('subdomain'))
         ]);
     }

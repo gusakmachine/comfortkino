@@ -16,6 +16,7 @@ class m200426_142550_halls extends Migration
             'id' => $this->primaryKey(),
             'capacity' => $this->integer(),
             'movie_theaters_id' => $this->integer(),
+            'places_sets_id' => $this->integer(),
         ]);
 
         $this->createIndex(
