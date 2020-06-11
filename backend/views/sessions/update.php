@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /* @var $sessions common\models\sessions\Sessions */
 /* @var $times common\models\sessions\Sessions */
 /* @var $movies common\models\sessions\Sessions */
+/* @var $halls common\models\sessions\Sessions */
 
 $this->title = 'Update Sessions: ' . $sessions->id;
 $this->params['breadcrumbs'][] = ['label' => 'Sessions', 'url' => ['index']];
@@ -20,6 +21,7 @@ $this->params['breadcrumbs'][] = 'Update';
         'sessions' => $sessions,
         'times' => $times,
         'movies' => $movies,
+        'halls' => $halls,
     ]) ?>
 
 </div>

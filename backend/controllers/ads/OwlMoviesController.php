@@ -3,6 +3,7 @@
 namespace backend\controllers\ads;
 
 use common\models\movies\Movies;
+use common\models\theaters\MovieTheaters;
 use Yii;
 use common\models\ads\OwlMovies;
 use common\models\ads\SearchOwlMovies;
@@ -83,6 +84,7 @@ class OwlMoviesController extends Controller
     {
         $model = new OwlMovies();
         $movies = Movies::find()->asArray()->all();
+        $movieTheaters = MovieTheaters::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -91,6 +93,7 @@ class OwlMoviesController extends Controller
         return $this->render('create', [
             'model' => $model,
             'movies' => ArrayHelper::map($movies, 'id', 'title'),
+            'movieTheaters' => ArrayHelper::map($movieTheaters, 'id', 'name'),
         ]);
     }
 
@@ -105,6 +108,7 @@ class OwlMoviesController extends Controller
     {
         $model = $this->findModel($id);
         $movies = Movies::find()->asArray()->all();
+        $movieTheaters = MovieTheaters::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -113,6 +117,7 @@ class OwlMoviesController extends Controller
         return $this->render('update', [
             'model' => $model,
             'movies' => ArrayHelper::map($movies, 'id', 'title'),
+            'movieTheaters' => ArrayHelper::map($movieTheaters, 'id', 'name'),
         ]);
     }
 

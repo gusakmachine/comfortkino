@@ -7,12 +7,12 @@ use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $sessions common\models\sessions\Sessions */
-/* @var $sessionsTime common\models\sessions\Sessions */
-/* @var $sessionsTimePrices common\models\sessions\Sessions */
+/* @var $movies common\models\sessions\Sessions */
+/* @var $times common\models\sessions\Sessions */
+/* @var $halls common\models\sessions\Sessions */
 /* @var array $time common\models\sessions\Sessions */
 /* @var array $timePrice common\models\sessions\Sessions */
 /* @var $form yii\widgets\ActiveForm */
-
 ?>
 
 <div class="sessions-form">
@@ -54,7 +54,13 @@ use kartik\select2\Select2;
         ],
     ]) ?>
 
-    <?= $form->field($sessions, 'hall_id')->textInput()->label('ID зала') ?>
+    <?= $form->field($sessions, 'hall_id')->widget(Select2::classname(), [
+        'data' => $halls,
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ])->label('Зал');
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

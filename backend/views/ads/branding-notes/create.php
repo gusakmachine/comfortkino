@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\ads\BrandingNotes */
+/* @var $movieTheaters common\models\ads\BrandingNotes */
 /* @var $svg_model common\models\img\SvgIcons */
 
 $this->title = 'Create Branding Notes';
@@ -16,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'svg_model' => $svg_model
+        'svg_model' => $svg_model,
+        'movieTheaters' => $movieTheaters,
     ]) ?>
 
 </div>

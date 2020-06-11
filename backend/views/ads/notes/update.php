@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $this->render('_form', [
         'model' => $model,
         'svg_model' => $svg_model,
+        'movieTheaters' => $movieTheaters,
     ]) ?>
 
 </div>

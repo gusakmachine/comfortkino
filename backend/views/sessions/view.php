@@ -47,7 +47,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $array ? join(', ', $array) : null;
                 }
             ],
-            'hall_id',
+            [
+                'attribute' => 'Hall',
+                'value' => function($model) {
+                    return $model->hall->name;
+                }
+            ],
         ],
     ]) ?>
 

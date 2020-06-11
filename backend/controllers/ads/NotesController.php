@@ -3,11 +3,13 @@
 namespace backend\controllers\ads;
 
 use common\models\img\SvgIcons;
+use common\models\theaters\MovieTheaters;
 use Yii;
 use common\models\ads\Notes;
 use common\models\ads\SearchNotes;
 use backend\components\Controller;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -81,6 +83,7 @@ class NotesController extends Controller
     public function actionCreate()
     {
         $model = new Notes();
+        $movieTheaters = MovieTheaters::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -89,6 +92,7 @@ class NotesController extends Controller
         return $this->render('create', [
             'model' => $model,
             'svg_model' => new SvgIcons(),
+            'movieTheaters' => ArrayHelper::map($movieTheaters, 'id', 'name'),
         ]);
     }
 
@@ -102,6 +106,7 @@ class NotesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $movieTheaters = MovieTheaters::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -110,6 +115,7 @@ class NotesController extends Controller
         return $this->render('update', [
             'model' => $model,
             'svg_model' => new SvgIcons(),
+            'movieTheaters' => ArrayHelper::map($movieTheaters, 'id', 'name'),
         ]);
     }
 

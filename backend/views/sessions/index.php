@@ -41,7 +41,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $times ? join(', ', $times) : null;
                 }
             ],
-            'hall_id',
+            [
+                'attribute' => 'Hall',
+                'value' => function($model) {
+                    return $model->hall->name;
+                }
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

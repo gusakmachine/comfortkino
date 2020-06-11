@@ -1,5 +1,6 @@
 <?php
 
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\assets\ImagesAsset;
@@ -26,7 +27,13 @@ ImagesAsset::register($this);
 
     <?= $form->field($model, 'button_text')->textInput(['maxlength' => true])->label('Текст кнопки') ?>
 
-    <?= $form->field($model, 'movie_theaters_id')->textInput()->label('ID кинотеатра') ?>
+    <?= $form->field($model, 'movie_theaters_id')->widget(Select2::classname(), [
+            'data' => $movieTheaters,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label('Кинотеатр');
+    ?>
 
     <?= $form->field($model, 'end_date')->textInput()->label('Дата окончания') ?>
 
