@@ -6,6 +6,7 @@ use Yii;
 use common\models\ads\PageBackground;
 use common\models\ads\SearchPageBackground;
 use backend\components\Controller;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\UploadForm;
@@ -25,6 +26,16 @@ class PageBackgroundController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'update', 'delete', 'create'],
+                        'roles' => ['moderator'],
+                    ],
                 ],
             ],
         ];

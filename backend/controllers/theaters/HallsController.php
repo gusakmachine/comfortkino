@@ -11,6 +11,7 @@ use Yii;
 use common\models\theaters\Halls;
 use common\models\theaters\SearchHalls;
 use backend\components\Controller;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -30,6 +31,16 @@ class HallsController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'update', 'delete', 'create'],
+                        'roles' => ['moderator'],
+                    ],
                 ],
             ],
         ];

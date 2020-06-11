@@ -8,6 +8,7 @@ use common\models\ads\OwlMovies;
 use common\models\ads\SearchOwlMovies;
 use backend\components\Controller;
 use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -26,6 +27,16 @@ class OwlMoviesController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'update', 'delete', 'create'],
+                        'roles' => ['moderator'],
+                    ],
                 ],
             ],
         ];

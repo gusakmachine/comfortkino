@@ -1,19 +1,19 @@
 <?php
 
-namespace backend\controllers\movies;
+namespace backend\modules\user\controllers;
 
 use Yii;
-use common\models\movies\Actors;
-use common\models\movies\ActorsSearch;
+use backend\models\User;
+use yii\data\ActiveDataProvider;
 use backend\components\Controller;
-use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
- * ActorsController implements the CRUD actions for Actors model.
+ * ManageController implements the CRUD actions for User model.
  */
-class ActorsController extends Controller
+class ManageController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -33,34 +33,30 @@ class ActorsController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'update', 'delete', 'create'],
-                        'roles' => ['moderator'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
         ];
     }
 
-    public static function controllerName() {
-        return 'Актёры';
-    }
-
     /**
-     * Lists all Actors models.
+     * Lists all User models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ActorsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find(),
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Actors model.
+     * Displays a single User model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -73,25 +69,27 @@ class ActorsController extends Controller
     }
 
     /**
-     * Creates a new Actors model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Actors();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $user = new User();
+        if ($user->load(Yii::$app->request->post())) {
+            $user->generateAuthKey();
+            if ($user->save()) {
+                return $this->redirect(['view', 'id' => $user->id]);
+            }
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'user' => $user,
         ]);
     }
 
     /**
-     * Updates an existing Actors model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -99,19 +97,21 @@ class ActorsController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $user = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $user->setAttribute('password_hash', null);
+
+        if ($user->load(Yii::$app->request->post()) && $user->save()) {
+            return $this->redirect(['view', 'id' => $user->id]);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'user' => $user,
         ]);
     }
 
     /**
-     * Deletes an existing Actors model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -125,15 +125,15 @@ class ActorsController extends Controller
     }
 
     /**
-     * Finds the Actors model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Actors the loaded model
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Actors::findOne($id)) !== null) {
+        if (($model = User::findOne($id)) !== null) {
             return $model;
         }
 

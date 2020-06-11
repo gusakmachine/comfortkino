@@ -6,6 +6,7 @@ use Yii;
 use common\models\movies\Directors;
 use common\models\movies\DirectorsSearch;
 use backend\components\Controller;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -24,6 +25,16 @@ class DirectorsController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'update', 'delete', 'create'],
+                        'roles' => ['moderator'],
+                    ],
                 ],
             ],
         ];

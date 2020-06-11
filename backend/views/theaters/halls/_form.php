@@ -78,8 +78,8 @@ PlacesEditorAsset::register($this);
                         <div class="places-wrapper">
                             <span class="places" style="background-color: <?= $places[$i]['color_id']->color; ?>"><?= $places[$i]['place']; ?></span>
                             <span class="place-price"><?= $places[$i]['price_id']->price; ?></span>
-                            <input class="hidden place-price-id">
-                            <input class="hidden place-color-id">
+                            <input class="hidden place-price-id" value="<?= $places[$i]['price_id']->id ?>">
+                            <input class="hidden place-color-id" value="<?= $places[$i]['color_id']->id ?>">
                             <input class="hidden place-graphic-display">
                         </div>
                         <?php

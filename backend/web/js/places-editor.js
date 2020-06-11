@@ -96,6 +96,7 @@ $('.edit_place-price').click(function () {
 });
 
 $('.rows').on('click', '.delete-row, .change-count-places', rowsHandler);
+countRows();
 $('.rows.setup').each(function () {
     var current_row = this;
     var row_number = Number($(this).attr('data-row-number'));
@@ -107,7 +108,4 @@ $('.rows.setup').each(function () {
         setInputNames(this, current_row, place_number);
         setGraphicDisplay($(this).children('.place-graphic-display'), row_number, place_number);
     });
-
-    setPrices($(this).children('.places-wrapper'));
-    setColor($(this).children('.places-wrapper'));
 });

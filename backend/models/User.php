@@ -5,6 +5,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -25,6 +26,12 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+
+    const ROLE_ADMIN = 'admin';
+    const ROLE_MODERATOR = 'moderator';
+
+    public $roles;
+    public $pass;
 
 
     /**
@@ -51,9 +58,57 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            ['roles', 'safe'],
+
+            ['username', 'trim'],
+            ['username', 'required'],
+            ['username', 'unique', 'targetClass' => '\backend\models\User', 'message' => 'This username has already been taken.'],
+            ['username', 'string', 'min' => 2, 'max' => 255],
+
+            ['email', 'trim'],
+            ['email', 'email'],
+            ['email', 'string', 'max' => 255],
+            ['email', 'unique', 'targetClass' => '\backend\models\User', 'message' => 'This email address has already been taken.'],
+
+            ['pass', 'required', 'on' => 'insert'],
+            ['pass', 'string', 'min' => 6],
+            ['pass', 'string'],
+
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
+    }
+
+
+
+    public function __construct($config = [])
+    {
+        parent::__construct($config);
+        $this->on(self::EVENT_AFTER_INSERT, [$this,'saveRoles']);
+        $this->on(self::EVENT_AFTER_UPDATE, [$this,'saveRoles']);
+    }
+
+    public function afterFind()
+    {
+        $this->roles = $this->getRoles();
+    }
+
+    public function getRoles()
+    {
+        $roles = Yii::$app->authManager->getRolesByUser($this->getId());
+        return ArrayHelper::getColumn($roles, 'name', false);
+    }
+
+    public function saveRoles() {
+        Yii::$app->authManager->revokeAll($this->getId());
+
+        if (is_array($this->roles)) {
+            foreach ($this->roles as $roleName) {
+                if ($role = Yii::$app->authManager->getRole($roleName)) {
+                    Yii::$app->authManager->assign($role, $this->getId());
+                }
+            }
+        }
     }
 
     /**
@@ -198,5 +253,27 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function getRolesDropdown() {
+        return [
+            self::ROLE_ADMIN => 'Admin',
+            self::ROLE_MODERATOR => 'Moderator',
+        ];
+    }
+
+    public function beforeSave($insert) {
+        if ($insert) {
+            if (empty($this->password_hash)) {
+                $this->setPassword($this->pass);
+            }
+        } else {
+            if (!empty($this->password_hash)) {
+                $this->setPassword($this->pass);
+            } else {
+                $this->password_hash = (string) $this->getOldAttribute('password_hash');
+            }
+        }
+        return parent::beforeSave($insert);
     }
 }
