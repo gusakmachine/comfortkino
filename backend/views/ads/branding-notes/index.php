@@ -31,7 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'link_text',
             'svg_image_name',
             'href',
-            //'movie_theaters_id',
+            [
+                'attribute' => 'Theater',
+                'value' => function($model) {
+                    return $model->movieTheaters->name;
+                }
+            ],
             //'end_date',
             //'created_at',
             //'updated_at',

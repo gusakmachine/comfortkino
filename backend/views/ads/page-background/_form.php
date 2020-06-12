@@ -1,5 +1,6 @@
 <?php
 
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\assets\ImagesAsset;
@@ -23,7 +24,13 @@ ImagesAsset::register($this);
         <img class="model-page-background" src="<?= Yii::getAlias('@frontend_link') . Yii::getAlias('@page-backgrounds') . $model['background_image_name']; ?>" alt="page_background_image"/>
     <?php endif; ?>
 
-    <?= $form->field($model, 'movie_theaters_id')->textInput()->label('ID кинотеатра') ?>
+    <?= $form->field($model, 'movie_theaters_id')->widget(Select2::classname(), [
+            'data' => $movieTheaters,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label('Кинотеатр');
+    ?>
 
     <?= $form->field($model, 'end_date')->textInput()->label('Дата окончания') ?>
 

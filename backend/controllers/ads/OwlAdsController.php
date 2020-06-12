@@ -2,12 +2,14 @@
 
 namespace backend\controllers\ads;
 
+use common\models\theaters\MovieTheaters;
 use common\models\UploadForm;
 use Yii;
 use common\models\ads\OwlAds;
 use common\models\ads\SearchOwlAds;
 use backend\components\Controller;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -83,6 +85,7 @@ class OwlAdsController extends Controller
     {
         $model = new OwlAds();
         $file = new UploadForm();
+        $movieTheaters = MovieTheaters::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post())) {
             $file->imageFiles= [UploadedFile::getInstance($file, 'imageFiles')];
@@ -94,7 +97,8 @@ class OwlAdsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'file' => $file
+            'file' => $file,
+            'movieTheaters' => ArrayHelper::map($movieTheaters, 'id', 'name'),
         ]);
     }
 
@@ -108,6 +112,7 @@ class OwlAdsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $movieTheaters = MovieTheaters::find()->asArray()->all();
 
         $file = new UploadForm();
 
@@ -124,7 +129,8 @@ class OwlAdsController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'file' => $file
+            'file' => $file,
+            'movieTheaters' => ArrayHelper::map($movieTheaters, 'id', 'name'),
         ]);
     }
 

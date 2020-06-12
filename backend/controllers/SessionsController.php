@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\movies\Movies;
 use common\models\sessions\Times;
+use common\models\theaters\Halls;
 use Yii;
 use common\models\sessions\Sessions;
 use yii\data\ActiveDataProvider;
@@ -53,10 +54,7 @@ class SessionsController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Sessions::find()->with('movie', 'times'),
-            'pagination' => [
-                'pageSize' => 10,
-            ],
+            'query' => Sessions::find(),
         ]);
 
         return $this->render('index', [
@@ -87,6 +85,7 @@ class SessionsController extends Controller
         $sessions = new Sessions();
         $times = [new Times()];
         $movies = Movies::find()->asArray()->all();
+        $halls = Halls::find()->asArray()->all();
 
         if (Yii::$app->request->isPost) {
             $times = $this->prepareTimesArray(Yii::$app->request->post('Times', []), $times);
@@ -103,6 +102,7 @@ class SessionsController extends Controller
             'sessions' => $sessions,
             'times' => $times,
             'movies' => ArrayHelper::map($movies, 'id', 'title'),
+            'halls' => ArrayHelper::map($halls, 'id', 'name'),
         ]);
     }
 
@@ -118,6 +118,7 @@ class SessionsController extends Controller
         $sessions = $this->findModel($id);
         $times = $this->getTimesBySessionId($id);
         $movies = Movies::find()->asArray()->all();
+        $halls = Halls::find()->asArray()->all();
 
         if (Yii::$app->request->isPost) {
             Times::deleteAll('sessions_id = :sessions_id', [':sessions_id' => $id]);
@@ -135,6 +136,7 @@ class SessionsController extends Controller
             'sessions' => $sessions,
             'times' => $times,
             'movies' => ArrayHelper::map($movies, 'id', 'title'),
+            'halls' => ArrayHelper::map($halls, 'id', 'name'),
         ]);
     }
 

@@ -1,11 +1,13 @@
 <?php
 
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\widgets\Images\Images;
 /* @var $this yii\web\View */
 /* @var $model common\models\ads\BrandingNotes */
 /* @var $svg_model common\models\img\SvgIcons */
+/* @var $movieTheaters common\models\img\SvgIcons */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -27,7 +29,13 @@ use backend\widgets\Images\Images;
 
     <?= $form->field($model, 'href')->textInput(['maxlength' => true])->label('Ссылка') ?>
 
-    <?= $form->field($model, 'movie_theaters_id')->textInput()->label('ID кинотеатра') ?>
+    <?= $form->field($model, 'movie_theaters_id')->widget(Select2::classname(), [
+            'data' => $movieTheaters,
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label('Кинотеатр');
+    ?>
 
     <?= $form->field($model, 'end_date')->textInput()->label('Дата окончания') ?>
 

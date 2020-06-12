@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\ads\OwlMovies */
+/* @var $movies common\models\ads\OwlMovies */
 
 $this->title = 'Create Owl Movies';
 $this->params['breadcrumbs'][] = ['label' => 'Owl Movies', 'url' => ['index']];
@@ -15,6 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'movies' => $movies,
+        'movieTheaters' => $movieTheaters,
     ]) ?>
 
 </div>

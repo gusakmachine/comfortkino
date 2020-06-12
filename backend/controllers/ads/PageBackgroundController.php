@@ -2,11 +2,13 @@
 
 namespace backend\controllers\ads;
 
+use common\models\theaters\MovieTheaters;
 use Yii;
 use common\models\ads\PageBackground;
 use common\models\ads\SearchPageBackground;
 use backend\components\Controller;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\UploadForm;
@@ -82,6 +84,7 @@ class PageBackgroundController extends Controller
     {
         $model = new PageBackground();
         $file = new UploadForm();
+        $movieTheaters = MovieTheaters::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post())) {
             //please, don't beat me
@@ -92,10 +95,11 @@ class PageBackgroundController extends Controller
                 return $this->redirect(['view', 'id' => 1]);
             }
         }
-        
+
         return $this->render('create', [
             'model' => $model,
-            'file' => $file
+            'file' => $file,
+            'movieTheaters' => ArrayHelper::map($movieTheaters, 'id', 'name'),
         ]);
     }
 
@@ -110,6 +114,7 @@ class PageBackgroundController extends Controller
     {
         $model = $this->findModel($id);
         $file = new UploadForm();
+        $movieTheaters = MovieTheaters::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post())) {
             if (empty($file->imageFiles) && $model->save())
@@ -124,7 +129,8 @@ class PageBackgroundController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'file' => $file
+            'file' => $file,
+            'movieTheaters' => ArrayHelper::map($movieTheaters, 'id', 'name'),
         ]);
     }
 

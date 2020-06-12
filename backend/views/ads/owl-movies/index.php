@@ -27,10 +27,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'movie_id',
-            'movie_theaters_id',
-            'end_date',
-            'created_at',
+            [
+                'attribute' => 'Movie',
+                'value' => function($model) {
+                    return $model->movie->title;
+                }
+            ],
+            [
+                'attribute' => 'Theater',
+                'value' => function($model) {
+                    return $model->movieTheaters->name;
+                }
+            ],
+            'end_date:datetime',
+            'created_at:datetime',
             //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
