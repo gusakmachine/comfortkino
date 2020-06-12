@@ -11,7 +11,7 @@
                 <a href="#" class="popup__town-toggler" data-SH="#popup-cities">
                     <span class="popup__town"><?= Yii::$app->session->get('city') ?></span>
                     <svg class="header__arrow-without-bottom">
-                        <use href="/img/static/icons/icons.svg#arrow-without-bottom"></use>
+                        <use href="<?= Yii::getAlias('@svg:#arrow-without-bottom'); ?>"></use>
                     </svg>
                 </a>
                 <span>Зал <?= $hall['id'] ?></span>

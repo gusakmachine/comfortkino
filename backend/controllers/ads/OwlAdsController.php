@@ -88,8 +88,8 @@ class OwlAdsController extends Controller
         $movieTheaters = MovieTheaters::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post())) {
-            $file->imageFile = UploadedFile::getInstance($file, 'imageFile');
-            $model['background_image_name'] = '/' . $file->imageFile->name;
+            $file->imageFiles= [UploadedFile::getInstance($file, 'imageFiles')];
+            $model['background_image_name'] = '/' . $file->imageFiles[0]->name;
 
             if ($model->save() && $file->upload())
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -117,8 +117,11 @@ class OwlAdsController extends Controller
         $file = new UploadForm();
 
         if ($model->load(Yii::$app->request->post())) {
-            $file->imageFile = UploadedFile::getInstance($file, 'imageFile');
-            $model['background_image_name'] = '/' . $file->imageFile->name;
+            if (empty($file->imageFiles) && $model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
+            
+            $file->imageFiles = [UploadedFile::getInstance($file, 'imageFiles')];
+            $model['background_image_name'] = '/' . $file->imageFiles[0]->name;
 
             if ($model->save() && $file->upload())
                 return $this->redirect(['view', 'id' => $model->id]);
