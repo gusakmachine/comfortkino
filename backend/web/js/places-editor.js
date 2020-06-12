@@ -4,8 +4,16 @@ var hall = $('.hall');
 var rows = $('.rows.example').clone().removeClass('example');
 var place = $('.places-wrapper:first').clone();
 
-$('.rows.example').remove();
+var selected_places;
 
+$('.rows.example').remove();
+$('.places-wrapper:first.example').remove();
+
+function setInputNames(place_wrapper, current_row, numberPlaces) {
+    $(place_wrapper).children('.place-price-id').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][price_id]');
+    $(place_wrapper).children('.place-color-id').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][color_id]');
+    $(place_wrapper).children('.place-graphic-display').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][graphic_display]');
+}
 function setPrices(places_wrapper) {
     var price = Number($('.price option:selected').html());
     var priceID = Number($('.price option:selected').val());
@@ -28,75 +36,81 @@ function countRows() {
         $(this).attr('data-row-number', index + 1).children('.row_number').html(index + 1 + ' ряд');
     });
 }
-function setInputNames(place_wrapper, current_row, numberPlaces) {
-    $(place_wrapper).children('.place-price-id').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][price_id]');
-    $(place_wrapper).children('.place-color-id').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][color_id]');
-    $(place_wrapper).children('.place-graphic-display').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][graphic_display]');
+function countPlaces(rows) {
+    $(rows).each(function () {
+        if($(this).children('.places-wrapper').length != 0) {
+            var current_row = this;
+            var currRowNumber = Number($(this).attr('data-row-number'));
+
+            $(this).children('.places-wrapper').each(function (index) {
+                $(this).children('.places').html(index + 1);
+                setInputNames(this, current_row, index + 1);
+                setGraphicDisplay($(this).children('.place-graphic-display'), currRowNumber, index + 1);
+            });
+        } else $(this).remove();
+    });
 }
 function addPlaces(current_row, currRowNumber, numberPlaces) {
-    $(current_row).children('.places-wrapper').remove();
+    var lastPlaceNumber = Number($(current_row).children('.places-wrapper:last').children('.places').html()) ;
 
-    for ( ; numberPlaces > 0 ; numberPlaces--) {
-        var place_clone = $(place).clone().children('.places').html(numberPlaces).parent();
+    if (!lastPlaceNumber)
+        lastPlaceNumber = 0;
 
-        setInputNames(place_clone, current_row, numberPlaces);
+    for (var i = 0; i < numberPlaces; i++) {
+        var place_number = i + 1 + lastPlaceNumber;
+        var place_clone = $(place).clone().children('.places').html(place_number).parent();
 
-        $(current_row).children('.row_number').after(place_clone);
+        setInputNames(place_clone, current_row, place_number);
+
+        $(current_row).append(place_clone);
 
         setPrices($(current_row).children('.places-wrapper'));
         setColor($(current_row).children('.places-wrapper'));
-        setGraphicDisplay($(place_clone).children('.place-graphic-display'), currRowNumber, numberPlaces);
+        setGraphicDisplay($(place_clone).children('.place-graphic-display'), currRowNumber, place_number);
     }
-}
-function rowsHandler() {
-    var current_row = $(this).closest('.rows');
-
-    if ($(this).hasClass('delete-row')) {
-        $(current_row).remove();
-        countRows();
-    } else if ($(this).hasClass('change-count-places'))
-        addPlaces($(current_row), Number($(current_row).attr('data-row-number')), $(current_row).children('.places-edit-menu').children('.change-count').val());
 }
 
 
 $('.edit_rows').click(function () {
-    var current_row = $(rows).clone();
+    for (var i = 0, numberRows = Number($('.number_rows').val()); i < numberRows; i++) {
+        var current_row = $(rows).clone();
 
-    $(hall).append($(current_row));
-    countRows();
+        $(hall).append($(current_row));
+        countRows();
 
-    for (var i = 0, numberRows = $('.number_rows').val(); i < numberRows; i++)
-        addPlaces(current_row, Number($(current_row).attr('data-row-number')), Number($(this).siblings('.number_places').val()));
-
-    $(current_row).on('click', '.delete-row, .change-count-places', rowsHandler);
+        addPlaces(current_row, Number($(current_row).attr('data-row-number')), Number($('.number_places').val()));
+    }
 });
-
 $('.edit_place-price').click(function () {
-    var startRows = Number($('.start_row').val());
-    var endRows = Number($('.end_row').val());
-    var startPlaces = Number($('.start_place').val());
-    var endPlaces = Number($('.end_place').val());
+    setColor(selected_places);
+    setPrices(selected_places);
+});
+$('.delete-row').click(function () {
+    var current_rows = $(selected_places).closest('.rows');
 
-    $('.rows').each(function () {
-        var row_number = Number($(this).attr('data-row-number'));
+    $(selected_places).remove();
+    countPlaces(current_rows);
+    countRows();
+});
+$('.add_places').click(function () {
+    var current_rows = $(selected_places).closest('.rows');
 
-        if (row_number > startRows - 1 && row_number < endRows + 1) {
-            var places_wrapper = $(this).children('.places-wrapper');
-
-            $(places_wrapper).each(function () {
-                var place_number = Number($(this).children('.places').html());
-
-                if (place_number > startPlaces - 1 && place_number < endPlaces + 1) {
-                    setColor(this)
-                    setPrices(this);
-                }
-            });
-        }
+    $(current_rows).each(function () {
+        addPlaces(this, Number($(this).attr('data-row-number')), Number($('.count-places').val()));
     });
 });
 
-$('.rows').on('click', '.delete-row, .change-count-places', rowsHandler);
+$(function() {
+    $(".hall").selectable({
+        filter: ".places-wrapper",
+        selected: function(event, ui) {
+            selected_places = $('.places-wrapper.ui-selected');
+        },
+    });
+});
+
 countRows();
+
 $('.rows.setup').each(function () {
     var current_row = this;
     var row_number = Number($(this).attr('data-row-number'));

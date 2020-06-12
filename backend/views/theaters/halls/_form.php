@@ -33,43 +33,51 @@ PlacesEditorAsset::register($this);
 
     <div class="rows example">
         <p class="row_number"></p>
-        <div class="places-wrapper">
-            <span class="places">1</span>
-            <span class="place-price">100</span>
-            <input class="hidden place-price-id">
-            <input class="hidden place-color-id">
-            <input class="hidden place-graphic-display">
-        </div>
-        <div class="places-edit-menu">
-            <input class="inpt change-count number_places" value="10">
-            <span class="span-btn change-count-places">Изменить ко-во мест</span>
-            <span class="span-btn delete-row">Удалить ряд</span>
-        </div>
+    </div>
+    <div class="places-wrapper example">
+        <span class="places">1</span>
+        <span class="place-price">100</span>
+        <input class="hidden place-price-id">
+        <input class="hidden place-color-id">
+        <input class="hidden place-graphic-display">
     </div>
 
-    <div class="hall">
-        <div class="rows-edit-menu">
-            <input class="inpt number_rows" value="1">
-            <input class="inpt number_places" value="10">
+    <div class="places-edit-menu">
+        <div class="edit-menu__item">
+            <div class="edit-menu__option-container">
+                <label for="color">Цвета для всех следующих</label>
+                <select id="colors" class="colors">
+                    <?php foreach ($colors as $item): ?>
+                        <option value="<?= $item['id']; ?>" style="background-color: <?= $item['color']; ?>"><?= $item['color']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="edit-menu__option-container">
+                <label for="price">Цены для всех следующих</label>
+                <select id="price" class="price">
+                    <?php foreach ($places_prices as $item): ?>
+                        <option value="<?= $item['id']; ?>"><?= $item['price']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <span class="span-btn edit_place-price">Изменить выделенные</span>
+        </div>
+        <div class="edit-menu__item">
+            <input class="inpt number_rows" placeholder="Ко-во рядов">
+            <input class="inpt number_places" placeholder="Ко-во мест">
             <span class="span-btn edit_rows">Добавить ряды</span>
+            <span class="span-btn delete-row">Удалить выделенное</span>
         </div>
-        <div class="price-edit-menu">
-            <input class="inpt start_row" placeholder="Начальный ряд">
-            <input class="inpt end_row" placeholder="Конечный ряд">
-            <input class="inpt start_place" placeholder="Начальное место">
-            <input class="inpt end_place" placeholder="Конечное место">
-            <select class="price">
-                <?php foreach ($places_prices as $item): ?>
-                    <option value="<?= $item['id']; ?>"><?= $item['price']; ?></option>
-                <?php endforeach; ?>
-            </select>
-            <select class="colors">
-                <?php foreach ($colors as $item): ?>
-                    <option value="<?= $item['id']; ?>" style="background-color: <?= $item['color']; ?>"><?= $item['color']; ?></option>
-                <?php endforeach; ?>
-            </select>
-            <span class="span-btn edit_place-price">Изменить цену</span>
+        <div class="edit-menu__item">
+            <input class="inpt count-places" value="10">
+            <span class="span-btn add_places">Добавить места</span>
         </div>
+        <div class="edit-menu__item">
+            <input class="inpt count-places" value="10">
+            <span class="span-btn add_places">Измеить положение</span>
+        </div>
+    </div>
+    <div class="hall">
         <?php if(isset($places)):?>
             <?php for ($i = 0; $i < count($places); $i++): ?>
                 <div class="rows setup" data-row-number="<?= $places[$i]['row']; ?>">
@@ -87,11 +95,6 @@ PlacesEditorAsset::register($this);
                                 break;
                         ?>
                     <?php endfor; ?>
-                    <div class="places-edit-menu">
-                        <input class="inpt change-count number_places" value="10">
-                        <span class="span-btn change-count-places">Изменить ко-во мест</span>
-                        <span class="span-btn delete-row">Удалить ряд</span>
-                    </div>
                 </div>
             <?php endfor; ?>
             </div>

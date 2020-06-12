@@ -1,19 +1,28 @@
-.hall {
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
 select {
     padding: 3px;
+    height: 34px;
     color: #555555;
     background-color: #fff;
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 2px;
 }
+
+
+.edit-menu__item {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-end;
+}
+.edit-menu__option-container {
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+}
 .inpt {
-    padding: 2px;
+    margin-right: 10px;
+    height: 34px;
+    text-align: center;
     color: #555555;
     background-color: #fff;
     background-image: none;
@@ -21,13 +30,23 @@ select {
     border-radius: 2px;
 }
 .span-btn {
+    margin-right: 10px;
     padding: 4px;
-    margin: 10px 0 10px 0;
+    height: 34px;
+    line-height: 24px;
     border: 1px solid black;
     border-radius: 3px;
 }
 .span-btn:hover {
     cursor: pointer;
+}
+
+
+.hall {
+    padding: 10px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 .rows.example {
     display: none;
@@ -37,28 +56,12 @@ select {
     display: flex;
     flex-wrap: wrap;
 }
-.rows-edit-menu {
-    margin-bottom: 10px;
-}
-.price-edit-menu {
-    margin-bottom: 10px;
-}
-.number_rows, .number_places {
-    max-width: 4rem;
-}
 .row_number {
     position: absolute;
     left: -45px;
     font-size: 14px;
     line-height: 2;
     color: RGBA(0, 0, 0, .4);
-}
-.places-edit-menu {
-    margin-top: 3px;
-}
-.price-edit-menu > * {
-    max-width: 130px;
-    margin-bottom: 5px;
 }
 .places-wrapper {
     margin-bottom: 10px;
@@ -70,7 +73,7 @@ select {
 .places {
     background: #0b93d5;
 }
-span.places {
+.places {
     border: unset;
     width: 32px;
     height: 32px;
@@ -84,4 +87,9 @@ span.places {
     max-width: 32px;
     text-align: center;
     color: RGBA(0, 0, 0, .4);
+}
+
+
+.ui-selected {
+    border: 1px solid black;
 }
