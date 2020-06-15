@@ -21,7 +21,6 @@ use common\models\theaters\Halls;
  *
  * @property Halls[] $halls
  * @property Colors $color
- * @property PlacePrices $price
  * @property Tickets[] $tickets
  */
 class PlacesSets extends \yii\db\ActiveRecord
@@ -40,10 +39,9 @@ class PlacesSets extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['place', 'row', 'set_id', 'price_id', 'color_id'], 'integer'],
+            [['place', 'row', 'set_id', 'price', 'color_id'], 'integer'],
             [['graphic_display'], 'string'],
             [['color_id'], 'exist', 'skipOnError' => true, 'targetClass' => Colors::className(), 'targetAttribute' => ['color_id' => 'id']],
-            [['price_id'], 'exist', 'skipOnError' => true, 'targetClass' => PlacePrices::className(), 'targetAttribute' => ['price_id' => 'id']],
         ];
     }
 
@@ -58,7 +56,7 @@ class PlacesSets extends \yii\db\ActiveRecord
             'row' => 'Row',
             'graphic_display' => 'Graphic Display',
             'set_id' => 'Set ID',
-            'price_id' => 'Price ID',
+            'price' => 'Price',
             'color_id' => 'Color ID',
         ];
     }
@@ -84,16 +82,6 @@ class PlacesSets extends \yii\db\ActiveRecord
     public function getColor()
     {
         return $this->hasOne(Colors::className(), ['id' => 'color_id']);
-    }
-
-    /**
-     * Gets query for [[Price]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPrice()
-    {
-        return $this->hasOne(PlacePrices::className(), ['id' => 'price_id']);
     }
 
     /**
@@ -152,7 +140,6 @@ class PlacesSets extends \yii\db\ActiveRecord
         $places = PlacesSets::find()->where(['set_id' => $param['hall']['places_sets_id']])->orderBy('row, place')->asArray()->all();
 
         for ($i = 0; $i < count($places); $i++) {
-            $places[$i]['price_id'] = PlacePrices::find()->where(['id' => $places[$i]['price_id']])->one();
             $places[$i]['color_id'] = Colors::find()->where(['id' => $places[$i]['color_id']])->one();
 
             if (in_array($places[$i]['id'], array_column($tickets, 'place_id')))

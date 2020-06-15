@@ -24,6 +24,7 @@ class SeacrhTickets extends Tickets
     public $times_price;
     public $placesSets_place;
     public $placesSets_row;
+    public $placesSets_price;
 
     /**
      * {@inheritdoc}
@@ -32,7 +33,7 @@ class SeacrhTickets extends Tickets
     {
         return [
             [['id', 'customer_phone', 'status', 'sessions_id', 'place_id', 'movie_id', 'hall_id', 'movie_theaters_id', 'city_id', 'times_id'], 'integer'],
-            [['cities_name', 'movie_theaters_title', 'halls_name', 'movies_title', 'sessions_date', 'times_time', 'times_price', 'placesSets_place', 'placesSets_row', 'created_at', 'updated_at',], 'safe'],
+            [['cities_name', 'movie_theaters_title', 'halls_name', 'movies_title', 'sessions_date', 'times_time', 'times_price', 'placesSets_place', 'placesSets_row', 'placesSets_price', 'created_at', 'updated_at',], 'safe'],
         ];
     }
 
@@ -79,6 +80,7 @@ class SeacrhTickets extends Tickets
         $dataProvider->sort->attributes['times_price'] = ['asc' => [Times::tableName().'.price' => SORT_ASC], 'desc' => [Times::tableName().'.price' => SORT_DESC]];
         $dataProvider->sort->attributes['placesSets_place'] = ['asc' => [PlacesSets::tableName().'.place' => SORT_ASC], 'desc' => [PlacesSets::tableName().'.place' => SORT_DESC]];
         $dataProvider->sort->attributes['placesSets_row'] = ['asc' => [PlacesSets::tableName().'.row' => SORT_ASC], 'desc' => [PlacesSets::tableName().'.row' => SORT_DESC]];
+        $dataProvider->sort->attributes['placesSets_price'] = ['asc' => [PlacesSets::tableName().'.price' => SORT_ASC], 'desc' => [PlacesSets::tableName().'.price' => SORT_DESC]];
 
         $this->load($params);
 
@@ -94,7 +96,8 @@ class SeacrhTickets extends Tickets
             ->andFilterWhere(['like', Times::tableName().'.time', $this->times_time])
             ->andFilterWhere(['like', Times::tableName().'.price', $this->times_price])
             ->andFilterWhere(['like', PlacesSets::tableName().'.place', $this->placesSets_place])
-            ->andFilterWhere(['like', PlacesSets::tableName().'.row', $this->placesSets_row]);
+            ->andFilterWhere(['like', PlacesSets::tableName().'.row', $this->placesSets_row])
+            ->andFilterWhere(['like', PlacesSets::tableName().'.price', $this->placesSets_row]);
 
         return $dataProvider;
     }

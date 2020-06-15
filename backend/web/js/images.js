@@ -23,4 +23,6 @@ $(document).ready(function(){
     $('.view-img-after-dwn').change(function() {
         readURL(this);
     });
+
+    console.log($('.viewers-item.selected-item'));
 });

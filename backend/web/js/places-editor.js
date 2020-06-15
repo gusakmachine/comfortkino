@@ -15,11 +15,10 @@ function setInputNames(place_wrapper, current_row, numberPlaces) {
     $(place_wrapper).children('.place-graphic-display').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][graphic_display]');
 }
 function setPrices(places_wrapper) {
-    var price = Number($('.price option:selected').html());
-    var priceID = Number($('.price option:selected').val());
+    var price = Number($('.price').val());
 
     $(places_wrapper).children('.place-price').html(price);
-    $(places_wrapper).children('.place-price-id').attr('value', priceID);
+    $(places_wrapper).children('.place-price-id').attr('value', price);
 }
 function setColor(places_wrapper) {
     var color = $('.colors option:selected').html();

@@ -54,7 +54,7 @@
                                 <button class="place scheme-menu__place" data-place-id="<?= $hall['places'][$i]['id'] ?>" <?= $hall['places'][$i]['isSold'] ? 'data-sold="true"' : ''?> style="<?= $hall['places'][$i]['isSold'] ? '' : 'background: ' . $hall['places'][$i]['color_id']['color'] . ';' ?> left: <?=  $hall['places'][$i]['graphic_display']['left'] ?>px; top: <?=  $hall['places'][$i]['graphic_display']['top'] ?>px;">
                                     <span class="placenumber"><?=  $hall['places'][$i]['place'] ?></span>
                                     <div class="popover">
-                                        <span class="big rub"><?= $session['times'][$sessionTimeIDX]['price'] +  $hall['places'][$i]['price_id']['price'] ?></span>
+                                        <span class="big rub"><?= $session['times'][$sessionTimeIDX]['price'] +  $hall['places'][$i]['price'] ?></span>
                                         <span><?=  $hall['places'][$i]['row'] . ' ряд, ' .  $hall['places'][$i]['place'] . ' место' ?></span>
                                     </div>
                                 </button>

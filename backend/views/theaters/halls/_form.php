@@ -55,12 +55,7 @@ PlacesEditorAsset::register($this);
                 </select>
             </div>
             <div class="edit-menu__option-container">
-                <label for="price">Цены для всех следующих</label>
-                <select id="price" class="price">
-                    <?php foreach ($places_prices as $item): ?>
-                        <option value="<?= $item['id']; ?>"><?= $item['price']; ?></option>
-                    <?php endforeach; ?>
-                </select>
+                <input class="inpt price" placeholder="Цена" value="100">
             </div>
             <span class="span-btn edit_place-price">Изменить выделенные</span>
         </div>
@@ -82,10 +77,10 @@ PlacesEditorAsset::register($this);
                     <p class="row_number"><?= $places[$i]['row']; ?> ряд</p>
                     <?php for (; $i < count($places); $i++): ?>
                         <div class="places-wrapper">
-                            <span class="places" style="background-color: <?= $places[$i]['color_id']->color; ?>"><?= $places[$i]['place']; ?></span>
-                            <span class="place-price"><?= $places[$i]['price_id']->price; ?></span>
-                            <input class="hidden place-price-id" value="<?= $places[$i]['price_id']->id ?>">
-                            <input class="hidden place-color-id" value="<?= $places[$i]['color_id']->id ?>">
+                            <span class="places" style="background-color: <?= $places[$i]['color']->color; ?>"><?= $places[$i]['place']; ?></span>
+                            <span class="place-price"><?= $places[$i]['price']; ?></span>
+                            <input class="hidden place-price-id" value="<?= $places[$i]['price']; ?>">
+                            <input class="hidden place-color-id" value="<?= $places[$i]['color']->id ?>">
                             <input class="hidden place-graphic-display">
                         </div>
                         <?php

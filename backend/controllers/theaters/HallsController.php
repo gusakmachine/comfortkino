@@ -101,7 +101,6 @@ class HallsController extends Controller
         return $this->render('create', [
             'model' => $model,
             'movie_theaters' => ArrayHelper::map(MovieTheaters::find()->asArray()->all(), 'id', 'name'),
-            'places_prices' => PlacePrices::find()->asArray()->all(),
             'colors' => Colors::find()->asArray()->all()
         ]);
     }
@@ -116,7 +115,7 @@ class HallsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $places = PlacesSets::getSet($model['places_sets_id']);
+        $places = PlacesSets::find()->with('color')->where(['set_id' => $model['places_sets_id']])->all();
 
         if ($post = Yii::$app->request->post()) {
             if (isset($post['Halls']['places_sets_id']))
@@ -134,7 +133,6 @@ class HallsController extends Controller
         return $this->render('update', [
             'model' => $model,
             'places' => $places,
-            'places_prices' => PlacePrices::find()->asArray()->all(),
             'colors' => Colors::find()->asArray()->all(),
             'movie_theaters' => ArrayHelper::map(MovieTheaters::find()->asArray()->all(), 'id', 'name'),
         ]);

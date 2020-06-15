@@ -34,20 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['attribute' => 'times_price','label' => 'Цена сеанса', 'value'=>'times.price'],
             ['attribute' => 'placesSets_place','label' => 'Место', 'value'=>'place.place'],
             ['attribute' => 'placesSets_row','label' => 'Ряд', 'value'=>'place.row'],
-            [
-                'label' => 'Цена за место',
-                'value'=> function ($data) {
-                    $data->place_price = 1;//\common\models\theaters\PlacesSets::getPlaceWithPrice($data->place->price_id);
-                    print_r($data);
-                    return 1;
-                }
-            ],
-            /*[
-                'label' => 'Суммарная цена',
-                'value'=> function ($data) {
-                    return \common\models\sessions\Tickets::getTotalPrice($data);
-                }
-            ],*/
+            ['attribute' => 'placesSets_price','label' => 'Цена за место', 'value'=>'place.price'],
             ['attribute' => 'created_at', 'label' => 'Время заказа',],
             //'updated_at',
 
