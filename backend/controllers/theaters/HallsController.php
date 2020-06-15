@@ -69,11 +69,11 @@ class HallsController extends Controller
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        $places = PlacesSets::getSet($model['places_sets_id']);
+        $model = Halls::find()->where(['id' => $id])->one();
+        $places = PlacesSets::find()->where(['set_id' => $model->places_sets_id])->asArray()->all();
 
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
             'places' => $places,
         ]);
     }
@@ -115,7 +115,7 @@ class HallsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $places = PlacesSets::find()->with('color')->where(['set_id' => $model['places_sets_id']])->all();
+        $places = PlacesSets::find()->where(['set_id' => $model['places_sets_id']])->all();
 
         if ($post = Yii::$app->request->post()) {
             if (isset($post['Halls']['places_sets_id']))

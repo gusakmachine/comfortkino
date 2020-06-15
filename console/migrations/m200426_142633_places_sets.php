@@ -19,7 +19,7 @@ class m200426_142633_places_sets extends Migration
             'graphic_display' => $this->json(),
             'set_id' => $this->integer(),
             'price' => $this->integer(),
-            'color_id' => $this->integer(),
+            'color' => $this->string(255),
         ]);
 
         $this->createIndex(
@@ -27,22 +27,6 @@ class m200426_142633_places_sets extends Migration
             '{{%places_sets}}',
             'set_id'
         );
-
-        $this->createIndex(
-            '{{%idx-places_sets_color_id}}',
-            '{{%places_sets}}',
-            'color_id'
-        );
-
-        $this->addForeignKey(
-            '{{%fk-color_id}}',
-            '{{%places_sets}}',
-            'color_id',
-            '{{%colors}}',
-            'id',
-            'CASCADE'
-        );
-
     }
 
     /**
@@ -50,15 +34,6 @@ class m200426_142633_places_sets extends Migration
      */
     public function safeDown()
     {
-        $this->dropIndex(
-            '{{%idx-places_sets_set_id}}',
-            '{{%places_sets}}'
-        );
-
-        $this->dropForeignKey(
-            '{{%fk-color_id}}',
-            '{{%tickets}}'
-        );
         $this->dropIndex(
             '{{%idx-places_sets_color_id}}',
             '{{%places_sets}}'

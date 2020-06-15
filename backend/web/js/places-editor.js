@@ -10,8 +10,8 @@ $('.rows.example').remove();
 $('.places-wrapper:first.example').remove();
 
 function setInputNames(place_wrapper, current_row, numberPlaces) {
-    $(place_wrapper).children('.place-price-id').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][price_id]');
-    $(place_wrapper).children('.place-color-id').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][color_id]');
+    $(place_wrapper).children('.place-price-id').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][price]');
+    $(place_wrapper).children('.place-color-id').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][color]');
     $(place_wrapper).children('.place-graphic-display').attr('name', 'Places['+$(current_row).attr('data-row-number')+']['+numberPlaces+'][graphic_display]');
 }
 function setPrices(places_wrapper) {
@@ -22,10 +22,9 @@ function setPrices(places_wrapper) {
 }
 function setColor(places_wrapper) {
     var color = $('.colors option:selected').html();
-    var colorID = $('.colors option:selected').val();
 
     $(places_wrapper).children('.places').css('background-color', color);
-    $(places_wrapper).children('.place-color-id').attr('value', colorID);
+    $(places_wrapper).children('.place-color-id').attr('value', color);
 }
 function setGraphicDisplay(place_graphic_display, numberRow, numberPlace) {
     $(place_graphic_display).attr('value', '{"top": "' + (numberRow * 35) + '", "left": "' + (numberPlace * 35) + '"}');

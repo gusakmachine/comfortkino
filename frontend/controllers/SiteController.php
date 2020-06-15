@@ -176,6 +176,7 @@ class SiteController extends Controller
     public function actionTickets()
     {
         $formData = Yii::$app->request->post();
+        $formData = ['sessionID' => 1, 'timeID' => 0];
 
         $movieTheater = CityComponent::getMovieTheaterBySubdomain(Yii::$app->session->get('subdomain'));
         $city = Cities::find()->where(['id' => $movieTheater['city_id']])->one();
@@ -193,8 +194,8 @@ class SiteController extends Controller
         for ($i = 0; $i < count($hall['places']); $i++)
             $hall['places'][$i]['graphic_display'] = json_decode($hall['places'][$i]['graphic_display'], true);
 
-        $prices = array_unique(array_column(array_column($hall['places'], 'price_id'), 'price'));
-        $colors = array_unique(array_column(array_column($hall['places'], 'color_id'), 'color'));
+        $prices = array_unique(array_column($hall['places'], 'price'));
+        $colors = array_unique(array_column($hall['places'], 'color'));
 
         return $this->renderAjax('tickets', [
             'session' => $session,
