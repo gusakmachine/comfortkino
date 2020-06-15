@@ -7,7 +7,7 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-frontend',
+    'id' => 'app-comfortkino',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'cityComponent'],
     'controllerNamespace' => 'frontend\controllers',

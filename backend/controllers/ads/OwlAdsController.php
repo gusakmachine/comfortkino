@@ -117,10 +117,11 @@ class OwlAdsController extends Controller
         $file = new UploadForm();
 
         if ($model->load(Yii::$app->request->post())) {
+            $file->imageFiles = [UploadedFile::getInstance($file, 'imageFiles')];
+
             if (empty($file->imageFiles) && $model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
-            
-            $file->imageFiles = [UploadedFile::getInstance($file, 'imageFiles')];
+
             $model['background_image_name'] = '/' . $file->imageFiles[0]->name;
 
             if ($model->save() && $file->upload())

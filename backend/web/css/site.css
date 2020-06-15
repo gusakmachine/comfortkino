@@ -141,6 +141,9 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.refresh-btn, .stop-refresh-btn {
+    margin-bottom: 10px;
+}
 
 
 .owl-movies__select-movie {

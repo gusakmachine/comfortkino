@@ -63,6 +63,9 @@ class PlacesSets extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getPlaceWithPrice($place_id) {
+        return PlacesSets::find()->with('price')->where(['id' => $place_id])->asArray()->one();
+    }
     /**
      * Gets query for [[Halls]].
      *
@@ -135,12 +138,26 @@ class PlacesSets extends \yii\db\ActiveRecord
         return true;
     }
 
-    public static function getSet($id) {
-        $places = PlacesSets::find()->where(['set_id' => $id])->orderBy('row, place')->asArray()->all();
+    public static function getSet($param) {
+        $tickets = Tickets::find()->select('place_id')->where([
+            'and',
+            [
+                'status' => [0, 1],
+                'sessions_id' => $param['session']['id'],
+                'movie_id' => $param['session']['movie_id'],
+                'hall_id' => $param['session']['hall_id'],
+                'times_id' => $param['sessionTimeIDX']
+            ]
+        ])->asArray()->all();
+        $places = PlacesSets::find()->where(['set_id' => $param['hall']['places_sets_id']])->orderBy('row, place')->asArray()->all();
 
         for ($i = 0; $i < count($places); $i++) {
             $places[$i]['price_id'] = PlacePrices::find()->where(['id' => $places[$i]['price_id']])->one();
             $places[$i]['color_id'] = Colors::find()->where(['id' => $places[$i]['color_id']])->one();
+
+            if (in_array($places[$i]['id'], array_column($tickets, 'place_id')))
+                $places[$i]['isSold'] = true;
+            else $places[$i]['isSold'] = false;
         }
 
         return $places;

@@ -36,8 +36,7 @@ $(document).ready(function() {
         $(this).parent().remove();
     });
 
-    $('#w0').submit(function (e) {
-        e.preventDefault();
+    $('#w0').on('beforeSubmit', function(e) {
         $(gallery_input).remove();
 
         var formData = new FormData(this);
@@ -59,5 +58,7 @@ $(document).ready(function() {
                 console.log(data);
             }
         });
+
+        return false;
     });
 });

@@ -6,16 +6,17 @@
             </svg>
         </div>
         <div class="popup__header">
-            <h3 class="popup__header-title"><?= $movie['title'] ?></h3>
+            <h3 class="popup__header-title" data-movie-id="<?= $movie['id'] ?>"><?= $movie['title'] ?></h3>
             <div class="popup__header-subtitle">
                 <a href="#" class="popup__town-toggler" data-SH="#popup-cities">
-                    <span class="popup__town"><?= Yii::$app->session->get('city') ?></span>
+                    <span data-cinema-id="<?= $movieTheater['id']; ?>" style="display: none"></span>
+                    <span data-city-id="<?= $city['id']; ?>" class="popup__town"><?= Yii::$app->session->get('city') ?></span>
                     <svg class="header__arrow-without-bottom">
                         <use href="<?= Yii::getAlias('@svg:#arrow-without-bottom'); ?>"></use>
                     </svg>
                 </a>
-                <span>Зал <?= $hall['id'] ?></span>
-                <span><?= date('d M Y', strtotime($session['date'])) . ', ' . date('H:i', strtotime($session['times'][$sessionTimeIDX]['time'])); ?></span>
+                <span data-hall-id="<?= $hall['id'] ?>"><?= $hall['name'] ?></span>
+                <span data-time-id="<?= $session['times'][$sessionTimeIDX]['id'] ?>"><?= date('d M Y', strtotime($session['date'])) . ', ' . date('H:i', strtotime($session['times'][$sessionTimeIDX]['time'])); ?></span>
             </div>
         </div>
         <div class="popup__timetable">
@@ -46,18 +47,11 @@
                     <div id="scheme__body" class="scheme__body">
                         <div id="scheme-menu" class="scheme-menu">
                             <?php for($i = 0; $i < count($hall['places']); $i++): ?>
-                                <?php
-                                    $isSold = 0;
-
-                                    if(in_array($hall['places'][$i]['id'], array_column($session['tickets'], 'place_id')))
-                                        $isSold = 1;
-                                ?>
-
                                 <?php if (!isset($hall['places'][$i + 1]['row']) || ($i + 1 < count($hall['places']) && $hall['places'][$i]['row'] != $hall['places'][$i + 1]['row'])): ?>
                                     <span class="place-row" style="left: 0; top: <?=  $hall['places'][$i]['graphic_display']['top'] ?>px;"><?= $hall['places'][$i]['row'] ?></span>
                                     <span class="place-row" style="right: 0; top: <?=  $hall['places'][$i]['graphic_display']['top'] ?>px;"><?= $hall['places'][$i]['row'] ?></span>
                                 <?php endif; ?>
-                                <button class="place scheme-menu__place" <?= $isSold ? 'data-sold="true"' : ''?> style="<?= $isSold ? '' : 'background: ' . $hall['places'][$i]['color_id']['color'] . ';' ?> left: <?=  $hall['places'][$i]['graphic_display']['left'] ?>px; top: <?=  $hall['places'][$i]['graphic_display']['top'] ?>px;">
+                                <button class="place scheme-menu__place" data-place-id="<?= $hall['places'][$i]['id'] ?>" <?= $hall['places'][$i]['isSold'] ? 'data-sold="true"' : ''?> style="<?= $hall['places'][$i]['isSold'] ? '' : 'background: ' . $hall['places'][$i]['color_id']['color'] . ';' ?> left: <?=  $hall['places'][$i]['graphic_display']['left'] ?>px; top: <?=  $hall['places'][$i]['graphic_display']['top'] ?>px;">
                                     <span class="placenumber"><?=  $hall['places'][$i]['place'] ?></span>
                                     <div class="popover">
                                         <span class="big rub"><?= $session['times'][$sessionTimeIDX]['price'] +  $hall['places'][$i]['price_id']['price'] ?></span>
@@ -86,8 +80,9 @@
         </div>
         <div class="popup__text">
             <div class="tickets popup__content-tickets">
+                <input class="tickets__phone-number" type="text" name="phone_number" maxlength="15" placeholder="Номер телефона">
                 <button id="tickets__result" class="tickets__result">Выберите места</button>
-                <button class="tickets__btn">Купить билеты</button>
+                <button class="tickets__btn">Заказать билеты</button>
             </div>
         </div>
     </div>

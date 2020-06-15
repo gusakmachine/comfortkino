@@ -147,7 +147,7 @@ $(document).ready(function(){
     function getMoviesForThisDay() {
         var request = $.ajax({
             type: 'post',
-            url: getMoviesURL,
+            url: moviesURL,
             data: {
                 date,
                 [csrfParam]: csrfToken,

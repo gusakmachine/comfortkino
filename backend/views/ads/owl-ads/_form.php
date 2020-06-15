@@ -21,9 +21,7 @@ ImagesAsset::register($this);
     <?= $form->field($model, 'title')->textInput(['maxlength' => true])->label('Заголовок') ?>
 
     <?= $form->field($file, 'imageFiles')->fileInput(['class' => 'view-img-after-dwn', 'data-image-name' => 'model-owl-backgrounds'])->label('Фоновое изображение') ?>
-    <?php if (isset($model['background_image_name'])): ?>
-        <img class="model-owl-backgrounds" src="<?= Yii::getAlias('@frontend_link') . Yii::getAlias('@owl-backgrounds') . $model['background_image_name']; ?>" alt="image" />
-    <?php endif; ?>
+    <img class="model-owl-backgrounds <?= (isset($model['background_image_name']))? '' : 'disabled' ?>" src="<?= Yii::getAlias('@frontend_link') . Yii::getAlias('@owl-backgrounds') . $model['background_image_name']; ?>" alt="image" />
 
     <?= $form->field($model, 'button_text')->textInput(['maxlength' => true])->label('Текст кнопки') ?>
 

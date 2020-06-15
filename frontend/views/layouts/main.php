@@ -19,8 +19,10 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <script>
-        var getMoviesURL = '<?= Url::to(['site/movies']) ?>';
-        var getTicketsURL = '<?= Url::to(['site/tickets']) ?>';
+        var ticketsMonitoring = '<?= Url::to(['site/unconfirmed-tickets']) ?>';
+
+        var moviesURL = '<?= Url::to(['site/movies']) ?>';
+        var ticketsURL = '<?= Url::to(['site/tickets']) ?>';
 
         var staticSvgIconsPATH = '<?= Yii::getAlias('@static_svg_icons'); ?>';
 
@@ -35,7 +37,7 @@ AppAsset::register($this);
 
 <div id="popup-tickets" class="popup show-hide"></div>
 <header class="header">
-    <a href="<?= Url::home()?>"><img src="<?= Yii::getAlias('@logo-image'); ?>" alt="Кинотеатр Русь, логотип" class="header__logo"></a>
+    <a href="<?= Url::home()?>"><img src="<?= Yii::getAlias('@logo-image'); ?>" alt="Мягкий кинотеатр, логотип" class="header__logo"></a>
     <button class="header__town-link" data-sh="#popup-cities">
         <span class="header__town"><?= Yii::$app->session->get('city') ?></span>
         <svg class="header__arrow-without-bottom"><use href="<?= Yii::getAlias('@svg:#arrow-without-bottom'); ?>"></use></svg>

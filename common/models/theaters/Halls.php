@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "halls".
  *
  * @property int $id
+ * @property string $name
  * @property int|null $capacity
  * @property int|null $movie_theaters_id
  * @property int|null $places_sets_id
@@ -32,7 +33,9 @@ class Halls extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['name'], 'required'],
             [['capacity', 'movie_theaters_id', 'places_sets_id'], 'integer'],
+            [['name'], 'string', 'max' => 255],
             [['movie_theaters_id'], 'exist', 'skipOnError' => true, 'targetClass' => MovieTheaters::className(), 'targetAttribute' => ['movie_theaters_id' => 'id']],
         ];
     }
@@ -44,6 +47,7 @@ class Halls extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Name',
             'capacity' => 'Capacity',
             'movie_theaters_id' => 'Movie Theaters ID',
             'places_sets_id' => 'Places Sets ID',

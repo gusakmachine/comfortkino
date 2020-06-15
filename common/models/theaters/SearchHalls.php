@@ -18,6 +18,7 @@ class SearchHalls extends Halls
     {
         return [
             [['id', 'capacity', 'movie_theaters_id', 'places_sets_id'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -62,6 +63,8 @@ class SearchHalls extends Halls
             'movie_theaters_id' => $this->movie_theaters_id,
             'places_sets_id' => $this->places_sets_id,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

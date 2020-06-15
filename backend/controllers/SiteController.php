@@ -4,8 +4,10 @@ namespace backend\controllers;
 use backend\models\PasswordResetRequestForm;
 use backend\models\ResetPasswordForm;
 use backend\models\User;
+use frontend\components\CityComponent;
 use yii\base\InvalidArgumentException;
 use Yii;
+use yii\caching\Cache;
 use yii\web\BadRequestHttpException;
 use backend\components\Controller;
 use yii\filters\VerbFilter;
@@ -77,7 +79,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-       return $this->render('index');
+        if ($post = Yii::$app->request->post())
+            if ($post['clear_cash'])
+                if (Yii::$app->cache->delete(CityComponent::getMovieTheaterBySubdomain($post['cinema'])['id']))
+                    return 'Кэш очищен';
+                else return 'Кэш уже очищен или не существует(проверьте назване кинотеатра)';
+
+        return $this->render('index');
     }
 
     /**

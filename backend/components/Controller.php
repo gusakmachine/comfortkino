@@ -30,8 +30,13 @@ class Controller extends BaseController
                 'Кинозалы' => 'theaters/halls',
                 'Цены на места' => 'theaters/place-prices',
             ],
+            'Сеансы' => [
+                'Сеансы' => 'sessions/sessions',
+                'Билеты' => 'sessions/tickets',
+                'Неподтвержденные билеты' => 'sessions/tickets/unconfirmed',
+            ],
             'Цвета' => '/colors',
-            'Сеансы' => '/sessions',
+            'Значки' => '/svg-icons',
             'Главная' => '/site',
         ];
 

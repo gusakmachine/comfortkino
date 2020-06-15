@@ -252,6 +252,7 @@
     -webkit-box-pack: end;
     -ms-flex-pack: end;
     justify-content: flex-end;
+    flex-wrap: wrap;
     margin: 25px 0 0;
     font-family: Roboto, sans-serif;
 }
@@ -279,6 +280,12 @@
     padding: 16px 23px 14px;
     margin: 0 0 0 75px;
     border-radius: 50px;
+}
+.popup-content .tickets__phone-number {
+    margin: 10px;
+    padding: 5px;
+    width: 45%;
+    border-radius: 8px;
 }
 .place-row {
     position: absolute;
@@ -531,6 +538,12 @@
     .popup-cities__top-content {
         width: 768px;
     }
+    .popup-content .tickets__phone-number {
+        width: 100%;
+    }
+    .popup-content .tickets__result {
+        padding: 1rem 0 1rem 0;
+    }
 }
 @media screen and (max-width: 768px) {
     .popup-cities__bottom-content {
@@ -561,6 +574,15 @@
     }
     .scheme-ticket {
         margin-right: 10px;
+    }
+    .popup-content .tickets__phone-number {
+        width: 100%;
+    }
+    .popup-content .tickets__btn {
+        padding: 10px;
+    }
+    .popup-content .tickets__result {
+        padding: 1rem 0 1rem 0;
     }
 }
 @media screen and (max-width: 576px){
@@ -613,11 +635,15 @@
     .session-price {
         font-size: .65rem;
     }
+    .popup-content .tickets__phone-number {
+        width: 100%;
+    }
     .popup-content .tickets__btn {
-        font-size: 0.8rem;
         padding: 10px;
+        font-size: 0.8rem;
     }
     .popup-content .tickets__result {
+        padding: 1rem 0 1rem 0;
         font-size: 0.8rem;
     }
 }

@@ -32,6 +32,7 @@ PlacesEditorAsset::register($this);
         'model' => $model,
         'attributes' => [
             'id',
+            'name',
             'capacity',
             'movie_theaters_id',
             'places_sets_id',

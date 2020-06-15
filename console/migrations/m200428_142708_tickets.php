@@ -14,7 +14,8 @@ class m200428_142708_tickets extends Migration
     {
         $this->createTable('tickets', [
             'id' => $this->primaryKey(),
-            'full_price' => $this->integer(),
+            'customer_phone' => $this->string(255),
+            'status' => $this->integer(),
             'sessions_id' => $this->integer(),
             'place_id' => $this->integer(),
             'movie_id' => $this->integer(),

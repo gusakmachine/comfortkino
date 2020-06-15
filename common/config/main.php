@@ -11,6 +11,7 @@ return [
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+            'cachePath' => '@backend/runtime/cache'
         ],
     ],
 ];

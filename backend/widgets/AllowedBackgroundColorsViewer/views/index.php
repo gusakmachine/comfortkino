@@ -6,11 +6,9 @@ ImagesAsset::register($this);
 /* @var $input_id string */
 ?>
 
-<div class="viewers-wrapper" data-element-id="<?= $input_id; ?>">
+<div class="viewers-wrapper" data-element-id="#<?= $input_id; ?>">
     <?php foreach ($model as $item): ?>
         <div class="viewers-item <?= ($item['color'] == $current_color)? 'selected-item' : '' ?>"
-             style="background: <?= $item['color']; ?>"
-             data-name="<?= $item['color']; ?>"
-        ></div>
+             style="background: <?= $item['color']; ?>;" data-name="<?= $item['color']; ?>"></div>
     <?php endforeach;?>
 </div>

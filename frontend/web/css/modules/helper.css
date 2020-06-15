@@ -11,6 +11,9 @@
 .disabled {
     display: none;
 }
+.inactive-btn {
+    opacity: .4;
+}
 
 .blue {
     background: #30a6f1 !important;

@@ -17,6 +17,8 @@ PlacesEditorAsset::register($this);
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'name')->textInput()->label('Название зала')  ?>
+
     <?= $form->field($model, 'capacity')->textInput()->label('Вместимость')  ?>
 
     <?= $form->field($model, 'movie_theaters_id')->widget(Select2::classname(), [
@@ -71,10 +73,6 @@ PlacesEditorAsset::register($this);
         <div class="edit-menu__item">
             <input class="inpt count-places" value="10">
             <span class="span-btn add_places">Добавить места</span>
-        </div>
-        <div class="edit-menu__item">
-            <input class="inpt count-places" value="10">
-            <span class="span-btn add_places">Измеить положение</span>
         </div>
     </div>
     <div class="hall">

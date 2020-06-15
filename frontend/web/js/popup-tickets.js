@@ -61,7 +61,7 @@ $(document).ready(function() {
 
         var request = $.ajax({
             type: 'post',
-            url: getTicketsURL,
+            url: ticketsURL,
             data: {
                 sessionID,
                 timeID,
@@ -73,6 +73,43 @@ $(document).ready(function() {
                 $('#popup-tickets').append(data);
                 dragscroll.reset();
 
+                $('.tickets__btn').on('click', function() {
+                    var phone_number = $('.tickets__phone-number').val();
+                    var places = [];
+
+                    $('.place--active[data-place-id]').map(function() {
+                        places.push(this.dataset.placeId);
+                    });
+
+                    if (phone_number.length < 9) {
+                        alert('Введите корректный номер телефона !');
+                        return;
+                    }
+                    if (places.length < 1) {
+                        alert('Выберите больше мест');
+                        return;
+                    }
+
+                    $.ajax({
+                        type: 'post',
+                        url: ticketsMonitoring,
+                        data: {
+                            places_idxs: places,
+                            Tickets: {
+                                customer_phone: phone_number,
+                                sessions_id: sessionID,
+                                movie_id: $('[data-movie-id]').attr('data-movie-id'),
+                                hall_id: $('[data-hall-id]').attr('data-hall-id'),
+                                movie_theaters_id: $('[data-cinema-id]').attr('data-cinema-id'),
+                                city_id: $('[data-city-id]').attr('data-city-id'),
+                                times_id: $('[data-time-id]').attr('data-time-id'),
+                            },
+                            [csrfParam]: csrfToken
+                        }
+                    }).done(function (data) {
+                        $('.tickets__btn').addClass('inactive-btn').html(data).off('click');
+                    });
+                });
             } else {
                 $('#popup-tickets').append('<span class="popup-tickets__error">Нет данных</span>');
             }
