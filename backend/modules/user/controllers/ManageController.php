@@ -2,6 +2,7 @@
 
 namespace backend\modules\user\controllers;
 
+use backend\modules\user\models\UsersSearch;
 use Yii;
 use backend\models\User;
 use yii\data\ActiveDataProvider;
@@ -46,11 +47,11 @@ class ManageController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),
-        ]);
+        $searchModel = new UsersSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

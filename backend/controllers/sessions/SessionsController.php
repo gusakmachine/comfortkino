@@ -3,6 +3,7 @@
 namespace backend\controllers\sessions;
 
 use common\models\movies\Movies;
+use common\models\sessions\SessionsSearch;
 use common\models\sessions\Tickets;
 use common\models\sessions\Times;
 use common\models\theaters\Halls;
@@ -55,11 +56,11 @@ class SessionsController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Sessions::find(),
-        ]);
+        $searchModel = new SessionsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
