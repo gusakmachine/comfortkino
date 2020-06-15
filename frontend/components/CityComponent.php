@@ -4,7 +4,6 @@ namespace frontend\components;
 
 use Yii;
 use yii\base\Component;
-use yii\helpers\Url;
 
 class CityComponent extends Component
 {

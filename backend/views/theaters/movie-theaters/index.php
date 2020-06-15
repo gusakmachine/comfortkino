@@ -20,26 +20,44 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'name',
             'address',
-//            'google_map_img',
-//            [
-//                'attribute' => 'google_map_link',
-//                'contentOptions' => ['class' => 'truncate']
-//            ],
             'start_work_time',
             'end_work_time',
             [
-                'attribute' => 'socials',
+                'attribute' => 'vk',
+                'contentOptions' => ['class' => 'truncate'],
                 'value' => function($model) {
-         $text = [];
+                    $text = [];
                     foreach ($model->socials as $item) {
-                        for ($i = 0; $i < count(Yii::$app->params['movieTheaterSocials']); $i++) {
-                            $text[] = $item[Yii::$app->params['movieTheaterSocials'][$i]];
-                        }
+                        $text[] = $item[Yii::$app->params['movieTheaterSocials'][0]];
+                    }
+                    return $text ? join(', ', $text) : null;
+                }
+
+            ],
+            [
+                'attribute' => 'facebook',
+                'contentOptions' => ['class' => 'truncate'],
+                'value' => function($model) {
+                    $text = [];
+                    foreach ($model->socials as $item) {
+                        $text[] = $item[Yii::$app->params['movieTheaterSocials'][1]];
+                    }
+                    return $text ? join(', ', $text) : null;
+                }
+            ],
+            [
+                'attribute' => 'instagram',
+                'contentOptions' => ['class' => 'truncate'],
+                'value' => function($model) {
+                    $text = [];
+                    foreach ($model->socials as $item) {
+                        $text[] = $item[Yii::$app->params['movieTheaterSocials'][2]];
                     }
                     return $text ? join(', ', $text) : null;
                 }
@@ -57,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'subdomain_name',
             [
-                'attribute' => 'city_id',
+                'attribute' => 'city',
                 'label' => 'City',
                 'value' => function($model) {
                     return $model->city->name;

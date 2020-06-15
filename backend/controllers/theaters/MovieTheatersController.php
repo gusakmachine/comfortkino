@@ -3,6 +3,8 @@
 namespace backend\controllers\theaters;
 
 use common\models\theaters\Cities;
+use common\models\theaters\CitiesSearch;
+use common\models\theaters\MovieTheatersSearch;
 use common\models\theaters\PhoneNumbers;
 use common\models\theaters\Socials;
 use common\models\UploadForm;
@@ -56,11 +58,11 @@ class MovieTheatersController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => MovieTheaters::find()->with('city','socials', 'phoneNumbers'),
-        ]);
+        $searchModel = new MovieTheatersSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

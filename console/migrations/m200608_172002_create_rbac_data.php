@@ -61,9 +61,7 @@ class m200608_172002_create_rbac_data extends Migration
      */
     public function safeDown()
     {
-        echo "m200608_172002_create_rbac_data cannot be reverted.\n";
-
-        return false;
+        return true;
     }
 
 }

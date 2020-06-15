@@ -2,6 +2,7 @@
 
 namespace backend\controllers\theaters;
 
+use common\models\theaters\CitiesSearch;
 use Yii;
 use common\models\theaters\Cities;
 use yii\data\ActiveDataProvider;
@@ -50,11 +51,11 @@ class CitiesController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Cities::find(),
-        ]);
+        $searchModel = new CitiesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

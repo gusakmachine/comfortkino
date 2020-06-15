@@ -21,18 +21,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'date',
             [
-                'attribute' => 'movie_id',
+                'attribute' => 'movie',
                 'label' => 'Movie',
                 'value' => function($model) {
                     return $model->movie->title;
                 }
             ],
             [
-                'attribute' => 'Times',
+                'attribute' => 'times',
+                'label' => 'Times',
                 'value' => function($model) {
                     $times = [];
                     foreach ($model->times as $item){
@@ -42,7 +44,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-                'attribute' => 'Hall',
+                'attribute' => 'hall',
+                'label' => 'Hall',
                 'value' => function($model) {
                     return $model->hall->name;
                 }

@@ -5,5 +5,5 @@ return [
     'senderEmail' => 'noreply@example.com',
     'senderName' => 'Example.com mailer',
     'user.passwordResetTokenExpire' => 3600,
-    'movieTheaterSocials' => ['vk', 'instagram', 'facebook'],
+    'movieTheaterSocials' => ['vk','facebook', 'instagram'],
 ];
