@@ -39,9 +39,8 @@ class PlacesSets extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['place', 'row', 'set_id', 'price', 'color_id'], 'integer'],
-            [['graphic_display'], 'string'],
-            [['color_id'], 'exist', 'skipOnError' => true, 'targetClass' => Colors::className(), 'targetAttribute' => ['color_id' => 'id']],
+            [['place', 'row', 'set_id', 'price'], 'integer'],
+            [['graphic_display', 'color'], 'string'],
         ];
     }
 
@@ -75,16 +74,6 @@ class PlacesSets extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Color]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getColor()
-    {
-        return $this->hasOne(Colors::className(), ['id' => 'color_id']);
-    }
-
-    /**
      * Gets query for [[Tickets]].
      *
      * @return \yii\db\ActiveQuery
@@ -109,8 +98,8 @@ class PlacesSets extends \yii\db\ActiveRecord
                     'row' => $row,
                     'graphic_display' => $place['graphic_display'],
                     'set_id' => $set_id,
-                    'price_id' => $place['price_id'],
-                    'color_id' => $place['color_id'],
+                    'price' => $place['price'],
+                    'color' => $place['color'],
                 ]]);
                 $new_models[] = $model;
             }
@@ -140,8 +129,6 @@ class PlacesSets extends \yii\db\ActiveRecord
         $places = PlacesSets::find()->where(['set_id' => $param['hall']['places_sets_id']])->orderBy('row, place')->asArray()->all();
 
         for ($i = 0; $i < count($places); $i++) {
-            $places[$i]['color_id'] = Colors::find()->where(['id' => $places[$i]['color_id']])->one();
-
             if (in_array($places[$i]['id'], array_column($tickets, 'place_id')))
                 $places[$i]['isSold'] = true;
             else $places[$i]['isSold'] = false;

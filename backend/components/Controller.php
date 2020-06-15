@@ -28,7 +28,6 @@ class Controller extends BaseController
                 'Города' => 'theaters/cities',
                 'Кинотеатры' => 'theaters/movie-theaters',
                 'Кинозалы' => 'theaters/halls',
-                'Цены на места' => 'theaters/place-prices',
             ],
             'Сеансы' => [
                 'Сеансы' => 'sessions/sessions',

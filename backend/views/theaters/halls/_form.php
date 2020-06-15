@@ -77,10 +77,10 @@ PlacesEditorAsset::register($this);
                     <p class="row_number"><?= $places[$i]['row']; ?> ряд</p>
                     <?php for (; $i < count($places); $i++): ?>
                         <div class="places-wrapper">
-                            <span class="places" style="background-color: <?= $places[$i]['color']->color; ?>"><?= $places[$i]['place']; ?></span>
+                            <span class="places" style="background-color: <?= $places[$i]['color']; ?>"><?= $places[$i]['place']; ?></span>
                             <span class="place-price"><?= $places[$i]['price']; ?></span>
                             <input class="hidden place-price-id" value="<?= $places[$i]['price']; ?>">
-                            <input class="hidden place-color-id" value="<?= $places[$i]['color']->id ?>">
+                            <input class="hidden place-color-id" value="<?= $places[$i]['color'] ?>">
                             <input class="hidden place-graphic-display">
                         </div>
                         <?php
