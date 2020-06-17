@@ -9,8 +9,8 @@ $this->title = 'Фильм «' . $movie['title'] . '» — Мягкий кино
 FilmAsset::register($this);
 ?>
 <section class="main-film">
-    <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__poster" style="background-image: url(<?= Yii::getAlias('@posters') . '/' . $movie['id'] . '/'    . $movie['poster'] ?>)"></a>
-    <a href="<?= Yii::getAlias('@posters') . $movie['poster'] ?>" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') . '/' . $movie['id'] . '/'  . $movie['mob_poster'] ?>)">
+    <a href="<?= Yii::getAlias('@posters') . '/' . $movie['id'] . '/'    . $movie['poster'] ?>" class="film__poster" style="background-image: url(<?= Yii::getAlias('@posters') . '/' . $movie['id'] . '/'    . $movie['poster'] ?>)"></a>
+    <a href="<?= Yii::getAlias('@mob_posters') . '/' . $movie['id'] . '/'  . $movie['mob_poster'] ?>" class="film__trailer-preview" style="background-image: url(<?= Yii::getAlias('@mob_posters') . '/' . $movie['id'] . '/'  . $movie['mob_poster'] ?>)">
     </a>
     <div class="film partially-hidden-content max-height-on">
         <div class="film__top-left-content">

@@ -17,6 +17,8 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
+    <?php $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Url::to(['/favicon.ico'])]); ?>
+
     <title><?= Html::encode($this->title) ?></title>
     <script>
         var ticketsMonitoring = '<?= Url::to(['site/unconfirmed-tickets']) ?>';

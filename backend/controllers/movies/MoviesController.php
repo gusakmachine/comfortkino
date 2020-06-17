@@ -106,21 +106,26 @@ class MoviesController extends Controller
             if (!empty($files->imageFiles['mob_poster']))
                 $model['mob_poster'] = $files->imageFiles['mob_poster'][0]->name;
 
-            if ($model->save() && $files->upload()) {
-                //Upload actors, directors, genres, countries, gallery
-                $new_actors = MoviesActors::loadActors($model->id, Yii::$app->request->post()['Movies']['actors']);
-                $new_directors = MoviesDirectors::loadDirectors($model->id, Yii::$app->request->post()['Movies']['directors']);
-                $new_genres = MoviesGenres::loadGenres($model->id, Yii::$app->request->post()['Movies']['genres']);
-                $new_countries = MoviesCountries::loadCountries($model->id, Yii::$app->request->post()['Movies']['countries']);
-                $new_gallery_models = Gallery::loadImageFiles($model->id, $files->imageFiles['gallery']);
+            if ($model->save()) {
+                $files->imageFiles['poster']['dirname'] = Yii::getAlias('@posters/' . $model->id . '/');
+                $files->imageFiles['mob_poster']['dirname'] = Yii::getAlias('@mob_posters/' . $model->id . '/');
+                $files->imageFiles['gallery']['dirname'] = Yii::getAlias('@gallery/' . $model->id . '/');
+                if ($files->upload()) {
+                    //Upload actors, directors, genres, countries, gallery
+                    $new_actors = MoviesActors::loadActors($model->id, Yii::$app->request->post()['Movies']['actors']);
+                    $new_directors = MoviesDirectors::loadDirectors($model->id, Yii::$app->request->post()['Movies']['directors']);
+                    $new_genres = MoviesGenres::loadGenres($model->id, Yii::$app->request->post()['Movies']['genres']);
+                    $new_countries = MoviesCountries::loadCountries($model->id, Yii::$app->request->post()['Movies']['countries']);
+                    $new_gallery_models = Gallery::loadImageFiles($model->id, $files->imageFiles['gallery']);
 
-                if (MoviesActors::saveMultiple($new_actors)
-                    && MoviesDirectors::saveMultiple($new_directors)
-                    && MoviesGenres::saveMultiple($new_genres)
-                    && MoviesCountries::saveMultiple($new_countries)
-                    && Gallery::saveMultiple($new_gallery_models)
-                )
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    if (MoviesActors::saveMultiple($new_actors)
+                        && MoviesDirectors::saveMultiple($new_directors)
+                        && MoviesGenres::saveMultiple($new_genres)
+                        && MoviesCountries::saveMultiple($new_countries)
+                        && Gallery::saveMultiple($new_gallery_models)
+                    )
+                        return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         }
 
@@ -162,6 +167,10 @@ class MoviesController extends Controller
                 $model['poster'] = $files->imageFiles['poster'][0]->name;
             if (!empty($files->imageFiles['mob_poster']))
                 $model['mob_poster'] = $files->imageFiles['mob_poster'][0]->name;
+
+            $files->imageFiles['poster']['dirname'] = Yii::getAlias('@posters/' . $id . '/');
+            $files->imageFiles['mob_poster']['dirname'] = Yii::getAlias('@mob_posters/' . $id . '/');
+            $files->imageFiles['gallery']['dirname'] = Yii::getAlias('@gallery/' . $id . '/');
 
             $new_gallery_models = Gallery::loadImageFiles($id, $files->imageFiles['gallery'], $gallery_models);
 

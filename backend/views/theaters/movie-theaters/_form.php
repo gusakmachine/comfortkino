@@ -22,9 +22,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($movieTheaters, 'address')->textInput()->label('Адресс') ?>
 
-    <?= $form->field($movieTheaters, 'google_map_img')->fileInput(['class' => 'view-img-after-dwn', 'data-image-name' => 'google-map-img'])->label('Google-картинка') ?>
-
-    <img class="google-map-img model-poster" style="display: <?= $movieTheaters['google_map_img'] ? 'block' : 'none' ?>" src="<?= Yii::getAlias('@frontend_link') . Yii::getAlias('@map_img') . $movieTheaters['google_map_img']; ?>" alt="image" />
+    <?= $form->field($file, 'imageFiles')->fileInput(['class' => 'view-img-after-dwn', 'data-image-name' => 'model-poster'])->label('Google-картинка') ?>
+    <img class="model-poster <?= (isset($movieTheaters['google_map_img']))? '' : 'disabled' ?>" src="<?= Yii::getAlias('@frontend_link') . Yii::getAlias('@map_img') . $movieTheaters['google_map_img']; ?>" alt="image" />
 
     <?= $form->field($movieTheaters, 'google_map_link')->textInput()->label('<a href="https://www.google.com/maps/place/" target="_blank">Google, ссылка на место</a>') ?>
 

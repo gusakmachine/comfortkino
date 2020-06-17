@@ -88,6 +88,7 @@ class PageBackgroundController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             //please, don't beat me
+            $file->dirname = Yii::getAlias('@page-backgrounds/');
             $file->imageFiles = [UploadedFile::getInstance($file, 'imageFiles')];
             $model['background_image_name'] = '/' . $file->imageFiles[0]->name;
 
@@ -120,6 +121,7 @@ class PageBackgroundController extends Controller
             if (empty($file->imageFiles) && $model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
 
+            $file->dirname = Yii::getAlias('@page-backgrounds/');
             $file->imageFiles = [UploadedFile::getInstance($file, 'imageFiles')];
             $model['background_image_name'] = '/' . $file->imageFiles[0]->name;
 
