@@ -10,8 +10,7 @@ return [
             'class' => 'yii\rbac\DbManager',
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
-            'cachePath' => '@backend/runtime/cache'
+            'class' => 'yii\caching\APC',
         ],
     ],
 ];
