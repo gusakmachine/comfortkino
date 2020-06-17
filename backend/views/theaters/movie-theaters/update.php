@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = 'Update';
         'socials' => $socials,
         'phones' => $phones,
         'cities' => $cities,
+        'file' => $file,
     ]) ?>
 
 </div>

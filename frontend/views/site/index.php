@@ -2,6 +2,7 @@
 use frontend\assets\MainAsset;
 
 MainAsset::register($this);
+$this->title = 'Мягкий кинотеатр ' . Yii::$app->session->get('theaterName');
 ?>
 <?php forEach($notes as $note) : ?>
 <div id="attention-note" class="attention-note" style="background: <?= $note['background_color']; ?>" data-sh="#attention-note">

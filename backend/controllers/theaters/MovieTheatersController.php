@@ -91,15 +91,17 @@ class MovieTheatersController extends Controller
         $socials = new Socials();
         $phones = [new PhoneNumbers()];
         $cities = Cities::find()->asArray()->all();
-        $files = new UploadForm();
+        $file = new UploadForm();
 
         if (Yii::$app->request->isPost) {
             $formData = Yii::$app->request->post();
             $phones = $this->preparePhonesArray(Yii::$app->request->post('PhoneNumbers', []), $phones);
             if ($movieTheaters->load($formData) && $socials->load($formData) && PhoneNumbers::loadMultiple($phones, $formData)) {
-                $movieTheaters->google_map_img = UploadedFile::getInstance($movieTheaters, 'google_map_img')->name;
+                $file->dirname = Yii::getAlias('@map_img/');
+                $file->imageFiles = [UploadedFile::getInstance($file, 'imageFiles')];
+                $movieTheaters->google_map_img = '/' . $file->imageFiles[0]->name;
                 if ($movieTheaters->validate() && $socials->validate() && PhoneNumbers::validateMultiple($phones)) {
-                    if ($movieTheaters->save() && $socials->save($movieTheaters->id) && PhoneNumbers::saveMultiple($phones,  $movieTheaters->id)) {
+                    if ($movieTheaters->save() && $socials->save($movieTheaters->id) && $file->upload() && PhoneNumbers::saveMultiple($phones,  $movieTheaters->id)) {
                         return $this->redirect(['view', 'id' => $movieTheaters->id]);
                     }
                 }
@@ -111,6 +113,7 @@ class MovieTheatersController extends Controller
             'socials' => $socials,
             'phones' => $phones,
             'cities' => ArrayHelper::map($cities, 'id', 'name'),
+            'file' => $file,
         ]);
     }
 
@@ -127,14 +130,18 @@ class MovieTheatersController extends Controller
         $socials = Socials::find()->where(['movie_theaters_id' => $id])->one();
         $phones = $this->getPhonesByMovieTheatersId($id);
         $cities = Cities::find()->asArray()->all();
+        $file = new UploadForm();
 
         if (Yii::$app->request->isPost) {
             $formData = Yii::$app->request->post();
             PhoneNumbers::deleteAll('movie_theaters_id = :movie_theaters_id', [':movie_theaters_id' => $id]);
             $phones = $this->preparePhonesArray(Yii::$app->request->post('PhoneNumbers', []));
             if ($movieTheaters->load(Yii::$app->request->post()) && $socials->load($formData) && PhoneNumbers::loadMultiple($phones, $formData)) {
+                $file->dirname = Yii::getAlias('@map_img/');
+                $file->imageFiles = [UploadedFile::getInstance($file, 'imageFiles')];
+                $movieTheaters->google_map_img = '/' . $file->imageFiles[0]->name;
                 if ($movieTheaters->validate() && $socials->validate() && PhoneNumbers::validateMultiple($phones)) {
-                    if ($movieTheaters->save() && $socials->save($id) && PhoneNumbers::saveMultiple($phones, $id)) {
+                    if ($movieTheaters->save() && $socials->save($id) && $file->upload() && PhoneNumbers::saveMultiple($phones, $id)) {
                         return $this->redirect(['view', 'id' => $id]);
                     }
                 }
@@ -146,6 +153,7 @@ class MovieTheatersController extends Controller
             'socials' => $socials,
             'phones' => $phones,
             'cities' => ArrayHelper::map($cities, 'id', 'name'),
+            'file' => $file,
         ]);
     }
 

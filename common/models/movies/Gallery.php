@@ -62,13 +62,15 @@ class Gallery extends \yii\db\ActiveRecord
         $new_gallery_models = [];
 
         foreach ($imageFiles as $image) {
-            foreach ($exist_gallery_models as $exist_gallery_model)
-                if ($exist_gallery_model->image_name == $image->name)
-                    continue 2;
+            if (is_object($image)) {
+                foreach ($exist_gallery_models as $exist_gallery_model)
+                    if ($exist_gallery_model->image_name == $image->name)
+                        continue 2;
 
-            $gallery_image = new Gallery();
-            $gallery_image->load(['Gallery' => ['image_name' => $image->name, 'movies_id' => $id]]);
-            $new_gallery_models[] = $gallery_image;
+                $gallery_image = new Gallery();
+                $gallery_image->load(['Gallery' => ['image_name' => $image->name, 'movies_id' => $id]]);
+                $new_gallery_models[] = $gallery_image;
+            }
         }
 
         return $new_gallery_models;

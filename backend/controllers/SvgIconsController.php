@@ -70,7 +70,8 @@ class SvgIconsController extends Controller
         $file = new UploadForm();
 
         if (Yii::$app->request->post()) {
-            $file->imageFiles= [UploadedFile::getInstance($file, 'imageFiles')];
+            $file->dirname = Yii::getAlias('@svg/');
+            $file->imageFiles = [UploadedFile::getInstance($file, 'imageFiles')];
             $model['name'] = '/' . $file->imageFiles[0]->name;
 
             if ($model->save() && $file->upload())
@@ -96,6 +97,7 @@ class SvgIconsController extends Controller
         $file = new UploadForm();
 
         if (Yii::$app->request->post()) {
+            $file->dirname = Yii::getAlias('@svg/');
             $file->imageFiles = [UploadedFile::getInstance($file, 'imageFiles')];
             $model['name'] = '/' . $file->imageFiles[0]->name;
 

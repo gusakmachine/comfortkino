@@ -88,6 +88,7 @@ class OwlAdsController extends Controller
         $movieTheaters = MovieTheaters::find()->asArray()->all();
 
         if ($model->load(Yii::$app->request->post())) {
+            $file->dirname = Yii::getAlias('@owl-backgrounds/');
             $file->imageFiles= [UploadedFile::getInstance($file, 'imageFiles')];
             $model['background_image_name'] = '/' . $file->imageFiles[0]->name;
 
@@ -117,6 +118,7 @@ class OwlAdsController extends Controller
         $file = new UploadForm();
 
         if ($model->load(Yii::$app->request->post())) {
+            $file->dirname = Yii::getAlias('@owl-backgrounds/');
             $file->imageFiles = [UploadedFile::getInstance($file, 'imageFiles')];
 
             if (empty($file->imageFiles) && $model->save())
